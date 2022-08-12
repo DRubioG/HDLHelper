@@ -59,7 +59,7 @@ class FileSystemView(QWidget):
         #print(self.model)
        # try:
         fileName= self.model.filePath(s[0])
-        text_edit=QTextEdit()
+        #text_edit=QTextEdit()
         text=open(fileName).read()
         #print(text)
         #text=text.replace("\n", "&#10;&#13;")
@@ -86,6 +86,7 @@ class FileSystemView(QWidget):
        # print()
         entity_loc = text.find("entity")
        # p=[]
+        self.line.clear()
         if entity_loc != -1:
            # print("dentro")
            # p.append(text[:entity_loc])
@@ -94,10 +95,11 @@ class FileSystemView(QWidget):
            # p.setTextColor(QColor(0, 0, 0))
            # p.append(text[entity_loc+len("entity"):])
            # self.line.append(p)
-           
+        
             text = text.replace("\t", "  ")
             self.line.append(text[:entity_loc])
-            self.line.setTextColor(QColor(0, 0, 255))
+            
+            self.line.setTextColor(QColor(0,0,255))
             #self.line.append("<span style=\" font-size:8pt; font-weight:600; color:#ff0000; \">")
             self.line.insertPlainText(text[entity_loc:entity_loc+len("entity ")])
            # self.line.append("</span>")
