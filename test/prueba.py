@@ -2,8 +2,9 @@ import sys
 import os
 from PyQt5.QtWidgets import QApplication, QWidget, QTreeView, QFileSystemModel, QVBoxLayout, QLineEdit, QHBoxLayout, QPlainTextEdit, QTextEdit
 from PyQt5.QtCore import QModelIndex, QDir
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QFont, QFontDatabase
 from stylesheet import style_sheet
+import re
 
 class FileSystemView(QWidget):
     def __init__(self, dir_path):
@@ -86,7 +87,10 @@ class FileSystemView(QWidget):
        # print()
         entity_loc = text.find("entity")
        # p=[]
+        db = QFontDatabase()
         self.line.clear()
+        font = db.font("Roboto", "Medium Italic", 7)
+        self.line.setFont(font)
         if entity_loc != -1:
            # print("dentro")
            # p.append(text[:entity_loc])
@@ -95,41 +99,76 @@ class FileSystemView(QWidget):
            # p.setTextColor(QColor(0, 0, 0))
            # p.append(text[entity_loc+len("entity"):])
            # self.line.append(p)
-        
-            text = text.replace("\t", "  ")
+            n=5
+            text = text.replace("\t", " "*n)
             self.line.append(text[:entity_loc])
-            
+
             self.line.setTextColor(QColor(0,0,255))
+            self.line.setFontWeight(QFont.Bold)
             #self.line.append("<span style=\" font-size:8pt; font-weight:600; color:#ff0000; \">")
             self.line.insertPlainText(text[entity_loc:entity_loc+len("entity ")])
-           # self.line.append("</span>")
+
+            # self.line.append("</span>")
             self.line.setTextColor(QColor(0, 0, 0))
+            self.line.setFontWeight(QFont.Normal)
+            #self.line.setFont(font)
+            #self.line.setFont(self.font)
             self.line.insertPlainText(text[entity_loc+len("entity "):])
-           # print(self.line)
-       # self.line.setTe
-        #self.line.setTextColor('#FFFFFF')
+
             
+            # print(self.line)
+            # self.line.setTe
+            #self.line.setTextColor('#FFFFFF') 
+                        
             #print(self.model.filePath(s[0]))
     #    except:
      #       None
+        #for i in text:
+         #   print(text)
+     #   coment = [i for i in len(text) text.find("--")
+        #if coment != -1:
+        end_line = [_.start() for _ in re.finditer("\n", text)] 
+        start_comment = [_.start() for _ in re.finditer("--", text)] 
+        print(end_line)
+        print(start_comment)
+        cadena=[]
+        for i in start_comment:
+            for j in end_line:
+                if j > i:
+                    cadena.append((i, j))
+                   
+                    break
+
+        print(cadena)
+        """for i in str(start_comment[0]):
+            for j in end_line:
+                if j>i:
+                  #  print(i)
+                  #  print(j)
+                    break
+        """    
+
+    
+
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
     #DIRECTORIO BASE.
     dirPath = os.getcwd()
-    app.setStyleSheet("""
-    QTreeView{
-        alternate-background-color: rgb(255, 255, 0);
-        color: rgb(0, 0, 0);
-    }
-    QTreeView::item:selected{
-        background-color: red;
-        color:blue
-    }
-    QTreeView::branch:adjoins-item{
-        image: url(icon.png);
-    }
-""")
+   # app.setStyleSheet("""
+    #QTreeView{
+     #   alternate-background-color: rgb(255, 255, 0);
+      #  color: rgb(0, 0, 0);
+ #   }
+  #  QTreeView::item:selected{
+   #     background-color: red;
+    #    color:blue
+#    }
+ #   QTreeView::branch:adjoins-item{
+  #      image: url(icon.png);
+   # }
+#""")
     demo = FileSystemView(dirPath)
     demo.show()
     sys.exit(app.exec_())
