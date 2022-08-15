@@ -1,9 +1,8 @@
 import sys
-from tkinter import CENTER
 from PyQt5.QtWidgets import (QApplication, QMainWindow, QPushButton, QLineEdit, QFileDialog,
 QLabel, QAction, QCheckBox, QDialog, QVBoxLayout, QComboBox)
 from PyQt5 import QtCore, Qt, QtWidgets, QtGui
-from StyleSheet import style_sheet
+#from StyleSheet import style_sheet
 
 
 class Testbench_gui(QDialog):
@@ -113,7 +112,7 @@ class Testbench_gui(QDialog):
 
 if __name__=="__main__":
     app = QApplication(sys.argv)
-    app.setStyleSheet(style_sheet)
+    #app.setStyleSheet(style_sheet)
     w = Testbench_gui()
     w.show()
     sys.exit(app.exec_())
