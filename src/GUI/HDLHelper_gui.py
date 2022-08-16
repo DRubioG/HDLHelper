@@ -1,33 +1,35 @@
 import sys
-from GUI.Testbench_gui import Testbench_gui
-from PyQt5.QtWidgets import QMainWindow, QApplication, QPushButton
+from PyQt5.QtWidgets import QMainWindow, QWidget, QDialog
 from PyQt5 import QtCore
-#from StyleSheet import style_sheet
+from UI.HDLHelper_UI import *
+from GUI.Testbench_generator_gui import *
 
 class HDLHelper_gui(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.initializeUI()
+        self.ui = Ui_HDLHelper()
+        self.ui.setupUi(self)
+        self.actions()
         self.show()
-
-    def initializeUI(self):
-        self.setFixedSize(523,250)
-        self.setWindowTitle('HDLHelper')
-
-        self.pushButton_input = QPushButton("testbench generator", self)
-        self.pushButton_input.setGeometry(QtCore.QRect(10, 70, 200, 36))
-        self.pushButton_input.setObjectName("testbench_generator")
-        self.pushButton_input.setToolTip('Testbench Generator')
-        self.pushButton_input.clicked.connect(self.testbench_generator)
     
-    def testbench_generator(self):
-        w=Testbench_gui()
-       # w.setStyleSheet(style_sheet)
-        w.exec()
-        print("botono")
+    def actions(self):
+        self.ui.testbench_generator_button.clicked.connect(self.testbench_generator_fn)
+        self.ui.calculator_button.clicked.connect(self.calculator_fn)
+        self.ui.top_file_generator_button.clicked.connect(self.top_file_generator_fn)
 
-if __name__=="__main__":
-    app = QApplication(sys.argv)
-    hdlhelper_gui = HDLHelper_gui()
-    hdlhelper_gui.show()
-    sys.exit(app.exec_())
+    
+    def testbench_generator_fn(self):
+        print("pulsado")
+        self.testbench_generator = Testbench_generator_gui()
+        self.testbench_generator.show()
+        
+    def calculator_fn(self):
+        self.coming_soon()
+
+    def top_file_generator_fn(self):
+        self.coming_soon()
+
+    def coming_soon(self):
+        self.w = QDialog()
+        self.w.setWindowTitle("Coming soon ...")
+        self.w.show()
