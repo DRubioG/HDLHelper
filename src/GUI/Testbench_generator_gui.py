@@ -1,13 +1,13 @@
 import sys
 from UI.Testbench_generator_UI import *
-from UI.StyleSheet import style_sheet
+from UI.StyleSheet import testbench_generator_gui
 from PyQt5.QtWidgets import QDialog, QMainWindow, QFileDialog, QWidget
 from PyQt5 import QtCore
 
 class Testbench_generator_gui(QWidget):
     def __init__(self):
         super().__init__()
-        self.setStyleSheet(style_sheet)
+        self.setStyleSheet(testbench_generator_gui)
         self.ui = Ui_Testbench_generator()
         self.ui.setupUi(self)
         self.actions()

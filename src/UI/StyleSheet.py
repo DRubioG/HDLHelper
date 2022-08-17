@@ -1,4 +1,8 @@
-style_sheet = """
+"""
+Style sheet
+"""
+
+testbench_generator_gui = """
     /* Push Button */
     QPushButton{
         color:   #354547 ;
