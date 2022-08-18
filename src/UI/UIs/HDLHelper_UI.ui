@@ -154,9 +154,9 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout_3">
     <item>
-     <widget class="QPushButton" name="visualizer">
+     <widget class="QPushButton" name="editor_button">
       <property name="text">
-       <string>Visualizer</string>
+       <string>Editor</string>
       </property>
      </widget>
     </item>
@@ -242,12 +242,12 @@
      </spacer>
     </item>
     <item>
-     <widget class="QPushButton" name="empty_2">
+     <widget class="QPushButton" name="ascii_conversor_button">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="text">
-       <string/>
+       <string>ASCII Conversor</string>
       </property>
      </widget>
     </item>
@@ -268,12 +268,12 @@
      </spacer>
     </item>
     <item>
-     <widget class="QPushButton" name="empty">
+     <widget class="QPushButton" name="auto_improve_button">
       <property name="enabled">
-       <bool>false</bool>
+       <bool>true</bool>
       </property>
       <property name="text">
-       <string/>
+       <string>Auto-improve</string>
       </property>
      </widget>
     </item>

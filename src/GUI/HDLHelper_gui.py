@@ -1,5 +1,6 @@
+from cgi import test
 import sys
-from PyQt5.QtWidgets import QMainWindow, QWidget, QDialog, QMenu, QLabel
+from PyQt5.QtWidgets import QMainWindow, QWidget, QDialog, QMenu, QLabel, QAction
 from PyQt5 import QtCore
 from UI.HDLHelper_UI import *
 from GUI.Testbench_generator_gui import *
@@ -16,10 +17,23 @@ class HDLHelper_gui(QMainWindow):
         self.show()
     
     def addMenuBar(self):
+        exitAction = QAction('Exit', self)        
+        exitAction.setShortcut('Ctrl+Q')
+
+        testbench_generator = QAction("Testbench Generator", self)
+        testbench_generator.setShortcut('Ctrl+T')
+
         menuBar = self.menuBar()
-        menuBar.addMenu("File")
+
+        fileMenu = menuBar.addMenu("File")
+        fileMenu.addAction(exitAction)
         menuBar.addMenu("Edit")
-        menuBar.addMenu("Options")
+
+        optionsMenu = menuBar.addMenu("Options")
+        optionsMenu.addAction(testbench_generator)
+
+
+        menuBar.addMenu("Help")
 
     def addStatusBar(self):
         statusbar = self.statusBar()
@@ -31,17 +45,17 @@ class HDLHelper_gui(QMainWindow):
         self.ui.calculator_button.clicked.connect(self.calculator_fn)
         self.ui.top_file_generator_button.clicked.connect(self.top_file_generator_fn)
         # second row
-        self.ui.ticks_calculator_button.clicked.connect(self.ticks_calculator_fn); self.ui.ticks_calculator_button.hide()
-        self.ui.hdl_translator_button.clicked.connect(self.hdl_translator_fn); self.ui.hdl_translator_button.hide()
-        self.ui.hdl_generator_button.clicked.connect(self.hdl_generator_fn); self.ui.hdl_generator_button.hide()
+        self.ui.ticks_calculator_button.clicked.connect(self.ticks_calculator_fn);                  self.ui.ticks_calculator_button.hide()
+        self.ui.hdl_translator_button.clicked.connect(self.hdl_translator_fn);                      self.ui.hdl_translator_button.hide()
+        self.ui.hdl_generator_button.clicked.connect(self.hdl_generator_fn);                        self.ui.hdl_generator_button.hide()
         # third row
-        self.ui.visualizer.clicked.connect(self.visualizer_fn); self.ui.visualizer.hide()
-        self.ui.documentation_generator_button.clicked.connect(self.documentation_generator_fn); self.ui.documentation_generator_button.hide()
-        self.ui.analize_dependencies_button.clicked.connect(self.analize_dependencies_fn); self.ui.analize_dependencies_button.hide()
+        self.ui.editor_button.clicked.connect(self.editor_fn);                                      self.ui.editor_button.hide()
+        self.ui.documentation_generator_button.clicked.connect(self.documentation_generator_fn);    self.ui.documentation_generator_button.hide()
+        self.ui.analize_dependencies_button.clicked.connect(self.analize_dependencies_fn);          self.ui.analize_dependencies_button.hide()
         #fourth row
-        self.ui.generate_state_machine_button.clicked.connect(self.generate_state_machine_fn); self.ui.generate_state_machine_button.hide()
-        self.ui.empty.hide()
-        self.ui.empty_2.hide()
+        self.ui.generate_state_machine_button.clicked.connect(self.generate_state_machine_fn);      self.ui.generate_state_machine_button.hide()
+        self.ui.ascii_conversor_button.clicked.connect(self.generate_state_machine_fn);             self.ui.ascii_conversor_button.hide()
+        self.ui.auto_improve_button.clicked.connect(self.generate_state_machine_fn);                self.ui.auto_improve_button.hide()
 
     #first row
     def testbench_generator_fn(self):
@@ -66,7 +80,7 @@ class HDLHelper_gui(QMainWindow):
         self.coming_soon()
     
     #third row
-    def visualizer_fn(self):
+    def editor_fn(self):
         self.coming_soon()
 
     def documentation_generator_fn(self):
@@ -77,6 +91,12 @@ class HDLHelper_gui(QMainWindow):
 
     #fourth row
     def generate_state_machine_fn(self):
+        self.coming_soon()
+
+    def ascii_conversor_fn(self):
+        self.coming_soon()
+
+    def auto_improve_button(self):
         self.coming_soon()
 
 
