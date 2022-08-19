@@ -1,7 +1,8 @@
-from cgi import test
+from itertools import combinations
 import sys
 from PyQt5.QtWidgets import QMainWindow, QWidget, QDialog, QMenu, QLabel, QAction
 from PyQt5 import QtCore
+
 from UI.HDLHelper_UI import *
 from GUI.Testbench_generator_gui import *
 
@@ -13,33 +14,91 @@ class HDLHelper_gui(QMainWindow):
         self.setWindowTitle("HDLHelper")
         self.addMenuBar()
         self.addStatusBar()
-        self.actions()
+        self.connections()
         self.show()
     
     def addMenuBar(self):
-        exitAction = QAction('Exit', self)        
-        exitAction.setShortcut('Ctrl+Q')
-
-        testbench_generator = QAction("Testbench Generator", self)
-        testbench_generator.setShortcut('Ctrl+T')
 
         menuBar = self.menuBar()
 
+        # File
         fileMenu = menuBar.addMenu("File")
+
+        exitAction = QAction('Exit', self)        
+        exitAction.setShortcut('Ctrl+Q')
+        exitAction.triggered.connect(self.cancelOperation)
         fileMenu.addAction(exitAction)
-        menuBar.addMenu("Edit")
 
-        optionsMenu = menuBar.addMenu("Options")
-        optionsMenu.addAction(testbench_generator)
+        # Edit
+        editMenu = menuBar.addMenu("Edit")
+        preferences = QAction('Preferences...', self)
+        preferences.triggered.connect(self.preferences_fn)
+        editMenu.addAction(preferences)
 
 
-        menuBar.addMenu("Help")
+        # Execute
+        executeMenu = menuBar.addMenu("Execute")
+
+        testbench_generator = QAction("Testbench Generator", self)
+        calculator = QAction("Calculator", self)
+        top_file_generator = QAction("Top file generator", self)
+        ticks_calculator = QAction("Ticks calculator", self)
+        translator = QAction("v <-> vhd", self)
+        hdl_generator = QAction("HDL generator", self)
+        editor = QAction("Editor", self)
+        documentation_generator = QAction("Documentation generator", self)
+        analize_dependencies = QAction("Analize dependencies", self)
+        gen_state_machine = QAction("Gen. State Machine", self)
+        ascii_conversor = QAction("Ascii Conversor", self)
+        auto_improve = QAction("Auto-improve", self)
+
+        testbench_generator.setShortcut('Ctrl+T')
+        calculator.setShortcut('Ctrl+C')
+        editor.setShortcut('Ctrl+E')
+        ascii_conversor.setShortcut('Ctrl+A')
+
+        testbench_generator.triggered.connect(self.testbench_generator_fn)
+        calculator.triggered.connect(self.calculator_fn)
+        top_file_generator.triggered.connect(self.top_file_generator_fn)
+        ticks_calculator.triggered.connect(self.ticks_calculator_fn)
+        translator.triggered.connect(self.hdl_translator_fn)
+        hdl_generator.triggered.connect(self.hdl_generator_fn)
+        editor.triggered.connect(self.editor_fn)
+        documentation_generator.triggered.connect(self.documentation_generator_fn)
+        analize_dependencies.triggered.connect(self.analize_dependencies_fn)
+        gen_state_machine.triggered.connect(self.generate_state_machine_fn)
+        ascii_conversor.triggered.connect(self.ascii_conversor_fn)
+        auto_improve.triggered.connect(self.auto_improve_fn)
+
+        executeMenu.addAction(testbench_generator)
+        executeMenu.addAction(calculator)
+        executeMenu.addAction(top_file_generator)
+        executeMenu.addAction(ticks_calculator)
+        executeMenu.addAction(translator)
+        executeMenu.addAction(hdl_generator)
+        executeMenu.addAction(editor)
+        executeMenu.addAction(documentation_generator)
+        executeMenu.addAction(analize_dependencies)
+        executeMenu.addAction(gen_state_machine)
+        executeMenu.addAction(ascii_conversor)
+        executeMenu.addAction(auto_improve)
+
+        # Help
+        helpMenu = menuBar.addMenu("Help")
+
+        about = QAction("About ...", self)
+        version = QAction("Version", self)
+        about.triggered.connect(self.about_fn)
+        version.triggered.connect(self.version_fn)
+        helpMenu.addAction(about)
+        helpMenu.addAction(version)
+
 
     def addStatusBar(self):
         statusbar = self.statusBar()
         statusbar.addPermanentWidget(QLabel("Version 0.0"))
     
-    def actions(self):
+    def connections(self):
         # first row
         self.ui.testbench_generator_button.clicked.connect(self.testbench_generator_fn)
         self.ui.calculator_button.clicked.connect(self.calculator_fn)
@@ -54,8 +113,8 @@ class HDLHelper_gui(QMainWindow):
         self.ui.analize_dependencies_button.clicked.connect(self.analize_dependencies_fn);          self.ui.analize_dependencies_button.hide()
         #fourth row
         self.ui.generate_state_machine_button.clicked.connect(self.generate_state_machine_fn);      self.ui.generate_state_machine_button.hide()
-        self.ui.ascii_conversor_button.clicked.connect(self.generate_state_machine_fn);             self.ui.ascii_conversor_button.hide()
-        self.ui.auto_improve_button.clicked.connect(self.generate_state_machine_fn);                self.ui.auto_improve_button.hide()
+        self.ui.ascii_conversor_button.clicked.connect(self.ascii_conversor_fn);             self.ui.ascii_conversor_button.hide()
+        self.ui.auto_improve_button.clicked.connect(self.auto_improve_fn);                self.ui.auto_improve_button.hide()
 
     #first row
     def testbench_generator_fn(self):
@@ -96,9 +155,18 @@ class HDLHelper_gui(QMainWindow):
     def ascii_conversor_fn(self):
         self.coming_soon()
 
-    def auto_improve_button(self):
+    def auto_improve_fn(self):
         self.coming_soon()
 
+    # MenuBar options
+    def about_fn(self):
+        self.coming_soon()
+
+    def version_fn(self):
+        self.coming_soon()
+    
+    def preferences_fn(self):
+        self.coming_soon()
 
     # Coming soon
     def coming_soon(self):
@@ -106,3 +174,5 @@ class HDLHelper_gui(QMainWindow):
         self.w.setWindowTitle("Coming soon ...")
         self.w.show()
     
+    def cancelOperation(self):
+        quit()

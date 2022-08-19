@@ -1,8 +1,10 @@
 import sys
-from UI.Testbench_generator_UI import *
-from UI.StyleSheet import testbench_generator_gui
 from PyQt5.QtWidgets import QDialog, QMainWindow, QFileDialog, QWidget
 from PyQt5 import QtCore
+
+from UI.Testbench_generator_UI import *
+from UI.StyleSheet.StyleSheet_testbench_generator import testbench_generator_gui
+
 
 class Testbench_generator_gui(QWidget):
     def __init__(self):
