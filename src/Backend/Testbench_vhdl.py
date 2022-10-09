@@ -8,6 +8,6 @@ class Testbench_vhdl():
     
     def init(self):
         self.hdl = HDL(self.file_input)
-        self.vhdl_regen = VHDL_regen()
+        self.vhdl_regen = VHDL_regen(self.hdl, self.file_output)
         
 

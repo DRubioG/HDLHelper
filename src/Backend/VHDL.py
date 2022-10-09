@@ -30,7 +30,7 @@ class VHDL():
         return text
 
 if __name__=="__main__":
-    vhdl = VHDL("test.vhd")
+    vhdl = VHDL("../../../Decoder.vhd")
     vhdl.extract_list()
 
 

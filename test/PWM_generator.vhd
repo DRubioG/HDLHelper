@@ -11,8 +11,8 @@ entity PWM_generator is
         clk: in std_logic;
         hab_pwm: in std_logic;
         periodo: in std_logic_vector(N-1 downto 0);
-        ciclo_trabajo: in std_logic_vector(23 downto 0);
         pwm_sal: out std_logic;
+        ciclo_trabajo: in std_logic_vector(23 downto 0);
         final_pwm: out std_logic);
 end PWM_generator;
 
