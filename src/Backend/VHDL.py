@@ -1,4 +1,3 @@
-from importlib.metadata import entry_points
 import os
 
 class VHDL():
@@ -49,16 +48,24 @@ class VHDL():
         ports_flag = 0
         _generics = []
         _real_generic = []
+        _ports = []
+        _real_ports = []
+        entity = []
         
-        entity = self.extract_entity()
+        entity_comments = self.extract_entity()
 
         # extract comments
-        for comment in entity:
+        for comment in entity_comments:
             if comment[0].find("--") != -1:
-                com = comment[0].split("--")[1]
+                ent, com = comment[0].split("--")
                 line = comment[1]
                 self.comments.append([com, line])
+                ##print(ent)
+                entity.append([ent, line])
+            else:
+                entity.append(comment)
         
+       # print(entity)
         # extract generics
         ## extract generic code from entity
         for generic in entity:
@@ -82,6 +89,7 @@ class VHDL():
             if generic[0] != "generic" and generic[0] != '':
                 _real_generic.append(generic)
 
+        #print(_real_generic)
         ## extract all parts of generics and add to a generics list
         for generic in _real_generic:
             aux1 = generic[0].split(":=")
@@ -106,7 +114,70 @@ class VHDL():
             
 
         # extract ports
-        print(self.generics)
+        ## extract ports code from entity
+        for ports in entity:
+            if ports[0].find("port") != -1:
+                ports_flag = 1
+            
+            if ports_flag == 1:
+                cont_ports += ports[0].count("(")
+                cont_ports -= ports[0].count(")")
+                _ports.append([ports[0], ports[1]])
+               # print(ports) 
+                if cont_ports == 0:
+                    break
+           
+
+        ## extract generics from generic structure
+        for ports in _ports:
+            ports[0] = ports[0].replace("\n", "")
+            ports[0] = ports[0].replace("\t", "")
+            ports[0] = ports[0].replace(" ", "")
+            
+            if ports[0] != "port(" and ports[0] != '':
+                _real_ports.append(ports)
+        
+       # print(_real_ports)
+
+
+
+        ## extract all parts of the ports and add to the port list
+        for ports in _real_ports:
+            fv = ""
+            mv = ""
+            lv = ""
+            aux2 = ports[0].split(":")
+            name = aux2[0].split(",")
+            
+            type_aux = aux2[1]
+            if type_aux[:2] == "in":
+                inout = "in"
+                aux3 = type_aux[2:]
+            elif type_aux[:3] == "out":
+                inout = "out"
+                aux3 = type_aux[3:]
+            elif type_aux[:5] == "inout":
+                inout = "inout"
+                aux3 = type_aux[5:]
+            
+            if aux3.find("(") != -1:
+                aux3 = aux3.replace(")", "")
+                type, value = aux3.split("(")
+                if value.find("downto"):
+                    fv, lv = value.split("downto")
+                    mv = "downto"
+                elif value.find("to"):
+                    fv, lv = value.split("to")
+                    mv = "to"
+                self.ports.append([name, inout, [type, fv, mv, lv], ports[1]])
+            else:
+                type = aux3    
+                self.ports.append([name, inout, type, ports[1]])
+
+            
+
+        print(self.ports)
+       # print(self.generics)
             # print(rest)
 
        # print(_real_generic)
