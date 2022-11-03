@@ -31,7 +31,8 @@ generic (
 	G  : std_logic := N-1
 )
     Port (
-		CLK : in  STD_LOGIC;	--alfa
+		CLK, rst : in  STD_LOGIC;	--alfa
+		--34234523
           Row : in  STD_LOGIC_VECTOR (N-1 downto 0);  --dfhdfg
 			 Col : out  STD_LOGIC_VECTOR (3 downto 0);--dfhdfg1
           DecodeOut : out  STD_LOGIC_VECTOR (3 downto 0));
