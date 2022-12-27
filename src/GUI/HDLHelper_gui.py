@@ -1,4 +1,3 @@
-from itertools import combinations
 import sys
 from PyQt5.QtWidgets import QMainWindow, QWidget, QDialog, QMenu, QLabel, QAction
 from PyQt5 import QtCore

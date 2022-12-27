@@ -176,7 +176,7 @@ class VHDL():
 
             
 
-        print(self.ports)
+        # print(self.ports)
        # print(self.generics)
             # print(rest)
 
@@ -185,7 +185,9 @@ class VHDL():
 
 
 
-    # def extract_list(self):
+    def extract_list(self):
+        self.vhdl_list()
+        return self.ports, self.generics, self.comments
     #     file = open(self.file_input, 'r')
     #     text = file.readlines()
 
