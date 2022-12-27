@@ -5,6 +5,7 @@ from VHDL_regen import *
 class Testbench_vhdl():
     def __init__(self, file_input, file_output):
         self.file_input = file_input
+        self.name = self.file_input[:-4]
         self.file_output = file_output
         self.regen = VHDL_regen()
         self.init()
@@ -20,9 +21,12 @@ class Testbench_vhdl():
         libraries = []
         for type in self.ports:
             if type == "unsigned":
-                libraries.append("numeric_std")
-        self.regen(self.file, libraries)
+                libraries.append("std_logic_unsigned")
+        self.regen.libraries(self.file, libraries)
         
+    def write_component(self):
+        components = [self.ports, self.generics, self.comments]
+        self.regen.component(self.file, components, self.name)
         
 
 if __name__ == "__main__":
