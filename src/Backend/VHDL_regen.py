@@ -39,14 +39,45 @@ class VHDL_regen():
                     output += "\t" + generic[0]
                 output += " : " + generic[1] + " " + generic[2] + ";"
                 for comment in comments:
-                    if comment[1] == generic[4]:
+                    if comment[1] == generic[3]:
                         output += "\t--" + comment[0]
                 output += "\n"
+            output += "\t)"
 
 
         ## ports
         if ports is not None:
             output += "\tport ("
+            cont2 = 0
+            for port in ports:
+                if len(port[0]) != 1:
+                    cont = 0
+                    for j in port[0]:
+                        output += "\t"
+                        if cont == len(port[0]):
+                            output += j
+                        else:
+                            output += i + ", "
+                        cont += 1
+                else:
+                    output += "\t" + port[0]
+
+                output += " : \t" + port[1] + " " 
+                if len(port[2]) != 1:
+                    output += port[2][0] + " (" + port[2][1] + " " + port[2][2] + " " + port[2][3] + ")"
+                else:
+                    output += port[2]
+                
+                if cont2 != len(ports):
+                    output += ";"
+                else:
+                    output += ");"
+                
+                for comment in comments:
+                    if comment[1] == port[3]:
+                        output += "\t--" + comment[0]
+                output += "\n"
+            
 
         output += "end component;\n"
         return output
