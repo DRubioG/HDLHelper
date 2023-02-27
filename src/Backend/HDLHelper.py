@@ -1,4 +1,5 @@
-import Testbench_vhdl, Testbench_verilog
+from Backend.Testbench_vhdl import *
+from Backend.Testbench_verilog  import *
 
 class HDLHelper():
     def __init__(self, file_input, file_output, operation="testbench"):
@@ -9,9 +10,9 @@ class HDLHelper():
     
     def init(self):
         if self.operation == "testbench":
-            if self.file_output[:-4] == ".vhd":
+            if self.file_input[-4:] == ".vhd":
                 Testbench_vhdl(self.file_input, self.file_output)
-            elif self.file_output[:-2]==".v":
+            elif self.file_input[-2:]==".v":
                 Testbench_verilog(self.file_input, self.file_output)
             else:
                 print("Error, file not recognized")

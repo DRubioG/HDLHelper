@@ -5,7 +5,7 @@ class VHDL_regen():
         output += "library IEEE;\n \
             use IEEE.std_logic_1164.all;\n"
         for lib in libraries:
-            output = "use." + lib + ".all;\n"
+            output = "use IEEE." + lib + ".all;\n"
             
         return output
         

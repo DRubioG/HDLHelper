@@ -1,5 +1,5 @@
-from HDL import *
-from VHDL_regen import *
+from Backend.HDL import *
+from Backend.VHDL_regen import *
 
 
 class Testbench_vhdl():
@@ -9,10 +9,12 @@ class Testbench_vhdl():
         self.file_output = file_output
         self.regen = VHDL_regen()
         self.init()
+        self.exec()
     
     def init(self):
         self.hdl = HDL(self.file_input)
         self.ports, self.generics, self.comments = self.hdl.init()
+        
 
     def generate_file(self, output_file):
         self.file = open(output_file, 'w')
@@ -21,14 +23,15 @@ class Testbench_vhdl():
         libraries = []
         for type in self.ports:
             if type == "unsigned":
-                libraries.append("std_logic_unsigned")
+                libraries.append("numeric_std")
         self.regen.libraries(self.file, libraries)
         
     def write_component(self):
         components = [self.ports, self.generics, self.comments]
         self.regen.component(self.file, components, self.name)
         
+    def exec(self):
+        self.generate_file(self.file_output)
+        self.write_libraries()
 
-if __name__ == "__main__":
-    testbench_vhdl = Testbench_vhdl("Decoder.vhd", "Decoder_tb")
 
