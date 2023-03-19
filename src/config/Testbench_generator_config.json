@@ -5,7 +5,9 @@
             "tab_spaces": "tab",
             "spaces": "4",
             "ftext": "",
-            "etext": "_i"
+            "etext": "_i",
+            "uppercase_generics": "True",
+            "uppercase_ports": "False"
         }
     ]
 }

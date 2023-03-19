@@ -21,7 +21,9 @@ class Testbench_vhdl():
         self.spaces = data["Testbench_generator"][0]["spaces"]
         self.ftext = data["Testbench_generator"][0]["ftext"]
         self.etext = data["Testbench_generator"][0]["etext"]
-        
+        self.uppercase_generics = data["Testbench_generator"][0]["uppercase_generics"]
+        self.uppercase_ports = data["Testbench_generator"][0]["uppercase_ports"]
+
         
     def load_ports (self):
         self.hdl = HDL(self.file_input)
@@ -34,8 +36,10 @@ class Testbench_vhdl():
         output += self.write_component()
         self.close_file(output)
 
+
     def generate_file(self, output_file):
         self.file = open(output_file, 'w')
+
 
     def write_libraries(self):
         libraries = []
@@ -45,10 +49,12 @@ class Testbench_vhdl():
         output = self.regen.libraries(self.file, libraries)
         return output
         
+
     def write_component(self):
         components = [self.ports, self.generics, self.comments]
         output = self.regen.component(self.file, components, self.name)
         return output
+        
         
     def close_file(self, output):
         self.file.write(output)

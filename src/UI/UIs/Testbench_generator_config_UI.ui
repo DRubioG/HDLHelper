@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>476</width>
-    <height>367</height>
+    <height>402</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -169,9 +169,9 @@
    <property name="geometry">
     <rect>
      <x>370</x>
-     <y>320</y>
-     <width>95</width>
-     <height>36</height>
+     <y>360</y>
+     <width>91</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
@@ -182,13 +182,39 @@
    <property name="geometry">
     <rect>
      <x>260</x>
-     <y>320</y>
-     <width>95</width>
-     <height>36</height>
+     <y>360</y>
+     <width>91</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="text">
     <string>Cancel</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_uppercase_generics">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>310</y>
+     <width>181</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Uppercase for generics</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_uppercase_ports">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>340</y>
+     <width>161</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Uppercase for ports</string>
    </property>
   </widget>
  </widget>

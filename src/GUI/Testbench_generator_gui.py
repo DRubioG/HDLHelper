@@ -50,16 +50,11 @@ class Testbench_generator_gui(QWidget):
         
     def configFile(self):
         self.testbench_generator_config = Testbench_generator_config_gui()
-        # self.ui_config = Ui_testbench_generator_config()
-        # self.ui_config.setupUi(self)
-        # self.ui_config.show()
+
 
     def createFile(self):
         self.hdlhelper = HDLHelper(self.file_input, self.file_output, "testbench")
-        #self.file.write("hole")
-            #self.file.append(open(test_bench[-1], 'w'))
         self.close()
         
     def cancelOperation(self):
         self.close()
-        #quit()
