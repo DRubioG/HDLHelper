@@ -44,7 +44,9 @@ class Testbench_generator_gui(QWidget):
         
 
     def seachOutputFile(self):
-        self.ui.lineEdit_output.setText("prueba")
+        outputfileDialog = QFileDialog()
+        outputfile = outputfileDialog.getExistingDirectory(self)
+        self.ui.lineEdit_output.setText(outputfile+self.file_output)
         
     def configFile(self):
         self.testbench_generator_config = Testbench_generator_config_gui()

@@ -30,8 +30,12 @@ class Testbench_vhdl():
         components = [self.ports, self.generics, self.comments]
         self.regen.component(self.file, components, self.name)
         
+    def close_file(self):
+        self.file.close()
+
     def exec(self):
         self.generate_file(self.file_output)
         self.write_libraries()
+        self.close_file()
 
 

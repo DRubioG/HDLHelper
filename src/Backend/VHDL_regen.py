@@ -1,12 +1,11 @@
 
 class VHDL_regen():
    # def __init__(self):
-    def libraries(self, output, libraries):
-        output += "library IEEE;\n \
-            use IEEE.std_logic_1164.all;\n"
+    def libraries(self, file, libraries):
+        output = "library IEEE;\nuse IEEE.std_logic_1164.all;\n"
         for lib in libraries:
             output = "use IEEE." + lib + ".all;\n"
-            
+        file.write(output)
         return output
         
     def architecture(self):
