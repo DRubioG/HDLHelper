@@ -4,3 +4,5 @@ do
     echo ${FILENAME};
     pyuic5 ${FILENAME}.ui -o ../${FILENAME%%.*}.py;
 done;
+
+exit

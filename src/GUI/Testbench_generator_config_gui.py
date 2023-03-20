@@ -23,7 +23,7 @@ class Testbench_generator_config_gui(QDialog):
         self.etext = self.data["Testbench_generator"][0]["etext"]
         self.uppercase_generics = self.data["Testbench_generator"][0]["uppercase_generics"]
         self.uppercase_ports = self.data["Testbench_generator"][0]["uppercase_ports"]
-
+        self.default_config = self.data["Testbench_generator"][0]["default_config"]
 
     def load_config(self):
         if self.version == 87:
@@ -54,6 +54,7 @@ class Testbench_generator_config_gui(QDialog):
         else:
             self.ui.checkBox_uppercase_ports.setChecked(False)    
 
+        self.ui.textEdit_default_config.setText(self.default_config)
 
     def tab_space(self):
         if self.ui.radioButton_spaces.isChecked():
@@ -100,6 +101,8 @@ class Testbench_generator_config_gui(QDialog):
             self.data["Testbench_generator"][0]["uppercase_ports"] = "True"
         else:
             self.data["Testbench_generator"][0]["uppercase_ports"] = "False"
+
+        self.data["Testbench_generator"][0]["default_config"] = self.ui.textEdit_default_config.toPlainText()
 
         json.dump(self.data, file, indent=4)
         file.close()

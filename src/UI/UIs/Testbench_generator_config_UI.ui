@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>476</width>
-    <height>402</height>
+    <height>591</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -169,7 +169,7 @@
    <property name="geometry">
     <rect>
      <x>370</x>
-     <y>360</y>
+     <y>530</y>
      <width>91</width>
      <height>31</height>
     </rect>
@@ -181,8 +181,8 @@
   <widget class="QPushButton" name="pushButton_cancel">
    <property name="geometry">
     <rect>
-     <x>260</x>
-     <y>360</y>
+     <x>250</x>
+     <y>530</y>
      <width>91</width>
      <height>31</height>
     </rect>
@@ -215,6 +215,29 @@
    </property>
    <property name="text">
     <string>Uppercase for ports</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit_default_config">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>400</y>
+     <width>411</width>
+     <height>91</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>380</y>
+     <width>211</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Default configuration </string>
    </property>
   </widget>
  </widget>
