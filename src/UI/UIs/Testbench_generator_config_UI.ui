@@ -56,7 +56,7 @@
       </widget>
      </item>
      <item>
-      <widget class="QRadioButton" name="radioButton_94">
+      <widget class="QRadioButton" name="radioButton_08">
        <property name="text">
         <string>'08</string>
        </property>
@@ -247,7 +247,7 @@
     <string>Default configuration </string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox_uppercase_ports_2">
+  <widget class="QCheckBox" name="checkBox_comments">
    <property name="geometry">
     <rect>
      <x>30</x>

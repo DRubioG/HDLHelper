@@ -36,6 +36,9 @@ class Ui_Dialog(object):
         self.pushButton_create = QtWidgets.QPushButton(Dialog)
         self.pushButton_create.setGeometry(QtCore.QRect(350, 240, 95, 36))
         self.pushButton_create.setObjectName("pushButton_create")
+        self.pushButton_config = QtWidgets.QPushButton(Dialog)
+        self.pushButton_config.setGeometry(QtCore.QRect(240, 240, 95, 36))
+        self.pushButton_config.setObjectName("pushButton_config")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
@@ -48,3 +51,4 @@ class Ui_Dialog(object):
         self.pushButton_search.setText(_translate("Dialog", "search"))
         self.pushButton_cancel.setText(_translate("Dialog", "Cancel"))
         self.pushButton_create.setText(_translate("Dialog", "Create"))
+        self.pushButton_config.setText(_translate("Dialog", "Config"))

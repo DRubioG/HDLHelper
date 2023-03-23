@@ -14,7 +14,7 @@ class Testbench_generator_config_gui(QDialog):
 
 
     def open_config(self):
-        file = open("./config/Testbench_generator_config.json", "r")
+        file = open("./config/configuration.json", "r")
         self.data = json.load(file)
         self.version = self.data["Testbench_generator"][0]["version"]
         self.tab_spaces = self.data["Testbench_generator"][0]["tab_spaces"]

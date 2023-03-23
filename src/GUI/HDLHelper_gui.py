@@ -1,6 +1,7 @@
-import sys
+import sys, json
 from PyQt5.QtWidgets import QMainWindow, QWidget, QDialog, QMenu, QLabel, QAction
 from PyQt5 import QtCore
+from PyQt5.QtCore import QUrl
 
 from UI.HDLHelper_UI import *
 from GUI.Testbench_generator_gui import *
@@ -95,13 +96,27 @@ class HDLHelper_gui(QMainWindow):
 
     def addStatusBar(self):
         statusbar = self.statusBar()
-        statusbar.addPermanentWidget(QLabel("Version 0.0"))
+        try:
+            import requests
+            reponse = requests.get("https://api.github.com/repos/DRubioG/HDLHelper/releases/latest")#https://github.com/DRubioG/HDLHelper/releases/latest")
+            new_version = reponse.json()["name"][1:]
+        except:
+            new_version = None
+        file = open("./config/configuration.json", "r")
+        version_act = json.load(file)["version"]
+        if  new_version == None:
+            version_tag = "Version {}".format(version_act)
+        elif version_act == new_version:
+            version_tag = "Version {}".format(version_act)
+        else:
+            version_tag = "<a href ='https://github.com/DRubioG/HDLHelper'>New version available(" + version_act + " -> "+ new_version + ")[copy link]</a>"
+        statusbar.addPermanentWidget(QLabel(version_tag))
     
     def connections(self):
         # first row
         self.ui.testbench_generator_button.clicked.connect(self.testbench_generator_fn)
-        self.ui.calculator_button.clicked.connect(self.calculator_fn)
-        self.ui.top_file_generator_button.clicked.connect(self.top_file_generator_fn)
+        self.ui.calculator_button.clicked.connect(self.calculator_fn);                              self.ui.calculator_button.hide()
+        self.ui.top_file_generator_button.clicked.connect(self.top_file_generator_fn);              self.ui.top_file_generator_button.hide()
         # second row
         self.ui.ticks_calculator_button.clicked.connect(self.ticks_calculator_fn);                  self.ui.ticks_calculator_button.hide()
         self.ui.hdl_translator_button.clicked.connect(self.hdl_translator_fn);                      self.ui.hdl_translator_button.hide()
