@@ -36,8 +36,6 @@ class Testbench_generator_gui(QWidget):
 
         self.file_input = files[0][0]
         self.file_output = test_bench
-        print(self.file_output)
-        print(self.file_input)
         self.ui.lineEdit_output.setText(self.file_output)
         self.ui.lineEdit_input.setText(self.file_input)
         

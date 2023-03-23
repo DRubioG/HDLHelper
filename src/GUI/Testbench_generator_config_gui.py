@@ -24,12 +24,15 @@ class Testbench_generator_config_gui(QDialog):
         self.uppercase_generics = self.data["Testbench_generator"][0]["uppercase_generics"]
         self.uppercase_ports = self.data["Testbench_generator"][0]["uppercase_ports"]
         self.default_config = self.data["Testbench_generator"][0]["default_config"]
+        self.comments = self.data["Testbench_generator"][0]["comments"]
 
     def load_config(self):
-        if self.version == 87:
+        if self.version == "87":
             self.ui.radioButton_87.setChecked(True)
-        elif self.version == 93:
+        elif self.version == "93":
             self.ui.radioButton_93.setChecked(True)
+        elif self.version == "08":
+            self.ui.radioButton_08.setChecked(True)
         else:
             self.ui.radioButton_mixed.setChecked(True)
         
@@ -54,7 +57,13 @@ class Testbench_generator_config_gui(QDialog):
         else:
             self.ui.checkBox_uppercase_ports.setChecked(False)    
 
+        if self.comments == "True":
+            self.ui.checkBox_comments.setChecked(True)
+        else:
+            self.ui.checkBox_comments.setChecked(False) 
+
         self.ui.textEdit_default_config.setText(self.default_config)
+
 
     def tab_space(self):
         if self.ui.radioButton_spaces.isChecked():
@@ -75,11 +84,14 @@ class Testbench_generator_config_gui(QDialog):
     
 
     def save_file(self):
-        file = open("./config/Testbench_generator_config.json", "w")
+        file = open("./config/configuration.json", "w")
+
         if self.ui.radioButton_87.isChecked():
-            self.data["Testbench_generator"][0]["version"] = 87
+            self.data["Testbench_generator"][0]["version"] = "87"
         elif self.ui.radioButton_93.isChecked():
-            self.data["Testbench_generator"][0]["version"] = 93
+            self.data["Testbench_generator"][0]["version"] = "93"
+        elif self.ui.radioButton_08.isChecked():
+            self.data["Testbench_generator"][0]["version"] = "08"
         else:
             self.data["Testbench_generator"][0]["version"] = "Mixed"
 
@@ -101,6 +113,11 @@ class Testbench_generator_config_gui(QDialog):
             self.data["Testbench_generator"][0]["uppercase_ports"] = "True"
         else:
             self.data["Testbench_generator"][0]["uppercase_ports"] = "False"
+
+        if self.ui.checkBox_comments.isChecked() == True:
+            self.data["Testbench_generator"][0]["comments"] = "True"
+        else:
+            self.data["Testbench_generator"][0]["comments"] = "False"
 
         self.data["Testbench_generator"][0]["default_config"] = self.ui.textEdit_default_config.toPlainText()
 

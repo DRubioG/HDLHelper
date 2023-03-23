@@ -14,7 +14,7 @@ class Testbench_vhdl():
     
 
     def load_config(self):
-        file = open("./config/Testbench_generator_config.json", 'r')
+        file = open("./config/configuration.json", 'r')
         data = json.load(file)
         self.version = data["Testbench_generator"][0]["version"]
         self.tab_spaces = data["Testbench_generator"][0]["tab_spaces"]
@@ -23,6 +23,7 @@ class Testbench_vhdl():
         self.etext = data["Testbench_generator"][0]["etext"]
         self.uppercase_generics = data["Testbench_generator"][0]["uppercase_generics"]
         self.uppercase_ports = data["Testbench_generator"][0]["uppercase_ports"]
+        self.comments_load = data["Testbench_generator"][0]["comments"]
 
         
     def load_ports (self):
