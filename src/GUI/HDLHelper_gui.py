@@ -98,7 +98,7 @@ class HDLHelper_gui(QMainWindow):
         statusbar = self.statusBar()
         try:
             import requests
-            reponse = requests.get("https://api.github.com/repos/DRubioG/HDLHelper/releases/latest")#https://github.com/DRubioG/HDLHelper/releases/latest")
+            reponse = requests.get("https://api.github.com/repos/DRubioG/HDLHelper/releases/latest")
             new_version = reponse.json()["name"][1:]
         except:
             new_version = None
