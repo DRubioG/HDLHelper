@@ -26,10 +26,10 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 entity Decoder is --dfhdfg
 
-generic (
-	N, T : integer := 32;
-	G  : std_logic := N-1
-)
+	generic (
+		N, T : integer;	-- prueba
+		Gadgvsed  : std_logic := N-1	-- preuba3
+	)
     Port (
 		CLK, rst : in  STD_LOGIC;	--alfa
 		--34234523
