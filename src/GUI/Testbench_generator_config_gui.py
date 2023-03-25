@@ -14,17 +14,33 @@ class Testbench_generator_config_gui(QDialog):
 
 
     def open_config(self):
-        file = open("./config/configuration.json", "r")
-        self.data = json.load(file)
-        self.version = self.data["Testbench_generator"][0]["version"]
-        self.tab_spaces = self.data["Testbench_generator"][0]["tab_spaces"]
-        self.spaces = self.data["Testbench_generator"][0]["spaces"]
-        self.ftext = self.data["Testbench_generator"][0]["ftext"]
-        self.etext = self.data["Testbench_generator"][0]["etext"]
-        self.uppercase_generics = self.data["Testbench_generator"][0]["uppercase_generics"]
-        self.uppercase_ports = self.data["Testbench_generator"][0]["uppercase_ports"]
-        self.default_config = self.data["Testbench_generator"][0]["default_config"]
-        self.comments = self.data["Testbench_generator"][0]["comments"]
+        try:
+            file = open("./config/configuration.json", "r")
+            self.data = json.load(file)
+            self.ui.pushButton_save.setEnabled(True)
+            self.ui.label_config_file.setText("")
+            self.version = self.data["Testbench_generator"][0]["version"]
+            self.tab_spaces = self.data["Testbench_generator"][0]["tab_spaces"]
+            self.spaces = self.data["Testbench_generator"][0]["spaces"]
+            self.ftext = self.data["Testbench_generator"][0]["ftext"]
+            self.etext = self.data["Testbench_generator"][0]["etext"]
+            self.uppercase_generics = self.data["Testbench_generator"][0]["uppercase_generics"]
+            self.uppercase_ports = self.data["Testbench_generator"][0]["uppercase_ports"]
+            self.default_config = self.data["Testbench_generator"][0]["default_config"]
+            self.comments = self.data["Testbench_generator"][0]["comments"]
+        except:
+            self.ui.pushButton_save.setEnabled(False)
+            self.ui.label_config_file.setText("configuration.json doesn't exist")
+            self.version = "87"
+            self.tab_spaces = "tab"
+            self.spaces = "4"
+            self.ftext = ""
+            self.etext = ""
+            self.uppercase_generics = "True"
+            self.uppercase_ports = "False"
+            self.default_config = ""
+            self.comments = "False"
+            
 
     def load_config(self):
         if self.version == "87":
@@ -84,7 +100,7 @@ class Testbench_generator_config_gui(QDialog):
     
 
     def save_file(self):
-        file = open("./config/configuration.json", "w")
+        file = open("./config/configuration.json", 'r')
 
         if self.ui.radioButton_87.isChecked():
             self.data["Testbench_generator"][0]["version"] = "87"

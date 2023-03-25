@@ -14,16 +14,26 @@ class Testbench_vhdl():
     
 
     def load_config(self):
-        file = open("./config/configuration.json", 'r')
-        data = json.load(file)
-        self.version = data["Testbench_generator"][0]["version"]
-        self.tab_spaces = data["Testbench_generator"][0]["tab_spaces"]
-        self.spaces = data["Testbench_generator"][0]["spaces"]
-        self.ftext = data["Testbench_generator"][0]["ftext"]
-        self.etext = data["Testbench_generator"][0]["etext"]
-        self.uppercase_generics = data["Testbench_generator"][0]["uppercase_generics"]
-        self.uppercase_ports = data["Testbench_generator"][0]["uppercase_ports"]
-        self.comments_load = data["Testbench_generator"][0]["comments"]
+        try:
+            file = open("./config/configuration.json", 'r')
+            data = json.load(file)
+            self.version = data["Testbench_generator"][0]["version"]
+            self.tab_spaces = data["Testbench_generator"][0]["tab_spaces"]
+            self.spaces = data["Testbench_generator"][0]["spaces"]
+            self.ftext = data["Testbench_generator"][0]["ftext"]
+            self.etext = data["Testbench_generator"][0]["etext"]
+            self.uppercase_generics = data["Testbench_generator"][0]["uppercase_generics"]
+            self.uppercase_ports = data["Testbench_generator"][0]["uppercase_ports"]
+            self.comments_load = data["Testbench_generator"][0]["comments"]
+        except:
+            self.version = "87"
+            self.tab_spaces = "tab"
+            self.spaces = "4"
+            self.ftext = ""
+            self.etext = ""
+            self.uppercase_generics = "True"
+            self.uppercase_ports = "False"
+            self.comments_load = "False"
 
         
     def load_ports (self):

@@ -27,15 +27,18 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity Decoder is --dfhdfg
 
 	generic (
+		y : integer;	-- hola 2
+		U : integer := 32 --hola
+		-- comentario
 		N, T : integer;	-- prueba
-		Gadgvsed  : std_logic := N-1	-- preuba3
+		Gadgvsed  : std_logic_vector := N-1	-- preuba3
 	)
     Port (
 		CLK, rst : in  STD_LOGIC;	--alfa
 		--34234523
-          Row : in  STD_LOGIC_VECTOR (N-1 downto 0);  --dfhdfg
-			 Col : out  STD_LOGIC_VECTOR (3 downto 0);--dfhdfg1
-          DecodeOut : out  STD_LOGIC_VECTOR (3 downto 0));
+        Row : in  STD_LOGIC_VECTOR (N-1 downto 0);  --dfhdfg
+		Col : out  STD_LOGIC_VECTOR (3 downto 0);--dfhdfg1
+        DecodeOut : out  STD_LOGIC_VECTOR (3 downto 0));--marcafa
 end Decoder;
 
 architecture Behavioral of Decoder is

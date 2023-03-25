@@ -102,9 +102,12 @@ class HDLHelper_gui(QMainWindow):
             new_version = reponse.json()["name"][1:]
         except:
             new_version = None
-        file = open("./config/configuration.json", "r")
-        version_act = json.load(file)["version"]
-        if  new_version == None:
+        try:
+            file = open("./config/configuration.json", "r")
+            version_act = json.load(file)["version"]
+        except:
+            version_act = "Unknown"
+        if  new_version == None or version_act == "Unknown":
             version_tag = "Version {}".format(version_act)
         elif version_act == new_version:
             version_tag = "Version {}".format(version_act)

@@ -57,9 +57,9 @@ class VHDL():
         # extract comments
         for comment in entity_comments:
             if comment[0].find("--") != -1:
-                ent, com = comment[0].split("--")
+                ent, com = comment[0].split("--")   
                 line = comment[1]
-                self.comments.append([com, line])
+                self.comments.append([com.strip(), line])
                 ##print(ent)
                 entity.append([ent, line])
             else:
