@@ -30,7 +30,7 @@ entity miIP is
 		ss00_axi_awvalid	: in std_logic;
 		ss00_axi_awready	: out std_logic;
 		s00_axi_wdata	: in std_logic_vector(C_S00_AXI_DATA_WIDTH-1 downto 0);
-		s00_axi_wstrb	: in std_logic_vector((C_S00_AXI_DATA_WIDTH/8)-1 downto 0);
+		s00_axi_wstrb	: in std_logic_vector(C_S00_AXI_DATA_WIDTH/8-1 downto 0);
 		s00_axi_wvalid	: in std_logic;
 		s00_axi_wready	: out std_logic;
 		s00_axi_bresp	: out std_logic_vector(1 downto 0);

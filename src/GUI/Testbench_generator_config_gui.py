@@ -100,7 +100,7 @@ class Testbench_generator_config_gui(QDialog):
     
 
     def save_file(self):
-        file = open("./config/configuration.json", 'r')
+        file = open("./config/configuration.json", 'w')
 
         if self.ui.radioButton_87.isChecked():
             self.data["Testbench_generator"][0]["version"] = "87"

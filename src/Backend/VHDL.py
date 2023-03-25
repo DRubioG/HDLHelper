@@ -134,7 +134,7 @@ class VHDL():
             ports[0] = ports[0].replace("\t", "")
             ports[0] = ports[0].replace(" ", "")
             
-            if ports[0] != "port(" and ports[0] != '':
+            if ports[0] != "port(" and ports[0] != '' and ports[0] != ")":
                 _real_ports.append(ports)
         
        # print(_real_ports)
