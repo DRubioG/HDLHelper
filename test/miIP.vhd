@@ -9,7 +9,7 @@ entity miIP is
 		-- User parameters ends
 
 		-- Do not modify the parameters beyond this line
-
+		hola : integer; -- comentario
 
 		-- Parameters of Axi Slave Bus Interface S00_AXI
 		C_S00_AXI_DATA_WIDTH	: integer	:= 32;
@@ -25,7 +25,7 @@ entity miIP is
 		-- Ports of Axi Slave Bus Interface S00_AXI
 		s00_axi_aclk	: in std_logic;
 		s00_axi_aresetn	: in std_logic;
-		ss00_axi_awaddr	: in std_logic_vector(C_S00_AXI_ADDR_WIDTH-1 downto 0);
+		ss00_axi_awaddr	: in std_logic_vector(C_S00_AXI_ADDR_WIDTH-1 downto 0); --- erefefe
 		s00_axi_awprot	: in std_logic_vector(2 downto 0);
 		ss00_axi_awvalid	: in std_logic;
 		ss00_axi_awready	: out std_logic;

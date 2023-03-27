@@ -2,13 +2,14 @@ library IEEE;
 use IEEE.std_logic_1164.all;
 component miIP is
 	generic (
+		HOLA                	 : integer;    	  		-- comentario
 		C_S00_AXI_DATA_WIDTH	 : integer := 	32;
 		C_S00_AXI_ADDR_WIDTH	 : integer := 	4
 	)
 	port (
 		s00_axi_aclk    	 : in 	std_logic;                                                            
 		s00_axi_aresetn 	 : in 	std_logic;                                                            
-		ss00_axi_awaddr 	 : in 	std_logic_vector(C_S00_AXI_ADDR_WIDTH-1 downto 0);                    
+		ss00_axi_awaddr 	 : in 	std_logic_vector(C_S00_AXI_ADDR_WIDTH-1 downto 0);                    		-- erefefe
 		s00_axi_awprot  	 : in 	std_logic_vector(2 downto 0);                                         
 		ss00_axi_awvalid	 : in 	std_logic;                                                            
 		ss00_axi_awready	 : out	std_logic;                                                            

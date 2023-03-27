@@ -30,6 +30,13 @@ class Testbench_generator_config_gui(QDialog):
             self.comments = self.data["Testbench_generator"][0]["comments"]
         except:
             self.ui.pushButton_save.setEnabled(False)
+            self.ui.groupBox_tab_space.setEnabled(False)
+            self.ui.groupBox_version.setEnabled(False)
+            self.ui.groupBox_3.setEnabled(False)
+            self.ui.checkBox_comments.setEnabled(False)
+            self.ui.checkBox_uppercase_generics.setEnabled(False)
+            self.ui.checkBox_uppercase_ports.setEnabled(False)
+            self.ui.textEdit_default_config.setEnabled(False )
             self.ui.label_config_file.setText("configuration.json doesn't exist")
             self.version = "87"
             self.tab_spaces = "tab"

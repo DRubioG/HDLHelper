@@ -7,13 +7,28 @@ class VHDL_regen():
             output = "use IEEE." + lib + ".all;\n"
         return output
         
-    def architecture(self):
-        pass
-    def entity(self):
-        pass
+    def architecture(self, name_ent, generics=[], ports=[], comments=[], component=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext=""):
+        output = "architecture arch_" + name_ent + " of " + name_ent + " is\n"
+        if component is True:
+            output += self.constants()
+            output += self.signals(ports, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, ftext, etext)
+            output += self.component(ports, generics, comments, name_ent, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, comments)
+            output += "\nbegin"
+            output += self.implementation(name_ent, generics, ports, ftext, etext, tab_space_cfg, uppercase_port_cfg, uppercase_gen_cfg)
+        output += "end architecture arch_" + name_ent + ";"
+        return output
+
+    def entity(self, name, generics=[], ports=[], comments=[], uppercase_gen_cfg="", uppercase_port_cfg="", tab_spaces_cfg="", comments_cfg=""):
+        output = "\nentity " + name + " is\n"
+        output += self.generics(generics, comments, uppercase_gen_cfg, tab_spaces_cfg, comments_cfg)
+        output += self.ports(ports, comments, uppercase_port_cfg, uppercase_gen_cfg, tab_spaces_cfg, comments)
+        output += "end entity " + name + ";\n"
+        return output
 
     def tab_spaces(self, type,  num):
         output = ""
+        if type == "tab":
+            type = "\t"
         for i in range(num):
             output += type
         return output
@@ -25,7 +40,8 @@ class VHDL_regen():
 
     def generics(self, generics, comments, uppercase_cfg, tab_spaces_cfg, comment_cfg):
         N = 1
-        if generics is not None:
+        output = ""
+        if generics != []:
 
             lon_max = 0
             lon_max_type = 0
@@ -55,7 +71,7 @@ class VHDL_regen():
                     existence_equal = 1
                 
 
-            output = self.tab_spaces(tab_spaces_cfg, N) + "generic (\n"
+            output += self.tab_spaces(tab_spaces_cfg, N) + "generic (\n"
 
             cont_gen = 1
             for generic in generics:
@@ -115,13 +131,14 @@ class VHDL_regen():
                             break
                 cont_gen += 1
                 output += "\n"
-            output += self.tab_spaces(tab_spaces_cfg, N) + ")" + "\n"
+            output += self.tab_spaces(tab_spaces_cfg, N) + ");" + "\n"
         return output
     
 
     def ports(self, ports, comments, uppercase_port_cfg, uppercase_gen_cfg, tab_spaces_cfg, comment_cfg):
         N = 1
-        if ports is not None:
+        output = ""
+        if ports != []:
             
             lon_val = 0
             lon_max = 0
@@ -142,8 +159,8 @@ class VHDL_regen():
                 if lon >= lon_max:
                     lon_max = lon
 
-                if lon_max_inout <= len(port_len[1]):
-                    lon_max_inout = len(port_len[1])
+                if lon_max_inout <= len(port_len[1])+1:
+                    lon_max_inout = len(port_len[1])+1
                 
                 if type(port_len[2]) is list:
                     lon_val = 5
@@ -228,61 +245,152 @@ class VHDL_regen():
         return output
 
     
-    def component(self, output, components, name):
-        ports = components[0]
-        generics = components[1]
-        comments = components[2]
+    def component(self, ports, generics, comments, name, uppercase_port_cfg, uppercase_gen_cfg, tab_spaces_cfg, comment_cfg):
         name = name.split("/")[-1]
         output = "component " + name + " is\n"
 
         ## generics
-        tab_spaces_cfg = "\t"
-        uppercase_gen_cfg = "True"
-        comment_cfg = "True"
-        
         output += self.generics(generics, comments, uppercase_gen_cfg, tab_spaces_cfg, comment_cfg)
-        
-
 
         ## ports
-        output += self.ports(ports, comments, "False", uppercase_gen_cfg, tab_spaces_cfg, comment_cfg)
-        # if ports is not None:
-        #     output += "\tport ("
-        #     cont2 = 0
-        #     for port in ports:
-        #         if len(port[0]) != 1:
-        #             cont = 1
-        #             for j in port[0]:
-        #                 output += "\t"
-        #                 if cont == len(port[0]):
-        #                     output += j
-        #                 else:
-        #                     output += j + ", "
-        #                 cont += 1
-        #         else:
-        #             output += "\t" + port[0][0]
-
-        #         output += " : \t" + port[1] + " " 
-        #         if len(port[2]) != 1:
-        #             output += port[2][0] + " (" + port[2][1] + " " + port[2][2] + " " + port[2][3] + ")"
-        #         else:
-        #             output += port[2]
-                
-        #         if cont2 != len(ports):
-        #             output += ";"
-        #         else:
-        #             output += ");"
-                
-        #         for comment in comments:
-        #             if comment[1] == port[3]:
-        #                 output += "--" + comment[0]
-        #         output += "\n"
-            
+        output += self.ports(ports, comments, uppercase_port_cfg, uppercase_gen_cfg, tab_spaces_cfg, comment_cfg)  
 
         output += "end component;\n"
         return output
 
 
-    def implementation(self):
-        pass
+    def implementation(self, name,  generics, ports, ftext, etext, tab_spaces_cfg, uppercase_port_cfg, uppercase_gen_cfg):
+        N = 1
+        output = "\n" + name + "_inst : " + name + "\n"
+        if generics != []:
+            lon_max = 0
+            for generic_len in generics:
+                if type(generic_len[0]) is list:
+                    for i in generic_len[0]:
+                        lon = len(i)
+                        if lon_max <= lon:
+                            lon_max = lon
+                else:
+                    lon = len(generic_len[0])
+                if lon_max <= lon:
+                    lon_max = lon
 
+
+            cont_gen = 1
+            output += self.tab_spaces(tab_spaces_cfg, N) + "generic map (\n"
+            for generic in generics:
+                if type(generic[0]) is list:
+                    for i in generic[0]:
+                        output += self.tab_spaces(tab_spaces_cfg, N+1) + self.uppercase(uppercase_gen_cfg, i)
+                        for j in range(lon_max - len(i)):
+                            output += " "
+                        output += " => " + ftext + self.uppercase(uppercase_gen_cfg, i) + etext
+                        if cont_gen != len(generics):
+                            output += ","
+                        cont_gen += 1
+                else:
+                    output += self.tab_spaces(tab_spaces_cfg, N+1) + self.uppercase(uppercase_gen_cfg, generic[0]) + " => " + generic[0]
+
+                if cont_gen != len(generics):
+                    output += ","
+
+                output += "\n"
+                cont_gen += 1
+            output += self.tab_spaces(tab_spaces_cfg, N) + ")\n"
+
+
+        if ports != []:
+            lon_max = 0
+            for port_len in ports:
+                if len(port_len[0]) != 1:
+                    for i in port_len[0]:
+                        lon = len(i)+1
+                        if lon_max <= lon:
+                            lon_max = lon
+                else:
+                    lon = len(port_len[0])+1
+                if lon_max <= lon:
+                    lon_max = lon
+
+            cont_port = 1
+            output += self.tab_spaces(tab_spaces_cfg, N) + "port map (\n"
+            for port in ports:
+                if len(port[0]) != 1:
+                    for i in port[0]:
+                        output += self.tab_spaces(tab_spaces_cfg, N+1) + self.uppercase(uppercase_port_cfg, i)
+                        for j in range(lon_max - len(i)):
+                            output += " "
+                        output += " => " + ftext + self.uppercase(uppercase_port_cfg, i) + etext + ",\n"
+                        if cont_port != len(ports):
+                            output += ","
+                    cont_port += 1
+                else:
+                    output += self.tab_spaces(tab_spaces_cfg, N+1) + self.uppercase(uppercase_port_cfg, port[0][0]) + " => " + ftext + self.uppercase(uppercase_port_cfg, port[0][0]) + etext
+
+                    if cont_port != len(ports):
+                        output += ","
+                    
+                # output += "\n"
+                cont_port += 1
+            output += self.tab_spaces(tab_spaces_cfg, N) + ")"
+        
+        output += ";\n"
+
+        return output
+    
+
+    def signals(self, ports, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, ftext, etext):
+        if ports is not None:
+            lon_max = 0
+            for port_len in ports:
+                lon = 0
+                if type(port_len[0]) is list:
+                    cont_port = 1
+                    for i in port_len[0]:
+                        lon += len(i)
+                        if cont_port != len(port_len[0]):
+                            lon += 2
+                        cont_port += 1
+                else:
+                    lon += len(port_len[0])
+                
+                if lon_max <= lon:
+                    lon_max = lon
+
+            output = ""
+            for port in ports:
+                output += self.tab_spaces(tab_space_cfg, 1) + "signal " 
+                if len(port[0]) != 1:
+                    cont = 1
+                    for i in port[0]:
+                        output += ftext + self.uppercase(uppercase_port_cfg, i) + etext
+                        if cont != len(port[0]):
+                            output += ", "
+                        cont += 1
+                else:
+                    output += ftext + self.uppercase(uppercase_port_cfg, port[0][0]) + etext
+
+                if len(port[0]) != 1:
+                    lon_port = 0
+                    cont_aux = 1
+                    for i in port[0]:
+                        lon_port += len(i)
+                        if cont_aux != len(port[0]):
+                            lon_port += 2
+                    for j in range(lon_max-lon_port):
+                        output += " "
+                else:
+                    for j in range(lon_max - len(port[0])):
+                        output += " "
+
+                output += " : "
+                if type(port[2]) == list:
+                    output += port[2][0] + "(" + self.uppercase(uppercase_gen_cfg, port[2][1]) + " " + port[2][2] + " " + self.uppercase(uppercase_gen_cfg, port[2][3]) + ");\n"
+                else:
+                    output += port[2] + ";\n"
+   
+        return output
+
+    def constants(self):
+        output = ""
+        return output

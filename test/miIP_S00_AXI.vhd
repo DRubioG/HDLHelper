@@ -88,13 +88,13 @@ architecture arch_miIP of miIP_S00_AXI is
 	signal axi_awaddr	: std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
 	signal axi_awready	: std_logic;
 	signal axi_wready	: std_logic;
-	signal axi_bresp	: std_logic_vector(1 downto 0);
-	signal axi_bvalid	: std_logic;
-	signal axi_araddr	: std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
-	signal axi_arready	: std_logic;
-	signal axi_rdata	: std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
-	signal axi_rresp	: std_logic_vector(1 downto 0);
-	signal axi_rvalid	: std_logic;
+	signal axi_bresp      : std_logic_vector(1 downto 0);
+	signal axi_bvalid     : std_logic;
+	signal axi_araddr     : std_logic_vector(C_S_AXI_ADDR_WIDTH-1 downto 0);
+	signal axi_arready	  : std_logic;
+	signal axi_rd         : std_logic_vector(C_S_AXI_DATA_WIDTH-1 downto 0);
+	signal axi_rresp	  : std_logic_vector(1 downto 0);
+	signal axi_rvalid	  : std_logic;
 
 	-- Example-specific design signals
 	-- local parameter for addressing 32 bit / 64 bit C_S_AXI_DATA_WIDTH

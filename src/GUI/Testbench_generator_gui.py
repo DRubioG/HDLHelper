@@ -24,34 +24,46 @@ class Testbench_generator_gui(QWidget):
         self.ui.pushButton_config.clicked.connect(self.configFile)
         self.ui.pushButton_create.clicked.connect(self.createFile)
         self.ui.pushButton_cancel.clicked.connect(self.cancelOperation)
+        self.ui.lineEdit_output.setReadOnly(True)
+        self.ui.lineEdit_input.setReadOnly(True)
 
     def searchInputFile(self):
         fileDialog = QFileDialog()
-        files = fileDialog.getOpenFileNames(self, "Select file", QtCore.QDir.currentPath(), "VHDL, verilog (*.vhd *.v) ;;VHDL (*.vhd);; Verilog (*.v);; Tesbenches (*_tb.vhd *_tb.v)")
-        test_bench = []
-        self.file = []
+        files = fileDialog.getOpenFileName(self, "Select file", QtCore.QDir.currentPath(), "VHDL, verilog (*.vhd *.v) ;;VHDL (*.vhd);; Verilog (*.v);; Tesbenches (*_tb.vhd *_tb.v)")
 
-        for file in files[0]:
-            test_bench = file.replace(".", "_tb.")
+        self.file_path = files[0]
+        self.file_input = self.file_path
+        self.file_output = self.file_path.replace(".", "_tb.")
 
-        self.file_input = files[0][0]
-        self.file_output = test_bench
-        self.ui.lineEdit_output.setText(self.file_output)
-        self.ui.lineEdit_input.setText(self.file_input)
+        if self.file_input.find("\\") != -1:
+            self.file_input = self.file_input.split("\\")[-1]
+            self.file_output = self.file_output.split("\\")[-1]
+        else:
+            self.file_input = self.file_input.split("/")[-1]
+            self.file_output = self.file_output.split("/")[-1]
         
+        self.ui.lineEdit_input.setText(self.file_input)
+        self.ui.lineEdit_output.setText(self.file_output)
         
 
     def seachOutputFile(self):
         outputfileDialog = QFileDialog()
-        outputfile = outputfileDialog.getExistingDirectory(self)
-        self.ui.lineEdit_output.setText(outputfile+self.file_output)
+        self.file_output = outputfileDialog.getExistingDirectory(self)
+        if self.file_input.find("\\") != -1:
+            output = "\\"
+        else:
+            output = "/"
+        self.file_output += output + self.file_input.replace(".", "_tb.")
+     
+        self.ui.lineEdit_output.setText(self.file_output)
         
     def configFile(self):
         self.testbench_generator_config = Testbench_generator_config_gui()
 
 
     def createFile(self):
-        self.hdlhelper = HDLHelper(self.file_input, self.file_output, "testbench")
+
+        self.hdlhelper = HDLHelper(self.file_path, self.file_output, "testbench")
         self.close()
         
     def cancelOperation(self):

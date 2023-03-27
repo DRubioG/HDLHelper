@@ -9,8 +9,7 @@ class Testbench_vhdl():
         self.file_output = file_output
         self.regen = VHDL_regen()
         self.load_config()
-        self.load_ports()
-        self.exec()
+        self.testbench()
     
 
     def load_config(self):
@@ -36,19 +35,24 @@ class Testbench_vhdl():
             self.comments_load = "False"
 
         
-    def load_ports (self):
-        self.hdl = HDL(self.file_input)
-        self.ports, self.generics, self.comments = self.hdl.init()
+    # def load_ports (self):
+    #     self.hdl = HDL(self.file_input)
+    #     self.ports, self.generics, self.comments = self.hdl.init()
         
 
-    def exec(self):
-        self.generate_file(self.file_output)
+    def testbench(self):
+        self.hdl = HDL(self.file_input)
+        self.ports, self.generics, self.comments = self.hdl.init()
+
+        self.open_file(self.file_output)
+        name = self.file_output[:-4]
         output = self.write_libraries()
-        output += self.write_component()
+        output += self.write_entity(name)
+        output += self.write_architecture(name, self.ports)
         self.close_file(output)
 
 
-    def generate_file(self, output_file):
+    def open_file(self, output_file):
         self.file = open(output_file, 'w')
 
 
@@ -61,9 +65,15 @@ class Testbench_vhdl():
         return output
         
 
-    def write_component(self):
+    def write_entity(self, name):
         components = [self.ports, self.generics, self.comments]
-        output = self.regen.component(self.file, components, self.name)
+        
+        output = self.regen.entity(name)
+        return output
+    
+    def write_architecture(self, name, ports):
+        output = self.regen.architecture(name, ports=ports, component=True, uppercase_gen_cfg="True", tab_space_cfg=self.tab_spaces)
+
         return output
         
         
