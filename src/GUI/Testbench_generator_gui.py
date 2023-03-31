@@ -24,6 +24,8 @@ class Testbench_generator_gui(QWidget):
         self.ui.pushButton_config.clicked.connect(self.configFile)
         self.ui.pushButton_create.clicked.connect(self.createFile)
         self.ui.pushButton_cancel.clicked.connect(self.cancelOperation)
+        self.ui.pushButton_output.setEnabled(False)
+        self.ui.pushButton_create.setEnabled(False)
         self.ui.lineEdit_output.setReadOnly(True)
         self.ui.lineEdit_input.setReadOnly(True)
 
@@ -44,6 +46,8 @@ class Testbench_generator_gui(QWidget):
         
         self.ui.lineEdit_input.setText(self.file_input)
         self.ui.lineEdit_output.setText(self.file_output)
+        self.ui.pushButton_output.setEnabled(True)
+        self.ui.pushButton_create.setEnabled(True)
         
 
     def seachOutputFile(self):
@@ -54,8 +58,8 @@ class Testbench_generator_gui(QWidget):
         else:
             output = "/"
         self.file_output += output + self.file_input.replace(".", "_tb.")
-     
-        self.ui.lineEdit_output.setText(self.file_output)
+        relative_path = os.path.relpath(self.file_output, self.file_path)
+        self.ui.lineEdit_output.setText(relative_path[3:])
         
     def configFile(self):
         self.testbench_generator_config = Testbench_generator_config_gui()
