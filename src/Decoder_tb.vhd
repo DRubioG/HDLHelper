@@ -11,7 +11,7 @@ architecture arch_Decoder_tb of Decoder_tb is
 component Decoder_tb is
 	port (
 		clk, rst 	 : in  	std_logic;
-		row      	 : in  	std_logic_vector(N-1 downto 0);
+		row      	 : in  	std_logic_vector((N-1) downto 0);
 		col      	 : out 	std_logic_vector(3 downto 0);
 		decodeout	 : out 	std_logic_vector(3 downto 0));
 end component;

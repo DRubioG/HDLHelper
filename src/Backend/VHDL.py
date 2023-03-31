@@ -7,21 +7,20 @@ class VHDL():
         self.generics = []
         self.comments = []
 
-    def extract_file(self):
+    def read_file(self):
         file = open(self.file_input, 'r')
         text = file.readlines()
         return text
 
-    def extract_entity(self):
+    def get_entity(self):
         cont = 0
         entity = []
         entity_flag = 0
         line_counter = 0
 
-        text = self.extract_file()
+        text = self.read_file()
         # find the entity in the file
         for t in text:
-            t = t.lower()
             t = t.replace("\n", "")
             t = t.replace(";", "")
 
@@ -33,12 +32,26 @@ class VHDL():
                 cont -= t.count(")")
                 entity.append([t, line_counter])
             
-            if t.find("end ") != -1:    # find the "end" of the entity
-                if cont == 0:   # to avoid names with "end" characters in the name
-                    entity_flag = 0
-                    break   # finish the execution
+            if cont == 0:
+                if entity_flag == 1:
+                    if t[:3] == "end":
+                        break
+                    
             line_counter += 1
-        # print(entity)
+
+        return entity
+    
+    def get_comments(self, code):
+        entity = []
+
+        for comment_line in code:
+            if comment_line[0].find("--") != -1:
+                text, comment = comment_line[0].split("--")
+                self.comments.append([comment.strip(), comment_line[1]])
+                entity.append([text, comment[1]])
+            else:
+                entity.append(comment)
+
         return entity
         
     def vhdl_list(self):
@@ -52,24 +65,16 @@ class VHDL():
         _real_ports = []
         entity = []
         
-        entity_comments = self.extract_entity()
+        # get entity
+        entity_comments = self.get_entity()
 
-        # extract comments
-        for comment in entity_comments:
-            if comment[0].find("--") != -1:
-                ent, com = comment[0].split("--")   
-                line = comment[1]
-                self.comments.append([com.strip(), line])
-                ##print(ent)
-                entity.append([ent, line])
-            else:
-                entity.append(comment)
+        # get comments
+        entity = self.get_comments(entity_comments)
         
-       # print(entity)
-        # extract generics
-        ## extract generic code from entity
+        # get generics
+        ## get generic code from entity
         for generic in entity:
-            if generic[0].find("generic") != -1:
+            if generic[0].lower().find("generic") != -1:
                 generic_flag = 1
             
             if generic_flag == 1:
@@ -116,7 +121,7 @@ class VHDL():
         # extract ports
         ## extract ports code from entity
         for ports in entity:
-            if ports[0].find("port") != -1:
+            if ports[0].lower().find("port") != -1:
                 ports_flag = 1
             
             if ports_flag == 1:
@@ -134,7 +139,7 @@ class VHDL():
             ports[0] = ports[0].replace("\t", "")
             ports[0] = ports[0].replace(" ", "")
             
-            if ports[0] != "port(" and ports[0] != '' and ports[0] != ")":
+            if ports[0].lower() != "port(" and ports[0].lower() != '' and ports[0] != ")":
                 _real_ports.append(ports)
         
        # print(_real_ports)
@@ -147,26 +152,29 @@ class VHDL():
             mv = ""
             lv = ""
             aux2 = ports[0].split(":")
-            name = aux2[0].split(",")
-            
+            if aux2[0].find(","):
+                name = aux2[0].split(",")
+            else:
+                name = aux2[0]
+
             type_aux = aux2[1]
-            if type_aux[:2] == "in":
+            if type_aux[:2].lower() == "in":
                 inout = "in"
                 aux3 = type_aux[2:]
-            elif type_aux[:3] == "out":
+            elif type_aux[:3].lower() == "out":
                 inout = "out"
                 aux3 = type_aux[3:]
-            elif type_aux[:5] == "inout":
+            elif type_aux[:5].lower() == "inout":
                 inout = "inout"
                 aux3 = type_aux[5:]
             
             if aux3.find("(") != -1:
                 aux3 = aux3.replace(")", "")
                 type, value = aux3.split("(")
-                if value.find("downto"):
+                if value.lower().find("downto"):
                     fv, lv = value.split("downto")
                     mv = "downto"
-                elif value.find("to"):
+                elif value.lower().find("to"):
                     fv, lv = value.split("to")
                     mv = "to"
                 self.ports.append([name, inout, [type, fv, mv, lv], ports[1]])
@@ -176,37 +184,9 @@ class VHDL():
 
             
 
-        # print(self.ports)
-       # print(self.generics)
-            # print(rest)
-
-       # print(_real_generic)
-
-
-
-
     def extract_list(self):
         self.vhdl_list()
         return self.ports, self.generics, self.comments
-    #     file = open(self.file_input, 'r')
-    #     text = file.readlines()
-
-    #     text = self.extract_comments(text)
-    #     print(text)
-    #     generic = self.extract_generics(text)
-
-    # def extract_comments(self, text):
-    #     line = 0
-    #     for t in text:
-            
-    #         if t.find("--") != -1:
-    #             end = t.find("\n")
-    #             start = t.find("--")
-    #             self.comments.append([start, end, t[start: end, line]])
-    #             text[start:end]=""
-            
-    #         line += 1
-    #     return text
 
 if __name__=="__main__":
     vhdl = VHDL("Decoder.vhd")
