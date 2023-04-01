@@ -34,9 +34,9 @@ entity Decoder is --dfhdfg
 		Gadgvsed  : std_logic_vector := N-1	-- preuba3
 	)
     Port (
-		CLK, rst : in  STD_LOGIC := 32;	--alfa
+		CLK, rst : in  STD_LOGIC;	--alfa
 		--34234523
-        Row : in  STD_LOGIC_VECTOR ((N-1) downto (N-2)) := 324;  --dfhdfg
+        Row : in  STD_LOGIC_VECTOR ((N-1) downto (N-2));  --dfhdfg
 		Col : out  STD_LOGIC_VECTOR (3 downto 0);--dfhdfg1
         DecodeOut : out  STD_LOGIC_VECTOR (3 downto 0));--marcafa
 end;

@@ -12,7 +12,7 @@ class HDLHelper():
         if self.operation == "testbench":
             if self.file_input[-4:] == ".vhd":
                 Testbench_vhdl(self.file_input, self.file_output)
-            elif self.file_input[-2:]==".v":
-                Testbench_verilog(self.file_input, self.file_output)
+            # elif self.file_input[-2:]==".v":
+            #     Testbench_verilog(self.file_input, self.file_output)
             else:
                 print("Error, file not recognized")

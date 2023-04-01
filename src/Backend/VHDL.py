@@ -1,11 +1,12 @@
 import os
 
 class VHDL():
-    def __init__(self, file_input):
+    def __init__(self, file_input, copy):
         self.file_input = file_input
         self.ports = []
         self.generics = []
         self.comments = []
+        self.copy = copy
 
     def read_file(self):
         file = open(self.file_input, 'r')
@@ -48,30 +49,18 @@ class VHDL():
             if comment_line[0].find("--") != -1:
                 text, comment = comment_line[0].split("--")
                 self.comments.append([comment.strip(), comment_line[1]])
-                entity.append([text, comment[1]])
+                entity.append([text, comment_line[1]])
             else:
-                entity.append(comment)
+                entity.append(comment_line)
 
         return entity
-        
-    def vhdl_list(self):
+    
+    def get_generics(self, entity):
         cont_generics = 0
-        cont_ports = 0
         generic_flag = 0
-        ports_flag = 0
         _generics = []
         _real_generic = []
-        _ports = []
-        _real_ports = []
-        entity = []
-        
-        # get entity
-        entity_comments = self.get_entity()
 
-        # get comments
-        entity = self.get_comments(entity_comments)
-        
-        # get generics
         ## get generic code from entity
         for generic in entity:
             if generic[0].lower().find("generic") != -1:
@@ -116,9 +105,14 @@ class VHDL():
             line = generic[1]
 
             self.generics.append([name, type_, value, line])
-            
 
-        # extract ports
+        
+    def get_ports(self, entity):
+        cont_ports = 0
+        ports_flag = 0
+        _ports = []
+        _real_ports = []
+
         ## extract ports code from entity
         for ports in entity:
             if ports[0].lower().find("port") != -1:
@@ -147,12 +141,11 @@ class VHDL():
 
 
         ## extract all parts of the ports and add to the port list
+        cont = 1
         for ports in _real_ports:
-            fv = ""
-            mv = ""
-            lv = ""
+
             aux2 = ports[0].split(":")
-            if aux2[0].find(","):
+            if aux2[0].find(",") != -1:
                 name = aux2[0].split(",")
             else:
                 name = aux2[0]
@@ -169,27 +162,65 @@ class VHDL():
                 aux3 = type_aux[5:]
             
             if aux3.find("(") != -1:
-                aux3 = aux3.replace(")", "")
-                type, value = aux3.split("(")
-                if value.lower().find("downto"):
-                    fv, lv = value.split("downto")
+                if aux3.lower().find("downto") != -1:
+                    div = aux3.split("downto")
                     mv = "downto"
-                elif value.lower().find("to"):
-                    fv, lv = value.split("to")
+                elif aux3.lower().find("to"):
+                    div = aux3.split("to")
                     mv = "to"
+
+                div[0] = div[0].split("(", 1)
+
+                type = div[0][0].lower()
+                fv = div[0][1]
+
+                if cont != len(_real_ports):
+                    lv = div[1][:-1]
+                else:
+                    lv = div[1][:-2]
+
                 self.ports.append([name, inout, [type, fv, mv, lv], ports[1]])
             else:
-                type = aux3    
+                type = aux3.lower()   
                 self.ports.append([name, inout, type, ports[1]])
+
+            cont += 1
+
+    def vhdl_list(self):
+        
+        # get entity
+        entity_comments = self.get_entity()
+        if self.copy == 1:
+            self.entity = entity_comments[1:-1]
+            
+        else:
+            # get comments
+            entity = self.get_comments(entity_comments)
+            
+            # get generics
+            self.get_generics(entity)
+                
+                
+
+            # extract ports
+            self.get_ports(entity)
+        
 
             
 
-    def extract_list(self):
+    def get_list(self):
         self.vhdl_list()
-        return self.ports, self.generics, self.comments
+        if self.copy == 1:
+            return self.entity, None, None
+        else:
+            return self.ports, self.generics, self.comments
 
 if __name__=="__main__":
-    vhdl = VHDL("Decoder.vhd")
-    vhdl.vhdl_list()
+    vhdl = VHDL("Decoder.vhd", copy=0)
+    print(vhdl.get_list())
+    # print(vhdl.comments)
+    # print(vhdl.ports)
+    # print(vhdl.generics)
+
 
 

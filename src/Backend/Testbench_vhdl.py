@@ -34,14 +34,10 @@ class Testbench_vhdl():
             self.uppercase_ports = "False"
             self.comments_load = "False"
 
-        
-    # def load_ports (self):
-    #     self.hdl = HDL(self.file_input)
-    #     self.ports, self.generics, self.comments = self.hdl.init()
-        
+       
 
     def testbench(self):
-        self.hdl = HDL(self.file_input)
+        self.hdl = HDL(self.file_input, copy=1)
         self.ports, self.generics, self.comments = self.hdl.init()
 
         self.open_file(self.file_output)
