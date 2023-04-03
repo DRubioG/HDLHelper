@@ -11,8 +11,8 @@ class VHDL_regen():
         output = "architecture arch_" + name_ent + " of " + name_ent + " is\n"
         if component is True:
             output += self.constants()
-            output += self.signals(ports, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, ftext, etext)
             output += self.component(ports, generics, comments, name_ent, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, comments)
+            output += self.signals(ports, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, ftext, etext)
             output += "\nbegin"
             output += self.implementation(name_ent, generics, ports, ftext, etext, tab_space_cfg, uppercase_port_cfg, uppercase_gen_cfg)
         output += "end architecture arch_" + name_ent + ";"
@@ -245,15 +245,18 @@ class VHDL_regen():
         return output
 
     
-    def component(self, ports, generics, comments, name, uppercase_port_cfg, uppercase_gen_cfg, tab_spaces_cfg, comment_cfg):
+    def component(self, ports, generics, comments, name, copy, uppercase_port_cfg, uppercase_gen_cfg, tab_spaces_cfg, comment_cfg):
         name = name.split("/")[-1]
         output = "component " + name + " is\n"
 
-        ## generics
-        output += self.generics(generics, comments, uppercase_gen_cfg, tab_spaces_cfg, comment_cfg)
+        if copy == "True":
+            output += self.paste_component()
+        else:
+            ## generics
+            output += self.generics(generics, comments, uppercase_gen_cfg, tab_spaces_cfg, comment_cfg)
 
-        ## ports
-        output += self.ports(ports, comments, uppercase_port_cfg, uppercase_gen_cfg, tab_spaces_cfg, comment_cfg)  
+            ## ports
+            output += self.ports(ports, comments, uppercase_port_cfg, uppercase_gen_cfg, tab_spaces_cfg, comment_cfg)  
 
         output += "end component;\n"
         return output
@@ -391,6 +394,25 @@ class VHDL_regen():
    
         return output
 
-    def constants(self):
+    def constants(self, generics, tab_config):
         output = ""
+        for constant in generics:
+            output += "constant "
+            if type(constant[0]) is list:
+                cont = 1
+                for j in constant[0]:
+                    output += j
+                    cont += 1
+                    if cont != len(constant[0]):
+                        output += ","
+            else:
+                output += constant[0]
+            output += self.tab_spaces(tab_config, 1) + " : " + constant[1] + self.tab_spaces(tab_config, 1) + " := " + self.tab_spaces(tab_config, 1) + constant[2] + "\n"
+
+
         return output
+    
+    def paste_component(self, input):
+        output = "\n"
+        for i in input:
+            output += i + "\n"

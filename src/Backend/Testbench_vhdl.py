@@ -44,7 +44,7 @@ class Testbench_vhdl():
         name = self.file_output[:-4]
         output = self.write_libraries()
         output += self.write_entity(name)
-        output += self.write_architecture(name, self.ports)
+        output += self.write_architecture(name, self.generics, self.ports, copy=True)
         self.close_file(output)
 
 
@@ -67,8 +67,8 @@ class Testbench_vhdl():
         output = self.regen.entity(name)
         return output
     
-    def write_architecture(self, name, ports):
-        output = self.regen.architecture(name, ports=ports, component=True, uppercase_gen_cfg="True", tab_space_cfg=self.tab_spaces)
+    def write_architecture(self, name, generics, ports, copy):
+        output = self.regen.architecture(name, generics=generics, ports=ports, component=True, copy=True, uppercase_gen_cfg="True", tab_space_cfg=self.tab_spaces)
 
         return output
         
