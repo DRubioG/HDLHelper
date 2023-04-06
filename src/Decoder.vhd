@@ -31,7 +31,7 @@ entity Decoder is --dfhdfg
 		U : integer := 32 --hola
 		-- comentario
 		N, T : integer;	-- prueba
-		Gadgvsed  : std_logic_vector := N-1	-- preuba3
+		Gad  : std_logic_vector := N-1	-- preuba3
 	)
     Port (
 		CLK, rst : in  STD_LOGIC := 32;	--alfa

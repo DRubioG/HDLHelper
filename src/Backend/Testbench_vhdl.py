@@ -2,6 +2,7 @@ from Backend.HDL import *
 from Backend.VHDL_regen import *
 import json
 
+
 class Testbench_vhdl():
     def __init__(self, file_input, file_output):
         self.file_input = file_input
@@ -10,7 +11,6 @@ class Testbench_vhdl():
         self.regen = VHDL_regen()
         self.load_config()
         self.testbench()
-    
 
     def load_config(self):
         try:
@@ -34,23 +34,20 @@ class Testbench_vhdl():
             self.uppercase_ports = "False"
             self.comments_load = "False"
 
-       
-
     def testbench(self):
-        self.hdl = HDL(self.file_input, copy=1)
-        self.ports, self.generics, self.comments = self.hdl.init()
+        self.hdl = HDL(self.file_input)
+        self.ports, self.generics, self.comments, self.entity = self.hdl.init()
 
         self.open_file(self.file_output)
         name = self.file_output[:-4]
         output = self.write_libraries()
         output += self.write_entity(name)
-        output += self.write_architecture(name, self.generics, self.ports, copy=True)
+        output += self.write_architecture(name, self.generics,
+                                          self.ports, self.comments, self.entity, copy=True)
         self.close_file(output)
-
 
     def open_file(self, output_file):
         self.file = open(output_file, 'w')
-
 
     def write_libraries(self):
         libraries = []
@@ -59,21 +56,19 @@ class Testbench_vhdl():
                 libraries.append("numeric_std")
         output = self.regen.libraries(self.file, libraries)
         return output
-        
 
     def write_entity(self, name):
         components = [self.ports, self.generics, self.comments]
-        
+
         output = self.regen.entity(name)
         return output
-    
-    def write_architecture(self, name, generics, ports, copy):
-        output = self.regen.architecture(name, generics=generics, ports=ports, component=True, copy=True, uppercase_gen_cfg="True", tab_space_cfg=self.tab_spaces)
+
+    def write_architecture(self, name, generics, ports, comments, entity, copy):
+        output = self.regen.architecture(name, generics=generics, ports=ports, comments=comments, entity=entity, component=True, copy=copy,
+                                         uppercase_gen_cfg="True", uppercase_port_cfg=self.uppercase_ports, tab_space_cfg=self.tab_spaces, etext=self.etext, ftext=self.ftext)
 
         return output
-        
-        
+
     def close_file(self, output):
         self.file.write(output)
         self.file.close()
-   

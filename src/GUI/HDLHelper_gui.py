@@ -1,4 +1,5 @@
-import sys, json
+import sys
+import json
 from PyQt5.QtWidgets import QMainWindow, QWidget, QDialog, QMenu, QLabel, QAction
 from PyQt5 import QtCore
 from PyQt5.QtCore import QUrl
@@ -6,9 +7,13 @@ from PyQt5.QtCore import QUrl
 from UI.HDLHelper_UI import *
 from GUI.Testbench_generator_gui import *
 
+from UI.StyleSheet.StyleSheet_testbench_generator import testbench_generator_gui
+
+
 class HDLHelper_gui(QMainWindow):
     def __init__(self):
         super().__init__()
+        self.setStyleSheet(testbench_generator_gui)
         self.ui = Ui_HDLHelper()
         self.ui.setupUi(self)
         self.setWindowTitle("HDLHelper")
@@ -16,7 +21,7 @@ class HDLHelper_gui(QMainWindow):
         self.addStatusBar()
         self.connections()
         self.show()
-    
+
     def addMenuBar(self):
 
         menuBar = self.menuBar()
@@ -24,7 +29,7 @@ class HDLHelper_gui(QMainWindow):
         # File
         fileMenu = menuBar.addMenu("File")
 
-        exitAction = QAction('Exit', self)        
+        exitAction = QAction('Exit', self)
         exitAction.setShortcut('Ctrl+Q')
         exitAction.triggered.connect(self.cancelOperation)
         fileMenu.addAction(exitAction)
@@ -34,7 +39,6 @@ class HDLHelper_gui(QMainWindow):
         preferences = QAction('Preferences...', self)
         preferences.triggered.connect(self.preferences_fn)
         editMenu.addAction(preferences)
-
 
         # Execute
         executeMenu = menuBar.addMenu("Execute")
@@ -93,12 +97,12 @@ class HDLHelper_gui(QMainWindow):
         helpMenu.addAction(about)
         helpMenu.addAction(version)
 
-
     def addStatusBar(self):
         statusbar = self.statusBar()
         try:
             import requests
-            reponse = requests.get("https://api.github.com/repos/DRubioG/HDLHelper/releases/latest")
+            reponse = requests.get(
+                "https://api.github.com/repos/DRubioG/HDLHelper/releases/latest")
             new_version = reponse.json()["name"][1:]
         except:
             new_version = None
@@ -107,44 +111,62 @@ class HDLHelper_gui(QMainWindow):
             version_act = json.load(file)["version"]
         except:
             version_act = "Unknown"
-        if  new_version == None or version_act == "Unknown":
+        if new_version == None or version_act == "Unknown":
             version_tag = "Version {}".format(version_act)
         elif version_act == new_version:
             version_tag = "Version {}".format(version_act)
         else:
-            version_tag = "<a href ='https://github.com/DRubioG/HDLHelper'>New version available(" + version_act + " -> "+ new_version + ")[copy link]</a>"
+            version_tag = "<a href ='https://github.com/DRubioG/HDLHelper'>New version available(" + \
+                version_act + " -> " + new_version + ")[copy link]</a>"
         statusbar.addPermanentWidget(QLabel(version_tag))
-    
+
     def connections(self):
         # first row
-        self.ui.testbench_generator_button.clicked.connect(self.testbench_generator_fn)
-        self.ui.calculator_button.clicked.connect(self.calculator_fn);                              self.ui.calculator_button.hide()
-        self.ui.top_file_generator_button.clicked.connect(self.top_file_generator_fn);              self.ui.top_file_generator_button.hide()
+        self.ui.testbench_generator_button.clicked.connect(
+            self.testbench_generator_fn)
+        self.ui.calculator_button.clicked.connect(self.calculator_fn)
+        self.ui.calculator_button.hide()
+        self.ui.top_file_generator_button.clicked.connect(
+            self.top_file_generator_fn)
+        self.ui.top_file_generator_button.hide()
         # second row
-        self.ui.ticks_calculator_button.clicked.connect(self.ticks_calculator_fn);                  self.ui.ticks_calculator_button.hide()
-        self.ui.hdl_translator_button.clicked.connect(self.hdl_translator_fn);                      self.ui.hdl_translator_button.hide()
-        self.ui.hdl_generator_button.clicked.connect(self.hdl_generator_fn);                        self.ui.hdl_generator_button.hide()
+        self.ui.ticks_calculator_button.clicked.connect(
+            self.ticks_calculator_fn)
+        self.ui.ticks_calculator_button.hide()
+        self.ui.hdl_translator_button.clicked.connect(self.hdl_translator_fn)
+        self.ui.hdl_translator_button.hide()
+        self.ui.hdl_generator_button.clicked.connect(self.hdl_generator_fn)
+        self.ui.hdl_generator_button.hide()
         # third row
-        self.ui.editor_button.clicked.connect(self.editor_fn);                                      self.ui.editor_button.hide()
-        self.ui.documentation_generator_button.clicked.connect(self.documentation_generator_fn);    self.ui.documentation_generator_button.hide()
-        self.ui.analize_dependencies_button.clicked.connect(self.analize_dependencies_fn);          self.ui.analize_dependencies_button.hide()
-        #fourth row
-        self.ui.generate_state_machine_button.clicked.connect(self.generate_state_machine_fn);      self.ui.generate_state_machine_button.hide()
-        self.ui.ascii_conversor_button.clicked.connect(self.ascii_conversor_fn);             self.ui.ascii_conversor_button.hide()
-        self.ui.auto_improve_button.clicked.connect(self.auto_improve_fn);                self.ui.auto_improve_button.hide()
+        self.ui.editor_button.clicked.connect(self.editor_fn)
+        self.ui.editor_button.hide()
+        self.ui.documentation_generator_button.clicked.connect(
+            self.documentation_generator_fn)
+        self.ui.documentation_generator_button.hide()
+        self.ui.analize_dependencies_button.clicked.connect(
+            self.analize_dependencies_fn)
+        self.ui.analize_dependencies_button.hide()
+        # fourth row
+        self.ui.generate_state_machine_button.clicked.connect(
+            self.generate_state_machine_fn)
+        self.ui.generate_state_machine_button.hide()
+        self.ui.ascii_conversor_button.clicked.connect(self.ascii_conversor_fn)
+        self.ui.ascii_conversor_button.hide()
+        self.ui.auto_improve_button.clicked.connect(self.auto_improve_fn)
+        self.ui.auto_improve_button.hide()
 
-    #first row
+    # first row
     def testbench_generator_fn(self):
         self.testbench_generator = Testbench_generator_gui()
         self.testbench_generator.show()
-        
+
     def calculator_fn(self):
         self.coming_soon()
 
     def top_file_generator_fn(self):
         self.coming_soon()
 
-    #second row
+    # second row
     def ticks_calculator_fn(self):
         self.coming_soon()
 
@@ -153,8 +175,8 @@ class HDLHelper_gui(QMainWindow):
 
     def hdl_generator_fn(self):
         self.coming_soon()
-    
-    #third row
+
+    # third row
     def editor_fn(self):
         self.coming_soon()
 
@@ -164,7 +186,7 @@ class HDLHelper_gui(QMainWindow):
     def analize_dependencies_fn(self):
         self.coming_soon()
 
-    #fourth row
+    # fourth row
     def generate_state_machine_fn(self):
         self.coming_soon()
 
@@ -180,7 +202,7 @@ class HDLHelper_gui(QMainWindow):
 
     def version_fn(self):
         self.coming_soon()
-    
+
     def preferences_fn(self):
         self.coming_soon()
 
@@ -189,6 +211,6 @@ class HDLHelper_gui(QMainWindow):
         self.w = QDialog()
         self.w.setWindowTitle("Coming soon ...")
         self.w.show()
-    
+
     def cancelOperation(self):
         quit()

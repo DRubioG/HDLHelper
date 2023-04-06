@@ -1,10 +1,13 @@
 from PyQt5.QtWidgets import QDialog
 from UI.Testbench_generator_config_UI import *
+from UI.StyleSheet.StyleSheet_testbench_generator_config import testbench_generator_config_gui
+
 import json
 
 class Testbench_generator_config_gui(QDialog):
     def __init__(self):
         super().__init__()
+        self.setStyleSheet(testbench_generator_config_gui)
         self.ui = Ui_testbench_generator_config()
         self.ui.setupUi(self)
         self.open_config()
@@ -24,6 +27,7 @@ class Testbench_generator_config_gui(QDialog):
             self.spaces = self.data["Testbench_generator"][0]["spaces"]
             self.ftext = self.data["Testbench_generator"][0]["ftext"]
             self.etext = self.data["Testbench_generator"][0]["etext"]
+            self.copy = self.data["Testbench_generator"][0]["copy"]
             self.uppercase_generics = self.data["Testbench_generator"][0]["uppercase_generics"]
             self.uppercase_ports = self.data["Testbench_generator"][0]["uppercase_ports"]
             self.default_config = self.data["Testbench_generator"][0]["default_config"]
@@ -43,6 +47,7 @@ class Testbench_generator_config_gui(QDialog):
             self.spaces = "4"
             self.ftext = ""
             self.etext = ""
+            self.copy = "False"
             self.uppercase_generics = "True"
             self.uppercase_ports = "False"
             self.default_config = ""
@@ -69,6 +74,20 @@ class Testbench_generator_config_gui(QDialog):
         
         self.ui.lineEdit_begin.setText(self.ftext)
         self.ui.lineEdit_end.setText(self.etext)
+
+        if self.copy == "True":
+            self.ui.radioButton_copy.setChecked(True)
+            self.ui.radioButton_regenerate.setChecked(False)
+            self.ui.checkBox_comments.setEnabled(False)
+            self.ui.checkBox_uppercase_generics.setEnabled(False)
+            self.ui.checkBox_uppercase_ports.setEnabled(False)
+        else:
+            self.ui.radioButton_copy.setChecked(False)
+            self.ui.radioButton_regenerate.setChecked(True)
+            self.ui.checkBox_comments.setEnabled(True)
+            self.ui.checkBox_uppercase_generics.setEnabled(True)
+            self.ui.checkBox_uppercase_ports.setEnabled(True)
+
         
         if self.uppercase_generics == "True":
             self.ui.checkBox_uppercase_generics.setChecked(True)
@@ -95,11 +114,22 @@ class Testbench_generator_config_gui(QDialog):
         else:
             self.ui.lineEdit_number_spaces.setEnabled(False)
 
+    def copy_option(self):
+        if self.ui.radioButton_copy.isChecked():
+            self.ui.checkBox_comments.setEnabled(False)
+            self.ui.checkBox_uppercase_generics.setEnabled(False)
+            self.ui.checkBox_uppercase_ports.setEnabled(False)
+        else:
+            self.ui.checkBox_comments.setEnabled(True)
+            self.ui.checkBox_uppercase_generics.setEnabled(True)
+            self.ui.checkBox_uppercase_ports.setEnabled(True)
+
 
     def connections(self):
         self.ui.pushButton_save.clicked.connect(self.save_file)
         self.ui.pushButton_cancel.clicked.connect(self.cancel)
         self.ui.radioButton_spaces.toggled.connect(self.tab_space)
+        self.ui.radioButton_copy.toggled.connect(self.copy_option)
     
 
     def cancel(self):
