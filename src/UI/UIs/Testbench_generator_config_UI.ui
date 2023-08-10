@@ -157,7 +157,11 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QLineEdit" name="lineEdit_begin"/>
+      <widget class="QLineEdit" name="lineEdit_begin">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="label">

@@ -27,14 +27,14 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 entity Decoder is --dfhdfg
 
 	generic (
-		y : integer;	-- hola 2
+		yfghjuytrfcvbh : integer;	-- hola 2
 		U : integer := 32 --hola
 		-- comentario
 		N, T : integer;	-- prueba
 		Gad  : std_logic_vector := N-1	-- preuba3
 	)
     Port (
-		CLK, rst : in  STD_LOGIC := 32;	--alfa
+		CLK, rst, yh : in  STD_LOGIC := 32;	--alfa
 		--34234523
         Row : in  STD_LOGIC_VECTOR ((N-1) downto (N-2)) := 324;  --dfhdfg
 		Col : out  STD_LOGIC_VECTOR (3 downto 0);--dfhdfg1
