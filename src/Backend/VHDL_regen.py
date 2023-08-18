@@ -1,12 +1,22 @@
 
 class VHDL_regen():
+    """
+    This class has the purpose to regenerate VHDL files using the list of the components of the class HDL.
+    """
     def libraries(self, file, libraries):
+        """
+        This method is used to regenerate the libraries of VHDL. Library std_logic_1164 is included by default.
+        Input:
+            - libraries: a list of libraries used in VHDL
+        Return:
+            - one string with libraries generated
+        """
         output = "library IEEE;\nuse IEEE.std_logic_1164.all;\n"
         for lib in libraries:
             output = "use IEEE." + lib + ".all;\n"
         return output
 
-    def architecture(self, name_ent, generics=[], ports=[], comments=[], entity=[], component=False, copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext=""):
+    def architecture(self, name_ent, generics=[], ports=[], comments=[], entity=[], component=False, copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", default_config=""):
         output = "architecture arch_" + name_ent + " of " + name_ent + " is\n\n"
         if component is True:
             output += self.component(ports, generics, comments, name_ent, copy,
@@ -18,6 +28,7 @@ class VHDL_regen():
             output += "\nbegin\n"
             output += self.implementation(name_ent, generics, ports, ftext,
                                           etext, tab_space_cfg, uppercase_port_cfg, uppercase_gen_cfg)
+        output += "\n" + default_config + "\n\n"
         output += "end architecture arch_" + name_ent + ";"
         return output
 
@@ -269,36 +280,45 @@ class VHDL_regen():
         return output
 
     def implementation(self, name,  generics, ports, ftext, etext, tab_spaces_cfg, uppercase_port_cfg, uppercase_gen_cfg, N=0):
+        """
+        This method defines the implementation of the code in the testbench
+
+        """
 
         output = "\n" + name[:-3] + "_inst : " + name + "\n"
-        if generics != []:
+
+        # This part defines the implementation of the generics
+        if generics != []:      # analize if there are generics
+
+            # Calculates the number of characters of the more longer name in generics
             lon_max = 0
             for generic_len in generics:
-                if type(generic_len[0]) is list:
-                    for i in generic_len[0]:
+                if type(generic_len[0]) is list:    # this part is refered to the option of the nested generics in the list
+                    for i in generic_len[0]:        # in the implementation is not contemplate the nested generics
                         lon = len(i)
                         if lon_max <= lon:
                             lon_max = lon
-                else:
+                else:               # if there are not nested generic names, the length is direct
                     lon = len(generic_len[0])
                 if lon_max <= lon:
                     lon_max = lon
 
+            # Ahead is the implementation of the generic map
             cont_gen = 1
             output += self.tab_spaces(tab_spaces_cfg, N+1) + "generic map (\n"
             for generic in generics:
                 if type(generic[0]) is list:
-                    for i in generic[0]:
+                    for i in generic[0]:        # this part individualize the nested generics
                         output += self.tab_spaces(tab_spaces_cfg, N+2) + \
                             self.uppercase(uppercase_gen_cfg, i)
-                        for j in range(lon_max - len(i)):
+                        for j in range(lon_max - len(i)):       # this part add spaces to align the generic map
                             output += " "
                         output += self.tab_spaces(tab_spaces_cfg, N+1) + " => " + self.tab_spaces(
                             tab_spaces_cfg, N+1) + self.uppercase(uppercase_gen_cfg, i)
                         if cont_gen != len(generics):
                             output += ",\n"
                         cont_gen += 1
-                else:
+                else:       # this part regenerate non-nested generics
                     output += self.tab_spaces(tab_spaces_cfg, N+2) + \
                         self.uppercase(uppercase_gen_cfg, generic[0])
                     for j in range(lon_max - len(generic[0])):
@@ -306,10 +326,10 @@ class VHDL_regen():
                     output += self.tab_spaces(tab_spaces_cfg, N+1) + " => " + self.tab_spaces(
                         tab_spaces_cfg, N+1) + self.uppercase(uppercase_gen_cfg, generic[0])
 
-                if cont_gen != len(generics):
+                if cont_gen != len(generics): # this part add at the end ',' if it's not the final generic
                     output += ","
 
-                output += "\n"
+                output += "\n"  # This line add a line jumping at the end of the line
                 cont_gen += 1
             output += self.tab_spaces(tab_spaces_cfg, N+1) + ")\n"
 
@@ -364,13 +384,13 @@ class VHDL_regen():
     def signals(self, ports, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, ftext, etext, N=0):
 
         if ports != []:
-            lon_max = 0
+            lon_max = 0     # check the maximum number of characters in the longer port
             for port_len in ports:
                 lon = 0
                 if type(port_len[0]) is list:
                     cont_port = 1
                     for i in port_len[0]:
-                        lon += len(i)
+                        lon += len(i) + len(ftext) + len(etext)
                         if cont_port != len(port_len[0]):
                             lon += 2
                         cont_port += 1
@@ -380,10 +400,10 @@ class VHDL_regen():
                 if lon_max <= lon:
                     lon_max = lon
 
-            output = ""
-            for port in ports:
+            output = ""     # define the writtable variable
+            for port in ports:      
                 output += self.tab_spaces(tab_space_cfg, N) + "signal "
-                if type(port[0]) is list:
+                if type(port[0]) is list:       # check if the port is nested
                     cont = 1
                     for i in port[0]:
                         output += ftext + \
@@ -395,17 +415,18 @@ class VHDL_regen():
                     output += ftext + \
                         self.uppercase(uppercase_port_cfg, port[0]) + etext
 
-                if type(port[0]) is list:
+                if type(port[0]) is list:       # this part adds spaces 
                     lon_port = 0
                     cont_aux = 1
                     for i in port[0]:
-                        lon_port += len(i)
+                        lon_port += len(i) + len(ftext) + len(etext)
                         if cont_aux != len(port[0]):
                             lon_port += 2
+                            cont_aux += 1
                     for j in range(lon_max-lon_port):
                         output += " "
                 else:
-                    for j in range(lon_max - len(port[0])):
+                    for j in range(lon_max - len(port[0]) -len(etext) - len(ftext)):
                         output += " "
 
                 output += " : "

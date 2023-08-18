@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>476</width>
-    <height>621</height>
+    <height>636</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -179,8 +179,8 @@
   <widget class="QPushButton" name="pushButton_save">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>580</y>
+     <x>350</x>
+     <y>590</y>
      <width>91</width>
      <height>31</height>
     </rect>
@@ -192,8 +192,8 @@
   <widget class="QPushButton" name="pushButton_cancel">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>580</y>
+     <x>230</x>
+     <y>590</y>
      <width>91</width>
      <height>31</height>
     </rect>
@@ -205,7 +205,7 @@
   <widget class="QTextEdit" name="textEdit_default_config">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>20</x>
      <y>460</y>
      <width>411</width>
      <height>111</height>
@@ -228,8 +228,8 @@
   <widget class="QLabel" name="label_config_file">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>550</y>
+     <x>200</x>
+     <y>530</y>
      <width>221</width>
      <height>31</height>
     </rect>
@@ -323,6 +323,19 @@
     </property>
    </widget>
   </widget>
+  <widget class="QCheckBox" name="checkBox_tool_coments">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>590</y>
+     <width>181</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Tool comments</string>
+   </property>
+  </widget>
   <zorder>groupBox</zorder>
   <zorder>groupBox_version</zorder>
   <zorder>groupBox_tab_space</zorder>
@@ -333,6 +346,7 @@
   <zorder>textEdit_default_config</zorder>
   <zorder>label_2</zorder>
   <zorder>label_config_file</zorder>
+  <zorder>checkBox_tool_coments</zorder>
  </widget>
  <resources/>
  <connections/>

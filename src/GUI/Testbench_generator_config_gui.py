@@ -32,6 +32,7 @@ class Testbench_generator_config_gui(QDialog):
             self.uppercase_ports = self.data["Testbench_generator"][0]["uppercase_ports"]
             self.default_config = self.data["Testbench_generator"][0]["default_config"]
             self.comments = self.data["Testbench_generator"][0]["comments"]
+            self.tool_comments = self.data["Testbench_generator"][0]["tool_comments"]
         except:
             self.ui.pushButton_save.setEnabled(False)
             self.ui.groupBox_tab_space.setEnabled(False)
@@ -40,8 +41,10 @@ class Testbench_generator_config_gui(QDialog):
             self.ui.checkBox_comments.setEnabled(False)
             self.ui.checkBox_uppercase_generics.setEnabled(False)
             self.ui.checkBox_uppercase_ports.setEnabled(False)
-            self.ui.textEdit_default_config.setEnabled(False )
+            self.ui.textEdit_default_config.setEnabled(False)
+            self.ui.checkBox_tool_coments.setEnabled(False)
             self.ui.label_config_file.setText("configuration.json doesn't exist")
+            self.ui.groupBox.setEnabled(False)
             self.version = "87"
             self.tab_spaces = "tab"
             self.spaces = "4"
@@ -52,6 +55,7 @@ class Testbench_generator_config_gui(QDialog):
             self.uppercase_ports = "False"
             self.default_config = ""
             self.comments = "False"
+            self.tool_comments = "True"
             
 
     def load_config(self):
@@ -104,6 +108,10 @@ class Testbench_generator_config_gui(QDialog):
         else:
             self.ui.checkBox_comments.setChecked(False) 
 
+        if self.tool_comments == "True":
+            self.ui.checkBox_tool_coments.setChecked(True)
+        else:
+            self.ui.checkBox_tool_coments.setChecked(False)
         self.ui.textEdit_default_config.setText(self.default_config)
 
 
@@ -171,6 +179,12 @@ class Testbench_generator_config_gui(QDialog):
             self.data["Testbench_generator"][0]["comments"] = "True"
         else:
             self.data["Testbench_generator"][0]["comments"] = "False"
+
+        if self.ui.checkBox_tool_coments.isChecked() == True:
+            self.data["Testbench_generator"][0]["tool_comments"] = "True"
+        else:
+            self.data["Testbench_generator"][0]["tool_comments"] = "False"
+
 
         self.data["Testbench_generator"][0]["default_config"] = self.ui.textEdit_default_config.toPlainText()
 
