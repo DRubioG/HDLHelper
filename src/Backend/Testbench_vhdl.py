@@ -1,6 +1,6 @@
 from Backend.HDL import *
 from Backend.VHDL_regen import *
-import json, datetime
+import json, datetime, os
 
 
 class Testbench_vhdl():
@@ -83,6 +83,7 @@ class Testbench_vhdl():
 
         self.open_file(self.file_output)    # generates the testbench file
         name = self.file_output[:-4]        # extract the name of the file
+        _, name = os.path.split(name)
         output = self.write_tool_comments() # insert the tool comments  
         output += self.write_libraries()    # write the libraries of the testbench file
         output += self.write_entity(name)   # write the entity part
@@ -166,7 +167,7 @@ class Testbench_vhdl():
         Return:
             - string with all the architecture part written
         """
-        output = self.regen.architecture(name, generics=generics, ports=ports, comments=comments, entity=entity, component=True, copy=copy_flag,
+        output = self.regen.architecture(name, generics=generics, ports=ports, comments=comments, entity=entity, vhdl_version=self.vhdl_version, component=True, copy=copy_flag,
                                          uppercase_gen_cfg=self.uppercase_generics, uppercase_port_cfg=self.uppercase_ports, tab_space_cfg=self.tab_spaces, 
                                          etext=self.etext, ftext=self.ftext, default_config=self.default_config)
 

@@ -13,10 +13,10 @@
     ],
     "Testbench_generator": [
         {
-            "version": "87",
+            "version": "Mixed",
             "tab_spaces": "tab",
             "spaces": "4",
-            "ftext": "",
+            "ftext": "a_",
             "etext": "_i",
             "copy": "False",
             "uppercase_generics": "True",

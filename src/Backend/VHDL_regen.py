@@ -16,20 +16,52 @@ class VHDL_regen():
             output = "use IEEE." + lib + ".all;\n"
         return output
 
-    def architecture(self, name_ent, generics=[], ports=[], comments=[], entity=[], component=False, copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", default_config=""):
+    def architecture(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="Mixed", component=False, copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", default_config=""):
         output = "architecture arch_" + name_ent + " of " + name_ent + " is\n\n"
-        if component is True:
-            output += self.component(ports, generics, comments, name_ent, copy,
-                                     entity, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, comments)
-            output += self.constants(generics,
-                                     tab_space_cfg, uppercase_gen_cfg)
-            output += self.signals(ports, uppercase_port_cfg,
-                                   uppercase_gen_cfg, tab_space_cfg, ftext, etext)
-            output += "\nbegin\n"
-            output += self.implementation(name_ent, generics, ports, ftext,
-                                          etext, tab_space_cfg, uppercase_port_cfg, uppercase_gen_cfg)
+
+        if component is True and vhdl_version == "Mixed":
+            output += self.arch_Mixed(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, default_config)
+        elif component is True and vhdl_version == "87":
+            output += self.arch_87(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, default_config)
+        elif component is True and vhdl_version == "93":
+            output += self.arch_93(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, default_config)
+
         output += "\n" + default_config + "\n\n"
         output += "end architecture arch_" + name_ent + ";"
+        return output
+    
+    def arch_Mixed(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="Mixed", copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", default_config=""):
+        output = self.component(ports, generics, comments, name_ent, copy,
+                                    entity, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, comments)
+        output += self.constants(generics,
+                                    tab_space_cfg, uppercase_gen_cfg)
+        output += self.signals(ports, uppercase_port_cfg,
+                                uppercase_gen_cfg, tab_space_cfg, ftext, etext)
+        output += "\nbegin\n"
+        output += self.implementation(name_ent, generics, ports, ftext,
+                                        etext, tab_space_cfg, uppercase_port_cfg, uppercase_gen_cfg, vhdl_version)
+        return output
+    
+    def arch_87(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="87", copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", default_config=""):
+        output = self.component(ports, generics, comments, name_ent, copy,
+                                    entity, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, comments)
+        output += self.constants(generics,
+                                    tab_space_cfg, uppercase_gen_cfg)
+        output += self.signals(ports, uppercase_port_cfg,
+                                uppercase_gen_cfg, tab_space_cfg, ftext, etext)
+        output += "\nbegin\n"
+        output += self.implementation(name_ent, generics, ports, ftext,
+                                        etext, tab_space_cfg, uppercase_port_cfg, uppercase_gen_cfg, vhdl_version)
+        return output
+    
+    def arch_93(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="93", copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", default_config=""):
+        output = self.constants(generics,
+                                    tab_space_cfg, uppercase_gen_cfg)
+        output += self.signals(ports, uppercase_port_cfg,
+                                uppercase_gen_cfg, tab_space_cfg, ftext, etext)
+        output += "\nbegin\n"
+        output += self.implementation(name_ent, generics, ports, ftext,
+                                        etext, tab_space_cfg, uppercase_port_cfg, uppercase_gen_cfg, vhdl_version)
         return output
 
     def entity(self, name, generics=[], ports=[], comments=[], uppercase_gen_cfg="", uppercase_port_cfg="", tab_spaces_cfg="", comments_cfg=""):
@@ -279,7 +311,7 @@ class VHDL_regen():
         output += "end component;\n\n"
         return output
 
-    def implementation(self, name,  generics, ports, ftext, etext, tab_spaces_cfg, uppercase_port_cfg, uppercase_gen_cfg, N=0):
+    def implementation(self, name,  generics, ports, ftext, etext, tab_spaces_cfg, uppercase_port_cfg, uppercase_gen_cfg, vhdl_version, N=0):
         """
         This method defines the implementation of the code in the testbench
 
@@ -311,25 +343,29 @@ class VHDL_regen():
                     for i in generic[0]:        # this part individualize the nested generics
                         output += self.tab_spaces(tab_spaces_cfg, N+2) + \
                             self.uppercase(uppercase_gen_cfg, i)
-                        for j in range(lon_max - len(i)):       # this part add spaces to align the generic map
-                            output += " "
-                        output += self.tab_spaces(tab_spaces_cfg, N+1) + " => " + self.tab_spaces(
-                            tab_spaces_cfg, N+1) + self.uppercase(uppercase_gen_cfg, i)
+                        if vhdl_version != "87":
+                            for j in range(lon_max - len(i)):       # this part add spaces to align the generic map
+                                output += " "
+                            output += self.tab_spaces(tab_spaces_cfg, N+1) + " => " + self.tab_spaces(
+                                tab_spaces_cfg, N+1) + self.uppercase(uppercase_gen_cfg, i)
                         if cont_gen != len(generics):
                             output += ",\n"
-                        cont_gen += 1
+                    # if cont_gen != len(generics): # this part add at the end ',' if it's not the final generic
+                    #     output += ","
+                    # cont_gen += 1
                 else:       # this part regenerate non-nested generics
                     output += self.tab_spaces(tab_spaces_cfg, N+2) + \
                         self.uppercase(uppercase_gen_cfg, generic[0])
-                    for j in range(lon_max - len(generic[0])):
-                        output += " "
-                    output += self.tab_spaces(tab_spaces_cfg, N+1) + " => " + self.tab_spaces(
-                        tab_spaces_cfg, N+1) + self.uppercase(uppercase_gen_cfg, generic[0])
+                    if vhdl_version != "87":
+                        for j in range(lon_max - len(generic[0])):
+                            output += " "
+                        output += self.tab_spaces(tab_spaces_cfg, N+1) + " => " + self.tab_spaces(
+                            tab_spaces_cfg, N+1) + self.uppercase(uppercase_gen_cfg, generic[0])
 
-                if cont_gen != len(generics): # this part add at the end ',' if it's not the final generic
-                    output += ","
+                    if cont_gen != len(generics): # this part add at the end ',' if it's not the final generic
+                        output += ","
 
-                output += "\n"  # This line add a line jumping at the end of the line
+                    output += "\n"  # This line add a line jumping at the end of the line
                 cont_gen += 1
             output += self.tab_spaces(tab_spaces_cfg, N+1) + ")\n"
 
@@ -354,21 +390,25 @@ class VHDL_regen():
                     for i in port[0]:
                         output += self.tab_spaces(tab_spaces_cfg, N+2) + \
                             self.uppercase(uppercase_port_cfg, i)
-                        for j in range(lon_max - len(i)):
-                            output += " "
-                        output += " => " + self.tab_spaces(tab_spaces_cfg, N+1) + ftext + self.uppercase(
-                            uppercase_port_cfg, i) + etext + ","
+                        if vhdl_version != "87":
+                            for j in range(lon_max - len(i)):
+                                output += " "
+                            output += " => " + self.tab_spaces(tab_spaces_cfg, N+1) + ftext + self.uppercase(
+                                uppercase_port_cfg, i) + etext
                         if cont != len(port[0]):
-                            output += "\n"
+                            output += ",\n"
                         cont += 1
+                    if cont_port != len(ports):
+                        output += ","
                     cont_port += 1
                 else:
                     output += self.tab_spaces(tab_spaces_cfg, N+2) + \
                         self.uppercase(uppercase_port_cfg, port[0])
-                    for j in range(lon_max - len(port[0])):
-                        output += " "
-                    output += " => " + self.tab_spaces(tab_spaces_cfg, N+1) + ftext + self.uppercase(
-                        uppercase_port_cfg, port[0][0]) + etext
+                    if vhdl_version != "87":
+                        for j in range(lon_max - len(port[0])):
+                            output += " "
+                        output += " => " + self.tab_spaces(tab_spaces_cfg, N+1) + ftext + self.uppercase(
+                            uppercase_port_cfg, port[0][0]) + etext
 
                     if cont_port != len(ports):
                         output += ","
@@ -390,12 +430,12 @@ class VHDL_regen():
                 if type(port_len[0]) is list:
                     cont_port = 1
                     for i in port_len[0]:
-                        lon += len(i) + len(ftext) + len(etext)
+                        lon += len(ftext) + len(i) + len(etext)
                         if cont_port != len(port_len[0]):
-                            lon += 2
+                            lon += 2        # add the space and coma to the next port
                         cont_port += 1
                 else:
-                    lon += len(port_len[0])
+                    lon += len(ftext) + len(port_len[0]) + len(etext)
 
                 if lon_max <= lon:
                     lon_max = lon

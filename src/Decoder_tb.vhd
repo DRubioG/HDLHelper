@@ -1,6 +1,6 @@
 -----------------------------------------------
 -- Created using HDLHelper 0.0
--- Create Date: 2023-09-06 17:49:52.792634
+-- Create Date: 2023-09-06 20:00:34.146766
 -----------------------------------------------
 
 library IEEE;
@@ -22,8 +22,7 @@ component Decoder_tb is
 		clk, rst, yhmm       	 : in  	std_logic;
 		Rowerererrererererere	 : in  	std_logic_vector((N-1) downto (N-2));
 		Col                  	 : out 	std_logic_vector(3 downto 0);
-		DecodeOut            	 : out 	std_logic_vector(3 downto 0)
-		);
+		DecodeOut            	 : out 	std_logic_vector(3 downto 0));
 end component;
 
 constant YFG6YUGIUKJ	 : integer;
@@ -31,10 +30,10 @@ constant U          	 : integer := 	32;
 constant N, T         	 : integer;
 constant GAD        	 : std_logic_vector := 	N-1;
 
-signal clk_i, rst_i, yhmm_i  : std_logic;
-signal Rowerererrererererere_i : std_logic_vector((N-1) downto (N-2));
-signal Col_i                 : std_logic_vector(3 downto 0);
-signal DecodeOut_i           : std_logic_vector(3 downto 0);
+signal a_clk_i, a_rst_i, a_yhmm_i : std_logic;
+signal a_Rowerererrererererere_i  : std_logic_vector((N-1) downto (N-2));
+signal a_Col_i                    : std_logic_vector(3 downto 0);
+signal a_DecodeOut_i              : std_logic_vector(3 downto 0);
 
 begin
 
@@ -44,15 +43,15 @@ Decoder_inst : Decoder_tb
 		U          	 => 	U,
 		N          	 => 	N,
 		T          	 => 	T,
-		GAD        	 => 	GAD,
+		GAD        	 => 	GAD
 	)
 	port map (
-		clk                    => 	clk_i,
-		rst                    => 	rst_i,
-		yhmm                   => 	yhmm_i,
-		Rowerererrererererere  => 	R_i,
-		Col                    => 	C_i,
-		DecodeOut              => 	D_i
+		clk                    => 	a_clk_i,
+		rst                    => 	a_rst_i,
+		yhmm                   => 	a_yhmm_i,
+		Rowerererrererererere  => 	a_R_i,
+		Col                    => 	a_C_i,
+		DecodeOut              => 	a_D_i
 	);
 
 	clk <= not(clk) after 5 ns;

@@ -293,7 +293,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Regenerate with the comments</string>
+     <string>Regenerate with comments</string>
     </property>
    </widget>
    <widget class="QRadioButton" name="radioButton_regenerate">

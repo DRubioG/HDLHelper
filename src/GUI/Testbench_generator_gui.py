@@ -60,6 +60,7 @@ class Testbench_generator_gui(QWidget):
         else:
             output = "/"
         self.file_output += output + self.file_input.replace(".", "_tb.")
+        
         relative_path = os.path.relpath(self.file_output, self.file_path)
         self.ui.lineEdit_output.setText(relative_path[3:])
 
