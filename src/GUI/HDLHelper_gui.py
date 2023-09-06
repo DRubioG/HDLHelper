@@ -6,6 +6,7 @@ from PyQt5.QtCore import QUrl
 
 from UI.HDLHelper_UI import *
 from GUI.Testbench_generator_gui import *
+from GUI.HDLHelper_preferences_gui import *
 
 from UI.StyleSheet.StyleSheet_testbench_generator import testbench_generator_gui
 
@@ -53,7 +54,7 @@ class HDLHelper_gui(QMainWindow):
 
         # Edit
         editMenu = menuBar.addMenu("Edit")
-        preferences = QAction('Preferences...', self)
+        preferences = QAction('Preferences', self)
         preferences.triggered.connect(self.preferences_fn)
         editMenu.addAction(preferences)
 
@@ -243,6 +244,8 @@ class HDLHelper_gui(QMainWindow):
         self.coming_soon()
 
     def preferences_fn(self):
+        # self.preferencies = HDLHelper_preferences_gui()
+        # self.preferencies.show()
         self.coming_soon()
 
     # Coming soon

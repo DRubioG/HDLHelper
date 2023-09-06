@@ -1,5 +1,16 @@
 {
     "version": "0.0",
+    "preferences":[
+        {
+            "tool_comments": "True",
+            "user": "",
+            "corporation": "",
+            "contact": "",
+            "user_version": "",
+            "tool_version": "True",
+            "date": "True"
+        }
+    ],
     "Testbench_generator": [
         {
             "version": "87",
@@ -8,10 +19,9 @@
             "ftext": "",
             "etext": "_i",
             "copy": "False",
-            "uppercase_generics": "False",
+            "uppercase_generics": "True",
             "uppercase_ports": "False",
             "default_config": "\tclk <= not(clk) after 5 ns;\n\trst <= '0', '1' after 20 ns;",
-            "tool_comments": "True",
             "comments": "True"
         }
     ]

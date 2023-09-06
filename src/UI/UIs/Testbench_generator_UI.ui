@@ -22,6 +22,11 @@
      <height>17</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>Input File</string>
    </property>
@@ -31,9 +36,14 @@
     <rect>
      <x>30</x>
      <y>140</y>
-     <width>70</width>
+     <width>81</width>
      <height>17</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>Output File</string>
@@ -68,6 +78,11 @@
      <height>36</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>search</string>
    </property>
@@ -80,6 +95,11 @@
      <width>95</width>
      <height>36</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>search</string>
@@ -94,6 +114,11 @@
      <height>36</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>Cancel</string>
    </property>
@@ -107,6 +132,11 @@
      <height>36</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <property name="text">
     <string>Create</string>
    </property>
@@ -119,6 +149,11 @@
      <width>95</width>
      <height>36</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>Config</string>

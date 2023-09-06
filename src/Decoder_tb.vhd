@@ -1,6 +1,6 @@
 -----------------------------------------------
--- Created using HDLHelper v0.0
--- Designer: 
+-- Created using HDLHelper 0.0
+-- Create Date: 2023-09-06 17:49:52.792634
 -----------------------------------------------
 
 library IEEE;
@@ -13,22 +13,23 @@ architecture arch_Decoder_tb of Decoder_tb is
 
 component Decoder_tb is
 	generic (
-		yfg6yugiukj	 : integer;
+		YFG6YUGIUKJ	 : integer;
 		U          	 : integer          := 	32;
 		N, T       	 : integer;
-		Gad        	 : std_logic_vector := 	N-1
+		GAD        	 : std_logic_vector := 	N-1
 	);
 	port (
 		clk, rst, yhmm       	 : in  	std_logic;
 		Rowerererrererererere	 : in  	std_logic_vector((N-1) downto (N-2));
 		Col                  	 : out 	std_logic_vector(3 downto 0);
-		DecodeOut            	 : out 	std_logic_vector(3 downto 0));
+		DecodeOut            	 : out 	std_logic_vector(3 downto 0)
+		);
 end component;
 
-constant yfg6yugiukj	 : integer;
+constant YFG6YUGIUKJ	 : integer;
 constant U          	 : integer := 	32;
 constant N, T         	 : integer;
-constant Gad        	 : std_logic_vector := 	N-1;
+constant GAD        	 : std_logic_vector := 	N-1;
 
 signal clk_i, rst_i, yhmm_i  : std_logic;
 signal Rowerererrererererere_i : std_logic_vector((N-1) downto (N-2));
@@ -39,11 +40,11 @@ begin
 
 Decoder_inst : Decoder_tb
 	generic map (
-		yfg6yugiukj	 => 	yfg6yugiukj,
+		YFG6YUGIUKJ	 => 	YFG6YUGIUKJ,
 		U          	 => 	U,
 		N          	 => 	N,
 		T          	 => 	T,
-		Gad        	 => 	Gad,
+		GAD        	 => 	GAD,
 	)
 	port map (
 		clk                    => 	clk_i,

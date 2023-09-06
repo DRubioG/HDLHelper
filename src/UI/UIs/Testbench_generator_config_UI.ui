@@ -228,9 +228,9 @@
   <widget class="QLabel" name="label_config_file">
    <property name="geometry">
     <rect>
-     <x>200</x>
-     <y>530</y>
-     <width>221</width>
+     <x>60</x>
+     <y>500</y>
+     <width>361</width>
      <height>31</height>
     </rect>
    </property>
@@ -262,7 +262,7 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>181</width>
+      <width>231</width>
       <height>23</height>
      </rect>
     </property>
@@ -275,7 +275,7 @@
      <rect>
       <x>10</x>
       <y>50</y>
-      <width>161</width>
+      <width>291</width>
       <height>23</height>
      </rect>
     </property>
@@ -288,7 +288,7 @@
      <rect>
       <x>10</x>
       <y>70</y>
-      <width>281</width>
+      <width>291</width>
       <height>23</height>
      </rect>
     </property>
@@ -301,7 +301,7 @@
      <rect>
       <x>10</x>
       <y>0</y>
-      <width>101</width>
+      <width>131</width>
       <height>23</height>
      </rect>
     </property>

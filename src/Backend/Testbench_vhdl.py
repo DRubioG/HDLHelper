@@ -1,6 +1,6 @@
 from Backend.HDL import *
 from Backend.VHDL_regen import *
-import json
+import json, datetime
 
 
 class Testbench_vhdl():
@@ -28,7 +28,17 @@ class Testbench_vhdl():
         try:
             file = open("./config/configuration.json", 'r')
             data = json.load(file)      # get the configuration parameters
-            self.version = data["Testbench_generator"][0]["version"]
+            self.version = data["version"]
+
+            self.tool_comments = data["preferences"][0]["tool_comments"]
+            self.user = data["preferences"][0]["user"]
+            self.corporation = data["preferences"][0]["corporation"]
+            self.contact = data["preferences"][0]["contact"]
+            self.user_version = data["preferences"][0]["user_version"]
+            self.tool_version_fl = data["preferences"][0]["tool_version"]
+            self.date_fl = data["preferences"][0]["date"]
+
+            self.vhdl_version = data["Testbench_generator"][0]["version"]
             self.tab_spaces = data["Testbench_generator"][0]["tab_spaces"]
             self.spaces = data["Testbench_generator"][0]["spaces"]
             self.ftext = data["Testbench_generator"][0]["ftext"]
@@ -37,9 +47,18 @@ class Testbench_vhdl():
             self.uppercase_ports = data["Testbench_generator"][0]["uppercase_ports"]
             self.default_config = data["Testbench_generator"][0]["default_config"]
             self.comments_load = data["Testbench_generator"][0]["comments"]
-            self.tool_comments = data["Testbench_generator"][0]["tool_comments"]
         except:
-            self.version = "87"
+            self.version = "unkown"
+
+            self.tool_comments = "True"
+            self.user = ""
+            self.corporation = ""
+            self.contact = ""
+            self.user_version = ""
+            self.tool_version_fl = "False"
+            self.date_fl = "False"
+
+            self.vhdl_version = "87"
             self.tab_spaces = "tab"
             self.spaces = "4"
             self.ftext = ""
@@ -68,8 +87,8 @@ class Testbench_vhdl():
         output += self.write_libraries()    # write the libraries of the testbench file
         output += self.write_entity(name)   # write the entity part
         # write the architecture part
-        output += self.write_architecture(name, self.generics,
-                                          self.ports, self.comments, self.entity, self.default_config, copy=True)
+        output += self.write_architecture(name, self.generics, 
+                                          self.ports, self.comments, self.entity, self.default_config, copy_flag=True)
         self.close_file(output)     # close the file
 
 
@@ -86,7 +105,24 @@ class Testbench_vhdl():
         Return:
             - string with the initial comments
         """
-        return "-----------------------------------------------\n-- Created using HDLHelper "+ self.version + "\n-- Designer: " + "-----------------------------------------------"
+        if self.tool_comments == "True":
+            wr = "-----------------------------------------------\n"
+            if self.tool_version_fl == "True":
+                wr += "-- Created using HDLHelper "+ self.version + "\n"
+            if self.user != "":
+                wr += "-- User: " + self.user + "\n"
+            if self.date_fl == "True":
+                wr += "-- Create Date: " + str(datetime.datetime.now()) + "\n"
+            if self.corporation != "":
+                wr += "-- Corporation: " + self.corporation + "\n"
+            if self.contact != "":
+                wr += "-- Contact: " + self.contact + "\n"
+            if self.user_version != "":
+                wr += "-- Version: " + self.user_version + "\n"
+            wr += "-----------------------------------------------\n\n"
+            return wr
+        else:
+            return ""
 
 
     def write_libraries(self):
