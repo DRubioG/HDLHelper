@@ -49,8 +49,19 @@ class Testbench_generator_gui(QWidget):
 
         self.ui.lineEdit_input.setText(self.file_input)
         self.ui.lineEdit_output.setText(self.file_output)
+
+        self.overwriteButton()  # check if the file exists in the folder
+
         self.ui.pushButton_output.setEnabled(True)
         self.ui.pushButton_create.setEnabled(True)
+
+    def overwriteButton(self):
+        if os.path.exists(self.file_output) == True:
+            self.ui.pushButton_create.setText("Overwrite")
+            self.ui.pushButton_create.setStyleSheet("QPushButton#pushButton_create:hover{background-color: #f1a629}")
+        else:
+            self.ui.pushButton_create.setText("Create")
+            self.ui.pushButton_create.setStyleSheet("QPushButton#pushButton_create:hover{background-color: #5ce75f}")
 
     def seachOutputFile(self):
         outputfileDialog = QFileDialog()
@@ -60,6 +71,8 @@ class Testbench_generator_gui(QWidget):
         else:
             output = "/"
         self.file_output += output + self.file_input.replace(".", "_tb.")
+        
+        self.overwriteButton()      # check if the file exists in the folder
         
         relative_path = os.path.relpath(self.file_output, self.file_path)
         self.ui.lineEdit_output.setText(relative_path[3:])

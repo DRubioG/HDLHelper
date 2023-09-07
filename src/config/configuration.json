@@ -11,6 +11,12 @@
             "date": "True"
         }
     ],
+    "configuration":[
+        {
+            "splash_window": "True",
+            "overwrite_window": "True"
+        }
+    ],
     "Testbench_generator": [
         {
             "version": "Mixed",
