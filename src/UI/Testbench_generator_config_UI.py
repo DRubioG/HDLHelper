@@ -160,7 +160,7 @@ class Ui_testbench_generator_config(object):
         self.label_2.setText(_translate("testbench_generator_config", "Default configuration "))
         self.checkBox_uppercase_generics.setText(_translate("testbench_generator_config", "Uppercase for generics"))
         self.checkBox_uppercase_ports.setText(_translate("testbench_generator_config", "Uppercase for ports"))
-        self.checkBox_comments.setText(_translate("testbench_generator_config", "Regenerate with the comments"))
+        self.checkBox_comments.setText(_translate("testbench_generator_config", "Regenerate with comments"))
         self.radioButton_regenerate.setText(_translate("testbench_generator_config", "Regenerate"))
         self.radioButton_copy.setText(_translate("testbench_generator_config", "Copy"))
         self.checkBox_tool_coments.setText(_translate("testbench_generator_config", "Tool comments"))

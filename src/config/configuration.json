@@ -1,6 +1,6 @@
 {
     "version": "0.0",
-    "preferences":[
+    "preferences": [
         {
             "tool_comments": "True",
             "user": "",
@@ -11,10 +11,10 @@
             "date": "True"
         }
     ],
-    "configuration":[
+    "configuration": [
         {
-            "splash_window": "True",
-            "overwrite_window": "True"
+            "overwrite_window": "True",
+            "new_version_message": "True"
         }
     ],
     "Testbench_generator": [

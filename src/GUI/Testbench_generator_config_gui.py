@@ -59,6 +59,7 @@ class Testbench_generator_config_gui(QDialog):
             
 
     def load_config(self):
+        self.ui.radioButton_08.setCheckable(False)
         if self.version == "87":
             self.ui.radioButton_87.setChecked(True)
         elif self.version == "93":

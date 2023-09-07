@@ -21,7 +21,8 @@ class HDLHelper_preferences_gui(QWidget):
 
 
     def ok(self):
-        self.save_file()
+        # self.save_file()
+        pass
 
     def cancel(self):
         self.close()

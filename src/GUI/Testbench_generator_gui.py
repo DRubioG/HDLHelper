@@ -7,6 +7,7 @@ from UI.Testbench_generator_UI import *
 from UI.StyleSheet.StyleSheet_testbench_generator import testbench_generator_gui
 
 from GUI.Testbench_generator_config_gui import *
+from GUI.Testbench_overwrite_gui import *
 
 from Backend.HDLHelper import *
 
@@ -57,9 +58,11 @@ class Testbench_generator_gui(QWidget):
 
     def overwriteButton(self):
         if os.path.exists(self.file_output) == True:
+            self.overwrite = 1
             self.ui.pushButton_create.setText("Overwrite")
             self.ui.pushButton_create.setStyleSheet("QPushButton#pushButton_create:hover{background-color: #f1a629}")
         else:
+            self.overwrite = 0
             self.ui.pushButton_create.setText("Create")
             self.ui.pushButton_create.setStyleSheet("QPushButton#pushButton_create:hover{background-color: #5ce75f}")
 
@@ -81,10 +84,15 @@ class Testbench_generator_gui(QWidget):
         self.testbench_generator_config = Testbench_generator_config_gui()
 
     def createFile(self):
-
-        self.hdlhelper = HDLHelper(
-            self.file_path, self.file_output, "testbench")
-        self.close()
+        if self.overwrite == 1:
+            self.overwrite_config = Testbench_overwrite_gui()
+            self.hdlhelper = HDLHelper(
+                self.file_path, self.file_output, "testbench")
+            self.close()
+        else:
+            self.hdlhelper = HDLHelper(
+                    self.file_path, self.file_output, "testbench")
+            self.close()
 
     def cancelOperation(self):
         self.close()

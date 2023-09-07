@@ -7,6 +7,7 @@ from PyQt5.QtCore import QUrl
 from UI.HDLHelper_UI import *
 from GUI.Testbench_generator_gui import *
 from GUI.HDLHelper_preferences_gui import *
+from GUI.Dialog_new_version_gui import *
 
 from UI.StyleSheet.StyleSheet_testbench_generator import testbench_generator_gui
 
@@ -127,6 +128,11 @@ class HDLHelper_gui(QMainWindow):
         """
         statusbar = self.statusBar()        # create an object for the status bar
 
+        version_tag = self.check_new_version()
+        # add a version or a message
+        statusbar.addPermanentWidget(QLabel(version_tag))
+
+    def check_new_version(self):
         # this part checks if there are a new version of HDLHelper on GitHub
         try:
             import requests
@@ -150,8 +156,10 @@ class HDLHelper_gui(QMainWindow):
         else:
             version_tag = "<a href ='https://github.com/DRubioG/HDLHelper'>New version available(" + \
                 version_act + " -> " + new_version + ")[copy link]</a>"
-        # add a version or a message
-        statusbar.addPermanentWidget(QLabel(version_tag))
+            self.new_version = Dialog_new_version_gui(version_act, new_version)
+
+        return version_tag
+        
 
 
     def connections(self):
