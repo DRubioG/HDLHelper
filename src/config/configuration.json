@@ -28,7 +28,8 @@
             "uppercase_generics": "True",
             "uppercase_ports": "False",
             "default_config": "\tclk <= not(clk) after 5 ns;\n\trst <= '0', '1' after 20 ns;",
-            "comments": "True"
+            "comments": "True",
+            "split_signal_constant": "True"
         }
     ]
 }

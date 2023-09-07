@@ -16,6 +16,9 @@ class HDL():
         self.init()
     
     def init(self):
+        """
+        This method checks type of the file and applies specific configuration
+        """
         if self.file_input[-4:] == ".vhd":
             self.hdl = VHDL(self.file_input)
             ports, generics, comments, entity = self.hdl.get_list()

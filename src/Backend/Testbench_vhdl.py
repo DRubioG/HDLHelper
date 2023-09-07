@@ -47,6 +47,7 @@ class Testbench_vhdl():
             self.uppercase_ports = data["Testbench_generator"][0]["uppercase_ports"]
             self.default_config = data["Testbench_generator"][0]["default_config"]
             self.comments_load = data["Testbench_generator"][0]["comments"]
+            self.split_signal_constant = self.data["Testbench_generator"][0]["split_signal_constant"]
         except:
             self.version = "unkown"
 
@@ -66,7 +67,7 @@ class Testbench_vhdl():
             self.uppercase_generics = "True"
             self.uppercase_ports = "False"
             self.comments_load = "False"
-
+            self.split_signal_constant = "True"
 
     def testbench(self):
         """
@@ -169,7 +170,7 @@ class Testbench_vhdl():
         """
         output = self.regen.architecture(name, generics=generics, ports=ports, comments=comments, entity=entity, vhdl_version=self.vhdl_version, component=True, copy=copy_flag,
                                          uppercase_gen_cfg=self.uppercase_generics, uppercase_port_cfg=self.uppercase_ports, tab_space_cfg=self.tab_spaces, 
-                                         etext=self.etext, ftext=self.ftext, default_config=self.default_config)
+                                         etext=self.etext, ftext=self.ftext, default_config=self.default_config, split_signal_constant=self.split_signal_constant)
 
         return output
 

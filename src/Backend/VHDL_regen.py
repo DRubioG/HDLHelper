@@ -3,6 +3,7 @@ class VHDL_regen():
     """
     This class has the purpose to regenerate VHDL files using the list of the components of the class HDL.
     """
+
     def libraries(self, file, libraries):
         """
         This method is used to regenerate the libraries of VHDL. Library std_logic_1164 is included by default.
@@ -16,64 +17,165 @@ class VHDL_regen():
             output = "use IEEE." + lib + ".all;\n"
         return output
 
-    def architecture(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="Mixed", component=False, copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", default_config=""):
+    def architecture(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="Mixed", component=False, copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", default_config="", split_signal_constant="True"):
+        """
+        This method creates an VHDL architecture
+        Input:
+            - name_ent: string with the name of the architecture
+            - generics: list with generics
+            - ports: list with ports
+            - comments: list with comments
+            - entity: list with the entity
+            - vhdl_version: string with VHDL version
+            - component: flag that marks if there are a compenent in architecture
+            - copy: flag about if the entity is a copy
+            - uppercase_gen_cfg: flag about if generics has to be in uppers
+            - uppercase_port_cfg: flag about if ports has to be in uppers
+            - tab_space_cfg: flag about the type separation in code
+            - ftext: string with the previous part of the signals
+            - etext: string with the forward part of the signals
+            - default_config: <unkown>
+        Return:
+            - output: string with the architecture created
+        """
         output = "architecture arch_" + name_ent + " of " + name_ent + " is\n\n"
 
+        # different options of architecture type
         if component is True and vhdl_version == "Mixed":
-            output += self.arch_Mixed(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, default_config)
+            output += self.arch_Mixed(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, default_config, split_signal_constant)
         elif component is True and vhdl_version == "87":
-            output += self.arch_87(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, default_config)
+            output += self.arch_87(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, default_config, split_signal_constant)
         elif component is True and vhdl_version == "93":
-            output += self.arch_93(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, default_config)
+            output += self.arch_93(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, default_config, split_signal_constant)
 
         output += "\n" + default_config + "\n\n"
         output += "end architecture arch_" + name_ent + ";"
         return output
     
-    def arch_Mixed(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="Mixed", copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", default_config=""):
+    def arch_Mixed(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="Mixed", copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", default_config="", split_signal_constant="True"):
+        """
+        This method creates a mixed option VHDL architecture
+        Input:
+            - name_ent: string with the name of the architecture
+            - generics: list with generics
+            - ports: list with ports
+            - comments: list with comments
+            - entity: list with the entity
+            - vhdl_version: string with VHDL version
+            - copy: flag about if the entity is a copy
+            - uppercase_gen_cfg: flag about if generics has to be in uppers
+            - uppercase_port_cfg: flag about if ports has to be in uppers
+            - tab_space_cfg: flag about the type separation in code
+            - ftext: string with the previous part of the signals
+            - etext: string with the forward part of the signals
+            - default_config: <unkown>
+        Return:
+            - output: string with the architecture created
+        """
         output = self.component(ports, generics, comments, name_ent, copy,
                                     entity, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, comments)
         output += self.constants(generics,
-                                    tab_space_cfg, uppercase_gen_cfg)
+                                    tab_space_cfg, uppercase_gen_cfg, split_signal_constant)
         output += self.signals(ports, uppercase_port_cfg,
-                                uppercase_gen_cfg, tab_space_cfg, ftext, etext)
+                                uppercase_gen_cfg, tab_space_cfg, ftext, etext, split_signal_constant)
         output += "\nbegin\n"
         output += self.implementation(name_ent, generics, ports, ftext,
                                         etext, tab_space_cfg, uppercase_port_cfg, uppercase_gen_cfg, vhdl_version)
         return output
     
-    def arch_87(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="87", copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", default_config=""):
+    def arch_87(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="87", copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", default_config="", split_signal_constant="True"):
+        """
+        This method creates a '87 option VHDL architecture
+        Input:
+            - name_ent: string with the name of the architecture
+            - generics: list with generics
+            - ports: list with ports
+            - comments: list with comments
+            - entity: list with the entity
+            - vhdl_version: string with VHDL version
+            - copy: flag about if the entity is a copy
+            - uppercase_gen_cfg: flag about if generics has to be in uppers
+            - uppercase_port_cfg: flag about if ports has to be in uppers
+            - tab_space_cfg: flag about the type separation in code
+            - ftext: string with the previous part of the signals
+            - etext: string with the forward part of the signals
+            - default_config: <unkown>
+        Return:
+            - output: string with the architecture created
+        """
         output = self.component(ports, generics, comments, name_ent, copy,
                                     entity, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, comments)
         output += self.constants(generics,
-                                    tab_space_cfg, uppercase_gen_cfg)
+                                    tab_space_cfg, uppercase_gen_cfg, split_signal_constant)
         output += self.signals(ports, uppercase_port_cfg,
-                                uppercase_gen_cfg, tab_space_cfg, ftext, etext)
+                                uppercase_gen_cfg, tab_space_cfg, ftext, etext, split_signal_constant)
         output += "\nbegin\n"
         output += self.implementation(name_ent, generics, ports, ftext,
                                         etext, tab_space_cfg, uppercase_port_cfg, uppercase_gen_cfg, vhdl_version)
         return output
     
-    def arch_93(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="93", copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", default_config=""):
-        output = self.constants(generics,
-                                    tab_space_cfg, uppercase_gen_cfg)
-        output += self.signals(ports, uppercase_port_cfg,
-                                uppercase_gen_cfg, tab_space_cfg, ftext, etext)
+    def arch_93(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="93", 
+                copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", 
+                ftext="", etext="", default_config="", split_signal_constant="True"):
+        """
+        This method creates a '93 option VHDL architecture
+        Input:
+            - name_ent: string with the name of the architecture
+            - generics: list with generics
+            - ports: list with ports
+            - comments: list with comments
+            - entity: list with the entity
+            - vhdl_version: string with VHDL version
+            - copy: flag about if the entity is a copy
+            - uppercase_gen_cfg: flag about if generics has to be in uppers
+            - uppercase_port_cfg: flag about if ports has to be in uppers
+            - tab_space_cfg: flag about the type separation in code
+            - ftext: string with the previous part of the signals
+            - etext: string with the forward part of the signals
+            - default_config: <unkown>
+        Return:
+            - output: string with the architecture created
+        """
+        output = self.constants(generics, tab_space_cfg, uppercase_gen_cfg, split_signal_constant)
+        output += self.signals(ports, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, ftext, etext, split_signal_constant)
         output += "\nbegin\n"
-        output += self.implementation(name_ent, generics, ports, ftext,
-                                        etext, tab_space_cfg, uppercase_port_cfg, uppercase_gen_cfg, vhdl_version)
+        output += self.implementation(name_ent, generics, ports, ftext, 
+                                      etext, tab_space_cfg, uppercase_port_cfg, uppercase_gen_cfg, vhdl_version)
         return output
 
-    def entity(self, name, generics=[], ports=[], comments=[], uppercase_gen_cfg="", uppercase_port_cfg="", tab_spaces_cfg="", comments_cfg=""):
-        output = "\nentity " + name + " is\n"
+
+    def entity(self, name_ent, generics=[], ports=[], comments=[], uppercase_gen_cfg="", uppercase_port_cfg="", tab_spaces_cfg="", comments_cfg=""):
+        """
+        This method creates an VHDL entity
+        Input:
+            - name_ent: string with the name of the architecture
+            - generics: list with generics
+            - ports: list with ports
+            - comments: list with comments
+            - uppercase_gen_cfg: flag about if generics has to be in uppers
+            - uppercase_port_cfg: flag about if ports has to be in uppers
+        Return:
+            - output: string with the architecture created
+        """
+        output = "architecture arch_" + name_ent + " of " + name_ent + " is\n\n"
+        output = "\nentity " + name_ent + " is\n"
         output += self.generics(generics, comments,
                                 uppercase_gen_cfg, tab_spaces_cfg, comments_cfg)
         output += self.ports(ports, comments, uppercase_port_cfg,
                              uppercase_gen_cfg, tab_spaces_cfg, comments)
-        output += "end entity " + name + ";\n\n"
+        output += "end entity " + name_ent + ";\n\n"
         return output
 
+
     def tab_spaces(self, type,  num):
+        """
+        This method separates code using spaces or tabulations
+        Input:
+            - type: flag with the separation option
+            - num: number of spaces needs
+        Return:
+            - output: string with the separation elected
+        """
         output = ""
         if type == "tab":
             type = "\t"
@@ -81,12 +183,35 @@ class VHDL_regen():
             output += type
         return output
 
+
     def uppercase(self, uppercase_conf, variable):
+        """
+        This method change to uppers if the option is elected
+        Input:
+            - uppercase_conf: flag with the option elected
+            - variable: string that could be changed
+        Return:
+            - variable: string with the option elected
+        """
         if uppercase_conf == "True":
             return variable.upper()
         return variable
 
+
     def generics(self, generics, comments, uppercase_cfg, tab_spaces_cfg, comment_cfg, N=1):
+        """
+        This method creates a generic part of an VHDL file
+        Input:
+            - generics: list with generics
+            - comments: list with comments
+            - uppercase_cfg: flag about use upperscase in generics
+            - tab_spaces: flag about use tabs or spaces
+            - comments_cfg: flag about create generics with comments
+            - N: integer with number of tabs/spaces
+        Return:
+            - output: string with generics created
+        """
+
         output = ""
         if generics != []:
 
@@ -183,7 +308,22 @@ class VHDL_regen():
             output += self.tab_spaces(tab_spaces_cfg, N) + ");" + "\n"
         return output
 
+
     def ports(self, ports, comments, uppercase_port_cfg, uppercase_gen_cfg, tab_spaces_cfg, comment_cfg, N=1):
+        """
+        This method creates a ports part of an VHDL file
+        Input:
+            - ports: list with ports
+            - comments: list with comments
+            - uppercase_port_cfg: flag about use upperscase in ports
+            - uppercase_gen_cfg: flag about use upperscase in generics
+            - tab_spaces_cfg: flag about use tabs or spaces
+            - comments_cfg: flag about create generics with comments
+            - N: integer with number of tabs/spaces
+        Return:
+            - output: string with ports created
+        """
+
         output = ""
         if ports != []:
 
@@ -293,7 +433,23 @@ class VHDL_regen():
 
         return output
 
+
     def component(self, ports, generics, comments, name, copy, entity, uppercase_port_cfg, uppercase_gen_cfg, tab_spaces_cfg, comment_cfg):
+        """
+        This method creates a component in VHDL
+        Input:
+            - ports: list with ports
+            - generics: list with generics
+            - name: name of the component
+            - copy: flag of direct copy
+            - entity: list with the entity to paste in file, only if copy flag is "True"
+            - uppercase_port_cfg: flag about using uppercase in ports
+            - uppercase_gen_cfg: flag about using uppercase in generics
+            - tab_spaces_cfg: flag about using tab or spaces
+            - comment_cfg: flag about using comments in component
+        Return:
+            - output: string with component generated inside
+        """
         name = name.split("/")[-1]
         output = "component " + name + " is\n"
 
@@ -311,10 +467,23 @@ class VHDL_regen():
         output += "end component;\n\n"
         return output
 
+
     def implementation(self, name,  generics, ports, ftext, etext, tab_spaces_cfg, uppercase_port_cfg, uppercase_gen_cfg, vhdl_version, N=0):
         """
         This method defines the implementation of the code in the testbench
-
+        Input:
+            - name: name of the instance
+            - generics: list with generics
+            - ports: list with ports
+            - ftext: string previous to ports
+            - etext: string forward to ports
+            - tab_spaces_cfg: flag about using tabs or spaces
+            - uppercase_port_cfg: flag about using uppercase in ports
+            - uppercase_gen_cfg: flag about using uppercase in generics
+            - vhdl_version: flag about version of vhdl elected
+            - N: number of tab/spaces
+        Return:
+            - output: string with the implementation inside
         """
 
         output = "\n" + name[:-3] + "_inst : " + name + "\n"
@@ -421,7 +590,21 @@ class VHDL_regen():
 
         return output
 
-    def signals(self, ports, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, ftext, etext, N=0):
+
+    def signals(self, ports, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, ftext, etext, split_signal_constant, N=0):
+        """
+        This method creates a signal from a port list
+        Input:
+            - ports: list with ports
+            - uppercase_port_cfg: flag about using uppercase in signals
+            - uppercase_gen_cfg: flag about using uppercase in the generics of the composed ports
+            - tab_space_cfg: flag about using tabs or spaces
+            - ftext: string previous a signal name
+            - etext: string forward a signal name
+            - N: number of tabs/spaces used
+        Return:
+            - output: string with signals inside
+        """
 
         if ports != []:
             lon_max = 0     # check the maximum number of characters in the longer port
@@ -480,9 +663,17 @@ class VHDL_regen():
 
             return output
 
-    def constants(self,
-                  generics, tab_config, upper_generics, N=1):
-
+    def constants(self, generics, tab_config, upper_generics, split_signal_constant, N=1):
+        """
+        This method generates constant using a list of generics
+        Input:
+            - generics: list of generics
+            - tab_config: flag about using tabs or spaces
+            - upper_generics: flag of using uppercase in generics
+            - N: number of tabs/spaces used
+        Return:
+            - output: string with constants inside
+        """
         if generics != []:
             output = ""
             lon_max = 0
@@ -524,7 +715,17 @@ class VHDL_regen():
 
             return output
 
+
     def paste_component(self, entity):
+        """
+        This method returns a component with a direct copy of an entity
+        Input:
+            - entity: list with the entity
+        Return:
+            - output: string with entity inside
+        """
         output = "\n"
         for i in entity:
             output += i + "\n"
+        
+        return output

@@ -1,7 +1,9 @@
 import os
 
-
 class VHDL():
+    """
+    This class is used to convert VHDL code to a Python list
+    """
     def __init__(self, file_input):
         self.file_input = file_input
         self.ports = []
@@ -9,11 +11,21 @@ class VHDL():
         self.comments = []
 
     def read_file(self):
+        """
+        This method is used to read VHDL file
+        Return:
+            - text: a list with VHDL lines of the file
+        """
         file = open(self.file_input, 'r')
         text = file.readlines()
         return text
 
     def get_entity(self):
+        """
+        This method split the entity part of the VHDL code
+        Return:
+            - entity: a list with the lines of the entity
+        """
         cont = 0
         entity = []
         entity_flag = 0
@@ -43,6 +55,13 @@ class VHDL():
         return entity
 
     def get_comments(self, code):
+        """
+        This method gets VHDL comments of the input list
+        Input:
+            - code: a list with VHDL line with comments
+        Return:
+            - entity: a list of comments and the number of the line too
+        """
         entity = []
 
         for comment_line in code:
@@ -56,6 +75,11 @@ class VHDL():
         return entity
 
     def get_generics(self, entity):
+        """
+        This method gets the generics of the list of lines of VHDL code
+        Input:
+            - entity: a list with the list of VHDL lines
+        """
         cont_generics = 0
         generic_flag = 0
         _generics = []
@@ -105,7 +129,13 @@ class VHDL():
 
             self.generics.append([name, type_, value, line])
 
+
     def get_ports(self, entity):
+        """
+        This method gets the port lines of the VHDL code
+        Input:
+            - entity: a list of the entity lines of VHDL code
+        """
         cont_ports = 0
         ports_flag = 0
         _ports = []
@@ -181,7 +211,11 @@ class VHDL():
 
             cont += 1
 
+
     def vhdl_list(self):
+        """
+        This method executes the necesary methods to get the differents part of an VHDL file
+        """
 
         # get entity
         entity_comments = self.get_entity()
@@ -197,7 +231,16 @@ class VHDL():
         # extract ports
         self.get_ports(entity)
 
+
     def get_list(self):
+        """
+        This method is called to get the parts of an VHDL file
+        Return:
+            - self.port: global list of ports in VHDL
+            - self.generics: global list of generics in VHDL 
+            - self.comments: global list of comments about VHDL file
+            - self.entity: global list of the literal entity
+        """
         self.vhdl_list()
         return self.ports, self.generics, self.comments, self.entity
 

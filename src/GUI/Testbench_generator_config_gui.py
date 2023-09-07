@@ -5,6 +5,9 @@ from UI.StyleSheet.StyleSheet_testbench_generator_config import testbench_genera
 import json
 
 class Testbench_generator_config_gui(QDialog):
+    """
+    This class executes the config interface
+    """
     def __init__(self):
         super().__init__()
         self.setStyleSheet(testbench_generator_config_gui)
@@ -17,6 +20,9 @@ class Testbench_generator_config_gui(QDialog):
 
 
     def open_config(self):
+        """
+        This method opens the config file
+        """
         try:
             file = open("./config/configuration.json", "r")
             self.data = json.load(file)
@@ -33,6 +39,7 @@ class Testbench_generator_config_gui(QDialog):
             self.default_config = self.data["Testbench_generator"][0]["default_config"]
             self.comments = self.data["Testbench_generator"][0]["comments"]
             self.tool_comments = self.data["Testbench_generator"][0]["tool_comments"]
+            self.split_signal_constant = self.data["Testbench_generator"][0]["split_signal_constant"]
         except:
             self.ui.pushButton_save.setEnabled(False)
             self.ui.groupBox_tab_space.setEnabled(False)
@@ -56,9 +63,13 @@ class Testbench_generator_config_gui(QDialog):
             self.default_config = ""
             self.comments = "False"
             self.tool_comments = "True"
+            self.split_signal_constant = "True"
             
 
     def load_config(self):
+        """
+        This method changes the user interface with the configuration 
+        """
         self.ui.radioButton_08.setCheckable(False)
         if self.version == "87":
             self.ui.radioButton_87.setChecked(True)
@@ -93,7 +104,11 @@ class Testbench_generator_config_gui(QDialog):
             self.ui.checkBox_uppercase_generics.setEnabled(True)
             self.ui.checkBox_uppercase_ports.setEnabled(True)
 
-        
+        if self.split_signal_constant == "True":
+            self.ui.checkBox_signal_constant.setChecked(True)
+        else:
+            self.ui.checkBox_signal_constant.setChecked(False)
+
         if self.uppercase_generics == "True":
             self.ui.checkBox_uppercase_generics.setChecked(True)
         else:
@@ -117,13 +132,20 @@ class Testbench_generator_config_gui(QDialog):
 
 
     def tab_space(self):
+        """
+        This method changes tab option
+        """
         if self.ui.radioButton_spaces.isChecked():
             self.ui.lineEdit_number_spaces.setText(str(self.spaces))
             self.ui.lineEdit_number_spaces.setEnabled(True)
         else:
             self.ui.lineEdit_number_spaces.setEnabled(False)
 
+
     def copy_option(self):
+        """
+        This method configures the copy options
+        """
         if self.ui.radioButton_copy.isChecked():
             self.ui.checkBox_comments.setEnabled(False)
             self.ui.checkBox_uppercase_generics.setEnabled(False)
@@ -135,6 +157,9 @@ class Testbench_generator_config_gui(QDialog):
 
 
     def connections(self):
+        """
+        This method configurates buttons and radius options
+        """
         self.ui.pushButton_save.clicked.connect(self.save_file)
         self.ui.pushButton_cancel.clicked.connect(self.cancel)
         self.ui.radioButton_spaces.toggled.connect(self.tab_space)
@@ -142,10 +167,16 @@ class Testbench_generator_config_gui(QDialog):
     
 
     def cancel(self):
+        """
+        This method configures cancel option
+        """
         self.close()
     
 
     def save_file(self):
+        """
+        This method configures save option
+        """
         file = open("./config/configuration.json", 'w')
 
         if self.ui.radioButton_87.isChecked():
@@ -165,6 +196,11 @@ class Testbench_generator_config_gui(QDialog):
 
         self.data["Testbench_generator"][0]["ftext"] = self.ui.lineEdit_begin.text()
         self.data["Testbench_generator"][0]["etext"] = self.ui.lineEdit_end.text()
+
+        if self.ui.checkBox_signal_constant.isChecked() == True:
+            self.data["Testbench_generator"][0]["split_signal_constant"] = "True"
+        else:
+            self.data["Testbench_generator"][0]["split_signal_constant"] = "False"
 
         if self.ui.checkBox_uppercase_generics.isChecked() == True:
             self.data["Testbench_generator"][0]["uppercase_generics"] = "True"
