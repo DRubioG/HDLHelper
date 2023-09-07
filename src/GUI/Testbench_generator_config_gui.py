@@ -41,6 +41,7 @@ class Testbench_generator_config_gui(QDialog):
             self.tool_comments = self.data["Testbench_generator"][0]["tool_comments"]
             self.split_signal_constant = self.data["Testbench_generator"][0]["split_signal_constant"]
         except:
+            self.ui.comboBox_language.setEnabled(False)
             self.ui.pushButton_save.setEnabled(False)
             self.ui.groupBox_tab_space.setEnabled(False)
             self.ui.groupBox_version.setEnabled(False)
@@ -52,6 +53,7 @@ class Testbench_generator_config_gui(QDialog):
             self.ui.checkBox_tool_coments.setEnabled(False)
             self.ui.label_config_file.setText("configuration.json doesn't exist")
             self.ui.groupBox.setEnabled(False)
+            self.ui.checkBox_signal_constant.setEnabled(False)
             self.version = "87"
             self.tab_spaces = "tab"
             self.spaces = "4"

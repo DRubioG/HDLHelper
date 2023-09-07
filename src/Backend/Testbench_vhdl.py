@@ -47,7 +47,7 @@ class Testbench_vhdl():
             self.uppercase_ports = data["Testbench_generator"][0]["uppercase_ports"]
             self.default_config = data["Testbench_generator"][0]["default_config"]
             self.comments_load = data["Testbench_generator"][0]["comments"]
-            self.split_signal_constant = self.data["Testbench_generator"][0]["split_signal_constant"]
+            self.split_signal_constant = data["Testbench_generator"][0]["split_signal_constant"]
         except:
             self.version = "unkown"
 
