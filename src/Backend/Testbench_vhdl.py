@@ -170,7 +170,7 @@ class Testbench_vhdl():
         """
         output = self.regen.architecture(name, generics=generics, ports=ports, comments=comments, entity=entity, vhdl_version=self.vhdl_version, component=True, copy=copy_flag,
                                          uppercase_gen_cfg=self.uppercase_generics, uppercase_port_cfg=self.uppercase_ports, tab_space_cfg=self.tab_spaces, 
-                                         etext=self.etext, ftext=self.ftext, default_config=self.default_config, split_signal_constant=self.split_signal_constant)
+                                         etext=self.etext, ftext=self.ftext, default_config=self.default_config, split_signal_constant=self.split_signal_constant, comments_cfg=self.comments_load)
 
         return output
 
