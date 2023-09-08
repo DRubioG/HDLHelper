@@ -1,85 +1,103 @@
 import os
 
 class VHDL():
+    """
+    This class is used to convert VHDL code to a Python list
+    """
     def __init__(self, file_input):
         self.file_input = file_input
         self.ports = []
         self.generics = []
         self.comments = []
 
-    def extract_file(self):
+    def read_file(self):
+        """
+        This method is used to read VHDL file
+        Return:
+            - text: a list with VHDL lines of the file
+        """
         file = open(self.file_input, 'r')
         text = file.readlines()
         return text
 
-    def extract_entity(self):
+    def get_entity(self):
+        """
+        This method split the entity part of the VHDL code
+        Return:
+            - entity: a list with the lines of the entity
+        """
         cont = 0
         entity = []
         entity_flag = 0
         line_counter = 0
 
-        text = self.extract_file()
+        text = self.read_file()
         # find the entity in the file
         for t in text:
-            t = t.lower()
             t = t.replace("\n", "")
             t = t.replace(";", "")
 
-            if t.find("entity")!= -1:
+            if t.find("entity") != -1:
                 entity_flag = 1
-            
+
             if entity_flag == 1:
                 cont += t.count("(")
                 cont -= t.count(")")
                 entity.append([t, line_counter])
-            
-            if t.find("end ") != -1:    # find the "end" of the entity
-                if cont == 0:   # to avoid names with "end" characters in the name
-                    entity_flag = 0
-                    break   # finish the execution
+
+            if cont == 0:
+                if entity_flag == 1:
+                    if t[:3] == "end":
+                        break
+
             line_counter += 1
-        # print(entity)
+
         return entity
-        
-    def vhdl_list(self):
+
+    def get_comments(self, code):
+        """
+        This method gets VHDL comments of the input list
+        Input:
+            - code: a list with VHDL line with comments
+        Return:
+            - entity: a list of comments and the number of the line too
+        """
+        entity = []
+
+        for comment_line in code:
+            if comment_line[0].find("--") != -1:
+                text, comment = comment_line[0].split("--")
+                self.comments.append([comment.strip(), comment_line[1]])
+                entity.append([text, comment_line[1]])
+            else:
+                entity.append(comment_line)
+
+        return entity
+
+    def get_generics(self, entity):
+        """
+        This method gets the generics of the list of lines of VHDL code
+        Input:
+            - entity: a list with the list of VHDL lines
+        """
         cont_generics = 0
-        cont_ports = 0
         generic_flag = 0
-        ports_flag = 0
         _generics = []
         _real_generic = []
-        _ports = []
-        _real_ports = []
-        entity = []
-        
-        entity_comments = self.extract_entity()
 
-        # extract comments
-        for comment in entity_comments:
-            if comment[0].find("--") != -1:
-                ent, com = comment[0].split("--")
-                line = comment[1]
-                self.comments.append([com, line])
-                ##print(ent)
-                entity.append([ent, line])
-            else:
-                entity.append(comment)
-        
-       # print(entity)
-        # extract generics
-        ## extract generic code from entity
+        # get generic code from entity
         for generic in entity:
-            if generic[0].find("generic") != -1:
+            if generic[0].lower().find("generic") != -1:
                 generic_flag = 1
-            
+
             if generic_flag == 1:
                 cont_generics += generic[0].count("(")
                 cont_generics -= generic[0].count(")")
                 _generics.append([generic[0], generic[1]])
                 if cont_generics == 0:
                     break
-        
-        ## extract generics from generic structure
+
+        # extract generics from generic structure
         for generic in _generics:
             generic[0] = generic[0].replace("\n", "")
             generic[0] = generic[0].replace("\t", "")
@@ -89,127 +107,147 @@ class VHDL():
             if generic[0] != "generic" and generic[0] != '':
                 _real_generic.append(generic)
 
-        #print(_real_generic)
-        ## extract all parts of generics and add to a generics list
+        # print(_real_generic)
+        # extract all parts of generics and add to a generics list
         for generic in _real_generic:
             aux1 = generic[0].split(":=")
             aux2 = aux1[0].split(":")
             aux3 = aux2[0].split(",")
 
-            if len(aux3)!= 1:
+            if len(aux3) != 1:
                 name = aux3
             else:
                 name = aux3[0]
-            
-            if len(aux1 ) == 1:
+
+            if len(aux1) == 1:
                 value = ""
             else:
                 value = aux1[1]
 
-           
             type_ = aux2[1]
             line = generic[1]
 
             self.generics.append([name, type_, value, line])
-            
 
-        # extract ports
-        ## extract ports code from entity
+
+    def get_ports(self, entity):
+        """
+        This method gets the port lines of the VHDL code
+        Input:
+            - entity: a list of the entity lines of VHDL code
+        """
+        cont_ports = 0
+        ports_flag = 0
+        _ports = []
+        _real_ports = []
+
+        # extract ports code from entity
         for ports in entity:
-            if ports[0].find("port") != -1:
+            if ports[0].lower().find("port") != -1:
                 ports_flag = 1
-            
+
             if ports_flag == 1:
                 cont_ports += ports[0].count("(")
                 cont_ports -= ports[0].count(")")
                 _ports.append([ports[0], ports[1]])
-               # print(ports) 
+               # print(ports)
                 if cont_ports == 0:
                     break
-           
 
-        ## extract generics from generic structure
+        # extract generics from generic structure
         for ports in _ports:
             ports[0] = ports[0].replace("\n", "")
             ports[0] = ports[0].replace("\t", "")
             ports[0] = ports[0].replace(" ", "")
-            
-            if ports[0] != "port(" and ports[0] != '':
+
+            if ports[0].lower() != "port(" and ports[0].lower() != '' and ports[0] != ")":
                 _real_ports.append(ports)
-        
+
        # print(_real_ports)
 
-
-
-        ## extract all parts of the ports and add to the port list
+        # extract all parts of the ports and add to the port list
+        cont = 1
         for ports in _real_ports:
-            fv = ""
-            mv = ""
-            lv = ""
+
             aux2 = ports[0].split(":")
-            name = aux2[0].split(",")
-            
+            if aux2[0].find(",") != -1:
+                name = aux2[0].split(",")
+            else:
+                name = aux2[0]
+
             type_aux = aux2[1]
-            if type_aux[:2] == "in":
+            if type_aux[:2].lower() == "in":
                 inout = "in"
                 aux3 = type_aux[2:]
-            elif type_aux[:3] == "out":
+            elif type_aux[:3].lower() == "out":
                 inout = "out"
                 aux3 = type_aux[3:]
-            elif type_aux[:5] == "inout":
+            elif type_aux[:5].lower() == "inout":
                 inout = "inout"
                 aux3 = type_aux[5:]
-            
+
             if aux3.find("(") != -1:
-                aux3 = aux3.replace(")", "")
-                type, value = aux3.split("(")
-                if value.find("downto"):
-                    fv, lv = value.split("downto")
+                if aux3.lower().find("downto") != -1:
+                    div = aux3.split("downto")
                     mv = "downto"
-                elif value.find("to"):
-                    fv, lv = value.split("to")
+                elif aux3.lower().find("to"):
+                    div = aux3.split("to")
                     mv = "to"
+
+                div[0] = div[0].split("(", 1)
+
+                type = div[0][0].lower()
+                fv = div[0][1]
+
+                if cont != len(_real_ports):
+                    lv = div[1][:-1]
+                else:
+                    lv = div[1][:-2]
+
                 self.ports.append([name, inout, [type, fv, mv, lv], ports[1]])
             else:
-                type = aux3    
+                type = aux3.lower()
                 self.ports.append([name, inout, type, ports[1]])
 
-            
-
-        # print(self.ports)
-       # print(self.generics)
-            # print(rest)
-
-       # print(_real_generic)
+            cont += 1
 
 
+    def vhdl_list(self):
+        """
+        This method executes the necesary methods to get the differents part of an VHDL file
+        """
+
+        # get entity
+        entity_comments = self.get_entity()
+
+        self.entity = entity_comments[1:-1]
+
+        # get comments
+        entity = self.get_comments(entity_comments)
+
+        # get generics
+        self.get_generics(entity)
+
+        # extract ports
+        self.get_ports(entity)
 
 
-    def extract_list(self):
+    def get_list(self):
+        """
+        This method is called to get the parts of an VHDL file
+        Return:
+            - self.port: global list of ports in VHDL
+            - self.generics: global list of generics in VHDL 
+            - self.comments: global list of comments about VHDL file
+            - self.entity: global list of the literal entity
+        """
         self.vhdl_list()
-        return self.ports, self.generics, self.comments
-    #     file = open(self.file_input, 'r')
-    #     text = file.readlines()
-
-    #     text = self.extract_comments(text)
-    #     print(text)
-    #     generic = self.extract_generics(text)
-
-    # def extract_comments(self, text):
-    #     line = 0
-    #     for t in text:
-            
-    #         if t.find("--") != -1:
-    #             end = t.find("\n")
-    #             start = t.find("--")
-    #             self.comments.append([start, end, t[start: end, line]])
-    #             text[start:end]=""
-            
-    #         line += 1
-    #     return text
-
-if __name__=="__main__":
-    vhdl = VHDL("Decoder.vhd")
-    vhdl.vhdl_list()
+        return self.ports, self.generics, self.comments, self.entity
 
 
+if __name__ == "__main__":
+    vhdl = VHDL("Decoder.vhd", copy=True)
+    print(vhdl.get_list())
+    # print(vhdl.comments)
+    # print(vhdl.ports)
+    # print(vhdl.generics)

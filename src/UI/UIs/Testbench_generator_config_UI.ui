@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>476</width>
-    <height>591</height>
+    <height>660</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -144,7 +144,7 @@
     </rect>
    </property>
    <property name="title">
-    <string>Testbench ports name</string>
+    <string>Testbench port names</string>
    </property>
    <widget class="QWidget" name="horizontalLayoutWidget_3">
     <property name="geometry">
@@ -157,7 +157,11 @@
     </property>
     <layout class="QHBoxLayout" name="horizontalLayout_3">
      <item>
-      <widget class="QLineEdit" name="lineEdit_begin"/>
+      <widget class="QLineEdit" name="lineEdit_begin">
+       <property name="alignment">
+        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="label">
@@ -175,8 +179,8 @@
   <widget class="QPushButton" name="pushButton_save">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>550</y>
+     <x>340</x>
+     <y>610</y>
      <width>91</width>
      <height>31</height>
     </rect>
@@ -188,8 +192,8 @@
   <widget class="QPushButton" name="pushButton_cancel">
    <property name="geometry">
     <rect>
-     <x>250</x>
-     <y>550</y>
+     <x>230</x>
+     <y>610</y>
      <width>91</width>
      <height>31</height>
     </rect>
@@ -198,37 +202,11 @@
     <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox_uppercase_generics">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>310</y>
-     <width>181</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Uppercase for generics</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="checkBox_uppercase_ports">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>340</y>
-     <width>161</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Uppercase for ports</string>
-   </property>
-  </widget>
   <widget class="QTextEdit" name="textEdit_default_config">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>420</y>
+     <x>20</x>
+     <y>480</y>
      <width>411</width>
      <height>111</height>
     </rect>
@@ -237,8 +215,8 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>400</y>
+     <x>20</x>
+     <y>460</y>
      <width>211</width>
      <height>17</height>
     </rect>
@@ -247,19 +225,142 @@
     <string>Default configuration </string>
    </property>
   </widget>
-  <widget class="QCheckBox" name="checkBox_comments">
+  <widget class="QLabel" name="label_config_file">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>370</y>
-     <width>281</width>
+     <x>60</x>
+     <y>500</y>
+     <width>361</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+     <underline>true</underline>
+    </font>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>310</y>
+     <width>321</width>
+     <height>101</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string/>
+   </property>
+   <widget class="QCheckBox" name="checkBox_uppercase_generics">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>231</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Uppercase for generics</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_uppercase_ports">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>50</y>
+      <width>291</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Uppercase for ports</string>
+    </property>
+   </widget>
+   <widget class="QCheckBox" name="checkBox_comments">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>70</y>
+      <width>291</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Regenerate with comments</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButton_regenerate">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>131</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Regenerate</string>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="radioButton_copy">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>0</y>
+      <width>101</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Copy</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QCheckBox" name="checkBox_tool_coments">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>610</y>
+     <width>181</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>Generate with the comments</string>
+    <string>Tool comments</string>
    </property>
   </widget>
+  <widget class="QCheckBox" name="checkBox_signal_constant">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>420</y>
+     <width>241</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Split signals and constants</string>
+   </property>
+  </widget>
+  <zorder>groupBox</zorder>
+  <zorder>groupBox_version</zorder>
+  <zorder>groupBox_tab_space</zorder>
+  <zorder>comboBox_language</zorder>
+  <zorder>groupBox_3</zorder>
+  <zorder>pushButton_save</zorder>
+  <zorder>pushButton_cancel</zorder>
+  <zorder>textEdit_default_config</zorder>
+  <zorder>label_2</zorder>
+  <zorder>label_config_file</zorder>
+  <zorder>checkBox_tool_coments</zorder>
+  <zorder>checkBox_signal_constant</zorder>
  </widget>
  <resources/>
  <connections/>

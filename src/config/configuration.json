@@ -1,15 +1,35 @@
 {
-    "version" : "0.0",
+    "version": "0.0",
+    "preferences": [
+        {
+            "tool_comments": "True",
+            "user": "",
+            "corporation": "",
+            "contact": "",
+            "user_version": "",
+            "tool_version": "True",
+            "date": "True"
+        }
+    ],
+    "configuration": [
+        {
+            "overwrite_window": "True",
+            "new_version_message": "True"
+        }
+    ],
     "Testbench_generator": [
         {
-            "version": 87,
+            "version": "Mixed",
             "tab_spaces": "tab",
             "spaces": "4",
             "ftext": "",
             "etext": "_i",
+            "copy": "False",
             "uppercase_generics": "True",
             "uppercase_ports": "False",
-            "default_config": "\tclk <= not(clk) after 5 ns;\n\trst <= '0', '1' after 20 ns;"
+            "user_code": "\tclk <= not(clk) after 5 ns;\n\trst <= '0', '1' after 20 ns;",
+            "comments": "True",
+            "split_signal_constant": "False"
         }
     ]
 }

@@ -1,0 +1,18 @@
+{
+    "version": "0.0",
+    "Testbench_generator": [
+        {
+            "version": "87",
+            "tab_spaces": "tab",
+            "spaces": "4",
+            "ftext": "",
+            "etext": "_i",
+            "copy": "False",
+            "uppercase_generics": "False",
+            "uppercase_ports": "False",
+            "default_config": "\tclk <= not(clk) after 5 ns;\n\trst <= '0', '1' after 20 ns;",
+            "tool_comments": "True",
+            "comments": "True"
+        }
+    ]
+}
