@@ -8,6 +8,7 @@ from UI.HDLHelper_UI import *
 from GUI.Testbench_generator_gui import *
 from GUI.HDLHelper_preferences_gui import *
 from GUI.Dialog_new_version_gui import *
+from GUI.Documentation_generator_gui import *
 
 from UI.StyleSheet.StyleSheet_testbench_generator import testbench_generator_gui
 
@@ -187,7 +188,6 @@ class HDLHelper_gui(QMainWindow):
         self.ui.editor_button.hide()
         self.ui.documentation_generator_button.clicked.connect(
             self.documentation_generator_fn)
-        self.ui.documentation_generator_button.hide()
         self.ui.analize_dependencies_button.clicked.connect(
             self.analize_dependencies_fn)
         self.ui.analize_dependencies_button.hide()
@@ -206,7 +206,7 @@ class HDLHelper_gui(QMainWindow):
         This method opens the GUI of Testbench generator
         """
         self.testbench_generator = Testbench_generator_gui()
-        self.testbench_generator.show()
+        # self.testbench_generator.show()
 
     def calculator_fn(self):
         self.coming_soon()
@@ -229,7 +229,7 @@ class HDLHelper_gui(QMainWindow):
         self.coming_soon()
 
     def documentation_generator_fn(self):
-        self.coming_soon()
+        self.documentation_generator = Documentation_generator_gui()
 
     def analize_dependencies_fn(self):
         self.coming_soon()

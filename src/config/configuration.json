@@ -31,5 +31,14 @@
             "comments": "True",
             "split_signal_constant": "False"
         }
+    ],
+    "Documentation_generator": [
+        {
+            "source_code": "True",
+            "current_template": "template_basic",
+            "templates": [
+                "template_basic"
+            ]
+        }
     ]
 }
