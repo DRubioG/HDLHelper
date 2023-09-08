@@ -1,6 +1,6 @@
 -----------------------------------------------
 -- Created using HDLHelper 0.0
--- Create Date: 2023-09-08 12:44:42.869069
+-- Create Date: 2023-09-08 17:56:27.869349
 -----------------------------------------------
 
 library IEEE;
@@ -13,27 +13,24 @@ architecture arch_Decoder_tb of Decoder_tb is
 
 component Decoder_tb is
 	generic (
-		YFG6YUGIUKJ	 : 	integer;            	   	-- hola 2
+		YFG6YUGIUKJ	 : 	integer;	-- hola 2
 		U          	 : 	integer          := 	32;	-- hola
-		N, T       	 : 	integer;            	   	-- prueba
+		N, T       	 : 	integer;	-- prueba
 		GAD        	 : 	std_logic_vector := 	N-1	-- preuba3
 	);
 	port (
-		clk, rst, yhmm       	 : 	in  std_logic;                           		-- alfa
-		Rowerererrererererere	 : 	in  std_logic_vector((N-1) downto (N-2));		-- dfhdfg
-		Col                  	 : 	out std_logic_vector(3 downto 0);        		-- dfhdfg1
-		DecodeOut            	 : 	out std_logic_vector(3 downto 0));       		-- marcafa
+		clk, rst, yhmm,        	 : 	in  std_logic;	-- alfa
+		Rowerererrererererere	 : 	in  std_logic_vector((N-1) downto (N-2));	-- dfhdfg
+		Col                  	 : 	out std_logic_vector(3 downto 0);	-- dfhdfg1
+		DecodeOut            	 : 	out std_logic_vector(3 downto 0));	-- marcafa
 end component;
 
 constant YFG6YUGIUKJ : integer;
 constant U           : integer	 := 32;
-constant N           : integer;
-constant T           : integer;
+constant N, T        : integer;
 constant GAD         : std_logic_vector	 := N-1;
 
-signal clk_i                   : std_logic;
-signal rst_i                   : std_logic;
-signal yhmm_i                  : std_logic;
+signal clk_i, rst_i, yhmm_i    : std_logic;
 signal Rowerererrererererere_i : std_logic_vector((N-1) downto (N-2));
 signal Col_i                   : std_logic_vector(3 downto 0);
 signal DecodeOut_i             : std_logic_vector(3 downto 0);

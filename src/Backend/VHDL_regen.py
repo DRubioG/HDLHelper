@@ -19,7 +19,22 @@ class VHDL_regen():
         return output
 
 
-    def architecture(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="Mixed", component=False, copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", user_code="", split_signal_constant="True", comments_cfg="False"):
+    def architecture(self, name_ent, 
+                     generics=[], 
+                     ports=[], 
+                     comments=[], 
+                     entity=[], 
+                     vhdl_version="Mixed", 
+                     component=False, 
+                     copy=False, 
+                     uppercase_gen_cfg="False", 
+                     uppercase_port_cfg="False", 
+                     tab_space_cfg="", 
+                     ftext="", 
+                     etext="", 
+                     user_code="", 
+                     split_signal_constant="True", 
+                     comments_cfg="False"):
         """
         This method creates an VHDL architecture
         Input:
@@ -44,11 +59,11 @@ class VHDL_regen():
 
         # different options of architecture type
         if component is True and vhdl_version == "Mixed":
-            output += self.arch_Mixed(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, user_code, split_signal_constant, comments_cfg)
+            output += self.arch_Mixed(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, split_signal_constant, comments_cfg)
         elif component is True and vhdl_version == "87":
-            output += self.arch_87(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, user_code, split_signal_constant)
+            output += self.arch_87(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, split_signal_constant, comments_cfg)
         elif component is True and vhdl_version == "93":
-            output += self.arch_93(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, user_code, split_signal_constant)
+            output += self.arch_93(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, split_signal_constant)
 
         output += "\n" + user_code + "\n\n"
         output += "end architecture arch_" + name_ent + ";"
@@ -76,7 +91,7 @@ class VHDL_regen():
         Return:
             - output: string with the architecture created
         """
-        output = self.component(ports, generics, comments, name_ent, copy, entity, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, comments_cfg)
+        output = self.component(ports, generics, comments, name_ent, copy, entity, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, comments_cfg, split_signal_constant)
         output += self.constants(generics, tab_space_cfg, uppercase_gen_cfg, split_signal_constant)
         output += self.signals(ports, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, ftext, etext, split_signal_constant)
         output += "\nbegin\n"
@@ -85,7 +100,7 @@ class VHDL_regen():
         return output
     
 
-    def arch_87(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="87", copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", split_signal_constant="True"):
+    def arch_87(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="87", copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", split_signal_constant="True", comments_cfg="False"):
         """
         This method creates a '87 option VHDL architecture
         Input:
@@ -105,7 +120,7 @@ class VHDL_regen():
         Return:
             - output: string with the architecture created
         """
-        output = self.component(ports, generics, comments, name_ent, copy, entity, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, comments)
+        output = self.component(ports, generics, comments, name_ent, copy, entity, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, comments_cfg, split_signal_constant)
         output += self.constants(generics, tab_space_cfg, uppercase_gen_cfg, split_signal_constant)
         output += self.signals(ports, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, ftext, etext, split_signal_constant)
         output += "\nbegin\n"
@@ -199,7 +214,32 @@ class VHDL_regen():
         return variable
 
 
-    def generics(self, generics, comments, uppercase_cfg, tab_spaces_cfg, comment_cfg, split="True", N=1):
+    def insert_comment(self, val, comments):
+        """
+        This method inserts comments in code
+        Input:
+            - val: list with parts
+            - comments: list with comments
+        Return:
+            - output: string with comments
+        """
+        output =""
+
+        for comment in comments:
+            if comment[1] == val[3]:
+                output += "\t-- " + comment[0]
+                break
+
+        return output
+
+
+    def generics(self, generics, 
+                 comments, 
+                 uppercase_cfg, 
+                 tab_spaces_cfg, 
+                 comment_cfg, 
+                 split="True", 
+                 N=1):
         """
         This method creates a generic part of an VHDL file
         Input:
@@ -218,69 +258,94 @@ class VHDL_regen():
 
             lon_max = 0
             lon_max_type = 0
-            lon_max_val = 0
-            existence_equal = 0
-            for generic_len in generics:
-                if generic_len[2]:
-                    existence_equal = 1
+            # lon_max_val = 0
             
             lon_max = self.max_length(generics, split)
             lon_max_type = self.max_length(generics, split, pos=1)
-            lon_max_val = self.max_length(generics, split, pos=2)
+            # lon_max_val = self.max_length(generics, split, pos=2)
 
             output += self.tab_spaces(tab_spaces_cfg, N) + "generic (\n"
 
             cont_gen = 1
             for generic in generics:
                 if type(generic[0]) is list:    # nested list
-                    output += self.tab_spaces(tab_spaces_cfg, N+1)
+                    if split != "True":
+                        output += self.tab_spaces(tab_spaces_cfg, N+1)
                     cont = 1
                     for i in generic[0]:
                         if split == "True":
-                            output += self.uppercase(uppercase_cfg, i)
+                            output += self.tab_spaces(tab_spaces_cfg, N+1) + self.uppercase(uppercase_cfg, i) + \
+                                self.space_alignment(i, lon_max) + "\t : \t" + generic[1]
+
+                            if generic[2]:
+                                output += self.space_alignment(generic[1], lon_max_type)
+                                output += " := \t" + self.uppercase(uppercase_cfg, generic[2])
+
+                            if cont_gen != len(generics):
+                                output += ";"
+
+                            if comment_cfg == "True":       # write comments in line
+                                output += self.insert_comment(generic, comments)
+                                
+                            output += "\n"
                         else:
                             output += self.uppercase(uppercase_cfg, i)
-                        if cont != len(generic[0]):
-                            output += ", "
+                            if cont != len(generic[0]):
+                                output += ", "
                         cont += 1
+                    
                 else:
                     output += self.tab_spaces(tab_spaces_cfg, N+1) + \
                         self.uppercase(uppercase_cfg, generic[0])
-
-                output += self.space_alignment(generic[0], lon_max) + "\t : \t" + generic[1]
-
-                if generic[2]:
-                    output += self.space_alignment(generic[1], lon_max_type)
-                    output += " := \t" + self.uppercase(uppercase_cfg, generic[2])
-
-                if cont_gen != len(generics):
-                    output += ";"
-
-                l1 = 1
-                if comment_cfg == "True":       # write comments in line
-                    if existence_equal == 1 and generic[2] == '':
-
-                        if cont_gen == len(generics):       # align comments
-                            l1 = 0
-                        for i in range(lon_max_type - len(generic[1]) - l1):
-                            output += " "
-                        output += " "*4 + self.tab_spaces(tab_spaces_cfg, N)
-                        for i in range(lon_max_val):
-                            output += " "
                     
-                    for comment in comments:
-                        if comment[1] == generic[3]:
-                            output += "\t-- " + comment[0]
-                            break
+                    if split == "True":
+                        output += self.space_alignment(generic[0], lon_max) + "\t : \t" + generic[1]
 
+                        if generic[2]:
+                            output += self.space_alignment(generic[1], lon_max_type)
+                            output += " := \t" + self.uppercase(uppercase_cfg, generic[2])
+
+                        if cont_gen != len(generics):
+                            output += ";"
+
+
+                        if comment_cfg == "True":       # write comments in line
+                            output += self.insert_comment(generic, comments)
+                            
+                        output += "\n"
+
+                    
+
+                if split != "True":
+                    output += self.space_alignment(generic[0], lon_max) + "\t : \t" + generic[1]
+
+                    if generic[2]:
+                        output += self.space_alignment(generic[1], lon_max_type)
+                        output += " := \t" + self.uppercase(uppercase_cfg, generic[2])
+
+                    if cont_gen != len(generics):
+                        output += ";"
+
+
+                    if comment_cfg == "True":       # write comments in line
+                        output += self.insert_comment(generic, comments)
+                        
+                    output += "\n"
                 cont_gen += 1
-                output += "\n"
+                
             output += self.tab_spaces(tab_spaces_cfg, N) + ");" + "\n"
         
         return output
 
 
-    def ports(self, ports, comments, uppercase_port_cfg, uppercase_gen_cfg, tab_spaces_cfg, comment_cfg, split, N=1):
+    def ports(self, ports, 
+              comments, 
+              uppercase_port_cfg, 
+              uppercase_gen_cfg, 
+              tab_spaces_cfg, 
+              comment_cfg, 
+              split, 
+              N=1):
         """
         This method creates a ports part of an VHDL file
         Input:
@@ -321,64 +386,102 @@ class VHDL_regen():
             cont_ports = 1
             for port in ports:
                 if type(port[0]) is list:
-                    output += self.tab_spaces(tab_spaces_cfg, N+1)
+                    if split != "True":
+                        output += self.tab_spaces(tab_spaces_cfg, N+1)
                     cont = 1
                     for i in port[0]:
                         if split == "True":
-                            output += self.uppercase(uppercase_port_cfg, i)
+                            output += self.tab_spaces(tab_spaces_cfg, N+1) + self.uppercase(uppercase_port_cfg, i) + \
+                                self.space_alignment(i, lon_max) + "\t : \t" + port[1]
+
+                            if type(port[2]) != list:
+                                output += self.space_alignment(port[1], lon_max_inout) + " " + port[2]
+                            else:
+                                output += self.space_alignment(port[1], lon_max_inout) + " " + port[2][0] + "(" + self.uppercase(uppercase_gen_cfg, port[2][1]) + \
+                                    " " + port[2][2] + " " + self.uppercase(uppercase_gen_cfg, port[2][3]) + ")"
+
+                            if cont_ports != len(ports):
+                                output += ";"
+                            else:
+                                output += ");"
+
+                            # comments
+                            l1 = 1
+                            if comment_cfg == "True":
+                                output += self.insert_comment(port, comments)
+                                
+                            output += "\n"
+
                         else:
                             output += self.uppercase(uppercase_port_cfg, i)
-                        if cont != len(port[0]):
-                            output += ", "
+                            if cont_ports != len(port[0]):
+                                output += ", "
                         cont += 1
                 else:
                     output += self.tab_spaces(tab_spaces_cfg, N+1) + \
                         self.uppercase(uppercase_port_cfg, port[0])
+                    
+                    if split == "True":
+                        output += self.space_alignment(port[0], lon_max) + "\t : \t" + port[1]
 
-                output += self.space_alignment(port[0], lon_max) + "\t : \t" + port[1]
+                        if type(port[2]) != list:
+                            output += self.space_alignment(port[1], lon_max_inout) + " " + port[2]
+                        else:
+                            output += self.space_alignment(port[1], lon_max_inout) + " " + port[2][0] + "(" + self.uppercase(uppercase_gen_cfg, port[2][1]) + \
+                                " " + port[2][2] + " " + self.uppercase(uppercase_gen_cfg, port[2][3]) + ")"
 
-                if type(port[2]) != list:
-                    output += self.space_alignment(port[1], lon_max_inout) + " " + port[2]
-                else:
-                    output += self.space_alignment(port[1], lon_max_inout) + " " + port[2][0] + "(" + self.uppercase(uppercase_gen_cfg, port[2][1]) + \
-                        " " + port[2][2] + " " + self.uppercase(uppercase_gen_cfg, port[2][3]) + ")"
-
-                if cont_ports != len(ports):
-                    output += ";"
-                else:
-                    output += ");"
+                        if cont_ports != len(ports):
+                            output += ";"
+                        else:
+                            output += ");"
 
 
-                # comments
-                l1 = 1
-                if comment_cfg == "True":
-                    if cont_ports == len(ports):
-                        l1 = 2
+                        # comments
+                        l1 = 1
+                        if comment_cfg == "True":
+                            output += self.insert_comment(port, comments)
+                            
+                        output += "\n"
 
-                    lonc = 0
-                    if type(port[2]) is list:
-                        lonc = 4
-                        for values in port[2]:
-                            lonc += len(values)
+
+                if split != "True":
+                    output += self.space_alignment(port[0], lon_max) + "\t : \t" + port[1]
+
+                    if type(port[2]) != list:
+                        output += self.space_alignment(port[1], lon_max_inout) + " " + port[2]
                     else:
-                        lonc = len(port[2])
+                        output += self.space_alignment(port[1], lon_max_inout) + " " + port[2][0] + "(" + self.uppercase(uppercase_gen_cfg, port[2][1]) + \
+                            " " + port[2][2] + " " + self.uppercase(uppercase_gen_cfg, port[2][3]) + ")"
 
-                    for i in range(lon_max_val - lonc - l1):
-                        output += " "
+                    if cont_ports != len(ports):
+                        output += ";"
+                    else:
+                        output += ");"
 
-                    for comment in comments:
-                        if comment[1] == port[3]:
-                            output += self.tab_spaces(tab_spaces_cfg,
-                                                      N+1) + "-- " + comment[0]
-                            break
 
+                    # comments
+                    l1 = 1
+                    if comment_cfg == "True":
+                        output += self.insert_comment(port, comments)
+                        
+                    output += "\n"
                 cont_ports += 1
-                output += "\n"
+                
 
         return output
 
 
-    def component(self, ports, generics, comments, name, copy, entity, uppercase_port_cfg, uppercase_gen_cfg, tab_spaces_cfg, comment_cfg, split="True"):
+    def component(self, ports, 
+                  generics, 
+                  comments, 
+                  name, 
+                  copy, 
+                  entity, 
+                  uppercase_port_cfg, 
+                  uppercase_gen_cfg, 
+                  tab_spaces_cfg, 
+                  comment_cfg, 
+                  split="True"):
         """
         This method creates a component in VHDL
         Input:

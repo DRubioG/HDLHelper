@@ -45,7 +45,7 @@ class Testbench_vhdl():
             self.etext = data["Testbench_generator"][0]["etext"]
             self.uppercase_generics = data["Testbench_generator"][0]["uppercase_generics"]
             self.uppercase_ports = data["Testbench_generator"][0]["uppercase_ports"]
-            self.default_config = data["Testbench_generator"][0]["default_config"]
+            self.user_code = data["Testbench_generator"][0]["user_code"]
             self.comments_load = data["Testbench_generator"][0]["comments"]
             self.split_signal_constant = data["Testbench_generator"][0]["split_signal_constant"]
         except:
@@ -69,6 +69,7 @@ class Testbench_vhdl():
             self.comments_load = "False"
             self.split_signal_constant = "True"
 
+
     def testbench(self):
         """
         This method generates the VHDL testbench.
@@ -90,7 +91,7 @@ class Testbench_vhdl():
         output += self.write_entity(name)   # write the entity part
         # write the architecture part
         output += self.write_architecture(name, self.generics, 
-                                          self.ports, self.comments, self.entity, self.default_config, copy_flag=True)
+                                          self.ports, self.comments, self.entity, self.user_code, copy_flag=True)
         self.close_file(output)     # close the file
 
 
@@ -137,7 +138,7 @@ class Testbench_vhdl():
         for type in self.ports:
             if type == "unsigned":
                 libraries.append("numeric_std")
-        output = self.regen.libraries(self.file, libraries)
+        output = self.regen.libraries(libraries)
         return output
 
 
@@ -154,7 +155,7 @@ class Testbench_vhdl():
         return output
 
 
-    def write_architecture(self, name, generics, ports, comments, entity, default_config, copy_flag):
+    def write_architecture(self, name, generics, ports, comments, entity, user_code, copy_flag):
         """
         This method generates the architecture part with the specific option.
         Input:
@@ -170,7 +171,7 @@ class Testbench_vhdl():
         """
         output = self.regen.architecture(name, generics=generics, ports=ports, comments=comments, entity=entity, vhdl_version=self.vhdl_version, component=True, copy=copy_flag,
                                          uppercase_gen_cfg=self.uppercase_generics, uppercase_port_cfg=self.uppercase_ports, tab_space_cfg=self.tab_spaces, 
-                                         etext=self.etext, ftext=self.ftext, default_config=self.default_config, split_signal_constant=self.split_signal_constant, comments_cfg=self.comments_load)
+                                         etext=self.etext, ftext=self.ftext, user_code=self.user_code, split_signal_constant=self.split_signal_constant, comments_cfg=self.comments_load)
 
         return output
 
