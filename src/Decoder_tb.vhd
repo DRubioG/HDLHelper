@@ -1,6 +1,6 @@
 -----------------------------------------------
 -- Created using HDLHelper 0.0
--- Create Date: 2023-09-08 12:05:49.393396
+-- Create Date: 2023-09-08 12:44:42.869069
 -----------------------------------------------
 
 library IEEE;
@@ -19,10 +19,10 @@ component Decoder_tb is
 		GAD        	 : 	std_logic_vector := 	N-1	-- preuba3
 	);
 	port (
-		clk, rst, yhmm       	 : in  	std_logic;                           		-- alfa
-		Rowerererrererererere	 : in  	std_logic_vector((N-1) downto (N-2));		-- dfhdfg
-		Col                  	 : out 	std_logic_vector(3 downto 0);        		-- dfhdfg1
-		DecodeOut            	 : out 	std_logic_vector(3 downto 0));       		-- marcafa
+		clk, rst, yhmm       	 : 	in  std_logic;                           		-- alfa
+		Rowerererrererererere	 : 	in  std_logic_vector((N-1) downto (N-2));		-- dfhdfg
+		Col                  	 : 	out std_logic_vector(3 downto 0);        		-- dfhdfg1
+		DecodeOut            	 : 	out std_logic_vector(3 downto 0));       		-- marcafa
 end component;
 
 constant YFG6YUGIUKJ : integer;
