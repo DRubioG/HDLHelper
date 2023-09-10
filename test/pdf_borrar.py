@@ -1,16 +1,16 @@
 from fpdf import FPDF
 
 pdf = FPDF()
-effective_page_width = pdf.w - 2 * pdf.l_margin
+# effective_page_width = pdf.w - 2 * pdf.l_margin
 pdf.compress = False
 pdf.add_page()
 # pdf.add_font("TimesNewRoman", '', 'TimesNewRoman.ttf', uni=True)
 pdf.set_font("Arial", size=30)
-# pdf.cell( w=10, border =1, txt='title')
+pdf.cell( w=10, border =1, txt='title')
 # pdf.ln(30)
-# pdf.set_line_width(1)
-# pdf.set_draw_color(0, 0, 0)
-# pdf.line(10,20,30,40)
+pdf.set_line_width(1)
+pdf.set_draw_color(0, 0, 0)
+pdf.line(10,20,30,40)
 # pdf.set_draw_color(255, 0, 0)
 # pdf.line(100,20,300,40)
 # pdf.set_draw_color(255, 255, 255)

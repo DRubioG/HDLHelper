@@ -14,7 +14,7 @@
     "configuration": [
         {
             "overwrite_window": "True",
-            "new_version_message": "True"
+            "new_version_message": "False"
         }
     ],
     "Testbench_generator": [
