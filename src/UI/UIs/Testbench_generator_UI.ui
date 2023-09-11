@@ -108,8 +108,8 @@
   <widget class="QPushButton" name="pushButton_cancel">
    <property name="geometry">
     <rect>
-     <x>409</x>
-     <y>195</y>
+     <x>400</x>
+     <y>190</y>
      <width>95</width>
      <height>36</height>
     </rect>
@@ -126,8 +126,8 @@
   <widget class="QPushButton" name="pushButton_create">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>195</y>
+     <x>290</x>
+     <y>190</y>
      <width>95</width>
      <height>36</height>
     </rect>
@@ -144,8 +144,8 @@
   <widget class="QPushButton" name="pushButton_config">
    <property name="geometry">
     <rect>
-     <x>190</x>
-     <y>195</y>
+     <x>180</x>
+     <y>190</y>
      <width>95</width>
      <height>36</height>
     </rect>
