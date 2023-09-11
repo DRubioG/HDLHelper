@@ -51,23 +51,24 @@ class Testbench_generator_gui(QWidget):
         ), "VHDL, verilog (*.vhd *.v) ;;VHDL (*.vhd);; Verilog (*.v);; Tesbenches (*_tb.vhd *_tb.v)")
 
         self.file_path = files[0]
-        self.file_input = self.file_path
-        self.file_output = self.file_path.replace(".", "_tb.")
+        if files[0]:
+            self.file_input = self.file_path
+            self.file_output = self.file_path.replace(".", "_tb.")
 
-        if self.file_input.find("\\") != -1:
-            self.file_input = self.file_input.split("\\")[-1]
-            self.file_output = self.file_output.split("\\")[-1]
-        else:
-            self.file_input = self.file_input.split("/")[-1]
-            self.file_output = self.file_output.split("/")[-1]
+            if self.file_input.find("\\") != -1:
+                self.file_input = self.file_input.split("\\")[-1]
+                self.file_output = self.file_output.split("\\")[-1]
+            else:
+                self.file_input = self.file_input.split("/")[-1]
+                self.file_output = self.file_output.split("/")[-1]
 
-        self.ui.lineEdit_input.setText(self.file_input)
-        self.ui.lineEdit_output.setText(self.file_output)
+            self.ui.lineEdit_input.setText(self.file_input)
+            self.ui.lineEdit_output.setText(self.file_output)
 
-        self.overwriteButton()  # check if the file exists in the folder
+            self.overwriteButton()  # check if the file exists in the folder
 
-        self.ui.pushButton_output.setEnabled(True)
-        self.ui.pushButton_create.setEnabled(True)
+            self.ui.pushButton_output.setEnabled(True)
+            self.ui.pushButton_create.setEnabled(True)
 
 
     def overwriteButton(self):
