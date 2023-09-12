@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QFileDialog
 
 from UI.Documentation_generator_UI import *
-from GUI.Documentation_generator_gui import *
+from Backend.Documentation_generator import *
 
 import os, json
 
@@ -60,11 +60,23 @@ class Documentation_generator_gui(QWidget):
         self.ui.pushButton_cancel.clicked.connect(self.cancel_fn)
         self.ui.pushButton_input.clicked.connect(self.search_input)
         self.ui.pushButton_output.clicked.connect(self.search_output)
+        self.ui.checkBox_logo.toggled.connect(self.logo_fn)
         self.ui.lineEdit_output.setReadOnly(True)
         self.ui.lineEdit_file.setReadOnly(True)
         self.ui.pushButton_accept.setEnabled(False)
         self.ui.pushButton_output.setEnabled(False)
+        self.ui.lineEdit_logo.setEnabled(False)
+        self.ui.pushButton_logo.setEnabled(False)
         
+
+    def logo_fn(self):
+        if self.ui.checkBox_logo.isChecked():
+            self.ui.lineEdit_logo.setEnabled(True)
+            self.ui.pushButton_logo.setEnabled(True)
+        else:
+            self.ui.lineEdit_logo.setEnabled(False)
+            self.ui.pushButton_logo.setEnabled(False)
+
 
     def cancel_fn(self):
         """
@@ -73,17 +85,23 @@ class Documentation_generator_gui(QWidget):
         self.close()
     
     def accept_fn(self):
-        file = open("./config/configuration.json", 'w')
+        try:
+            file = open("./config/configuration.json", 'w')
 
-        if self.ui.checkBox.isChecked() == True:
-            self.data["Documentation_generator"][0]["source_code"] = "True"
-        else:
-            self.data["Documentation_generator"][0]["source_code"] = "False"
+            if self.ui.checkBox.isChecked() == True:
+                self.data["Documentation_generator"][0]["source_code"] = "True"
+            else:
+                self.data["Documentation_generator"][0]["source_code"] = "False"
 
-        self.data["Documentation_generator"][0]["current_template"] = self.ui.comboBox_templates.currentText()
+            self.data["Documentation_generator"][0]["current_template"] = self.ui.comboBox_templates.currentText()
 
-        json.dump(self.data, file, indent=4)
-        file.close()
+            json.dump(self.data, file, indent=4)
+            file.close()
+        except:
+            pass
+        documentation = Documentation_generator()
+        documentation.generate(self.file_input, self.file_output)
+
         self.close()
 
 
