@@ -5,10 +5,12 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import QUrl
 
 from UI.HDLHelper_UI import *
+
 from GUI.Testbench_generator_gui import *
 from GUI.HDLHelper_preferences_gui import *
 from GUI.Dialog_new_version_gui import *
 from GUI.Documentation_generator_gui import *
+from GUI.File_generator_gui import *
 
 from UI.StyleSheet.StyleSheet_testbench_generator import testbench_generator_gui
 
@@ -68,7 +70,7 @@ class HDLHelper_gui(QMainWindow):
         # top_file_generator = QAction("Top file generator", self)
         # ticks_calculator = QAction("Ticks calculator", self)
         # translator = QAction("v <-> vhd", self)
-        # hdl_generator = QAction("HDL generator", self)
+        hdl_generator = QAction("HDL generator", self)
         # editor = QAction("Editor", self)
         # documentation_generator = QAction("Documentation generator", self)
         # analize_dependencies = QAction("Analize dependencies", self)
@@ -86,7 +88,7 @@ class HDLHelper_gui(QMainWindow):
         # top_file_generator.triggered.connect(self.top_file_generator_fn)
         # ticks_calculator.triggered.connect(self.ticks_calculator_fn)
         # translator.triggered.connect(self.hdl_translator_fn)
-        # hdl_generator.triggered.connect(self.hdl_generator_fn)
+        hdl_generator.triggered.connect(self.hdl_generator_fn)
         # editor.triggered.connect(self.editor_fn)
         # documentation_generator.triggered.connect(self.documentation_generator_fn)
         # analize_dependencies.triggered.connect(self.analize_dependencies_fn)
@@ -99,7 +101,7 @@ class HDLHelper_gui(QMainWindow):
         # executeMenu.addAction(top_file_generator)
         # executeMenu.addAction(ticks_calculator)
         # executeMenu.addAction(translator)
-        # executeMenu.addAction(hdl_generator)
+        executeMenu.addAction(hdl_generator)
         # executeMenu.addAction(editor)
         # executeMenu.addAction(documentation_generator)
         # executeMenu.addAction(analize_dependencies)
@@ -182,7 +184,6 @@ class HDLHelper_gui(QMainWindow):
         self.ui.hdl_translator_button.clicked.connect(self.hdl_translator_fn)
         self.ui.hdl_translator_button.hide()
         self.ui.hdl_generator_button.clicked.connect(self.hdl_generator_fn)
-        self.ui.hdl_generator_button.hide()
         # third row
         self.ui.editor_button.clicked.connect(self.editor_fn)
         self.ui.editor_button.hide()
@@ -222,7 +223,7 @@ class HDLHelper_gui(QMainWindow):
         self.coming_soon()
 
     def hdl_generator_fn(self):
-        self.coming_soon()
+        self.file_generator = File_generator_gui()
 
     # third row
     def editor_fn(self):

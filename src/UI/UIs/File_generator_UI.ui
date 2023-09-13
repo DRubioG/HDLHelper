@@ -22,23 +22,16 @@
      <height>251</height>
     </rect>
    </property>
-  </widget>
-  <widget class="QTableView" name="tableView_content">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>310</y>
-     <width>491</width>
-     <height>201</height>
-    </rect>
+   <property name="readOnly">
+    <bool>true</bool>
    </property>
   </widget>
   <widget class="QComboBox" name="comboBox_port_generic">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>10</x>
      <y>540</y>
-     <width>79</width>
+     <width>91</width>
      <height>25</height>
     </rect>
    </property>
@@ -58,18 +51,21 @@
     <rect>
      <x>110</x>
      <y>540</y>
-     <width>141</width>
+     <width>91</width>
      <height>25</height>
     </rect>
    </property>
    <property name="text">
     <string/>
    </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+   </property>
   </widget>
   <widget class="QComboBox" name="comboBox_type">
    <property name="geometry">
     <rect>
-     <x>260</x>
+     <x>290</x>
      <y>540</y>
      <width>101</width>
      <height>25</height>
@@ -99,14 +95,23 @@
   <widget class="QLineEdit" name="lineEdit_bits">
    <property name="geometry">
     <rect>
-     <x>372</x>
+     <x>402</x>
      <y>540</y>
-     <width>61</width>
+     <width>31</width>
      <height>25</height>
     </rect>
    </property>
+   <property name="layoutDirection">
+    <enum>Qt::LeftToRight</enum>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string/>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
   <widget class="QPushButton" name="pushButton_add">
@@ -200,6 +205,55 @@
     <string>Sort</string>
    </property>
   </widget>
+  <widget class="QComboBox" name="comboBox_inout">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>540</y>
+     <width>71</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>in</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>out</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>inout</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QTableWidget" name="tableWidget_content">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>310</y>
+     <width>491</width>
+     <height>201</height>
+    </rect>
+   </property>
+  </widget>
+  <zorder>tableWidget_content</zorder>
+  <zorder>textEdit_text</zorder>
+  <zorder>comboBox_port_generic</zorder>
+  <zorder>lineEdit_name</zorder>
+  <zorder>comboBox_type</zorder>
+  <zorder>lineEdit_bits</zorder>
+  <zorder>pushButton_add</zorder>
+  <zorder>pushButton_create</zorder>
+  <zorder>pushButton_cancel</zorder>
+  <zorder>pushButton_config</zorder>
+  <zorder>lineEdit_entity</zorder>
+  <zorder>lineEdit_architecture</zorder>
+  <zorder>radioButton_sort</zorder>
+  <zorder>comboBox_inout</zorder>
  </widget>
  <resources/>
  <connections/>
