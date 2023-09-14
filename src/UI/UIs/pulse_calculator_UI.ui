@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Dialog</class>
- <widget class="QDialog" name="Dialog">
+ <class>Pulses_calculator</class>
+ <widget class="QDialog" name="Pulses_calculator">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -135,7 +135,7 @@
     <rect>
      <x>370</x>
      <y>40</y>
-     <width>60</width>
+     <width>71</width>
      <height>17</height>
     </rect>
    </property>
