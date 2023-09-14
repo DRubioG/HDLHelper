@@ -3,6 +3,7 @@ Style sheet
 """
 
 testbench_generator_config_gui = """
+
     /* Push Button */
     QPushButton{
         color:   #354547 ;
