@@ -26,6 +26,7 @@ class File_generator_gui(QWidget):
         self.ui.pushButton_config.clicked.connect(self.config_fn)
         self.ui.radioButton_sort.toggled.connect(self.sort_fn)
         self.ui.comboBox_port_generic.currentIndexChanged.connect(self.port_generic_fn)
+        self.ui.lineEdit_entity.textChanged.connect(self.entity_text_fn)
         
 
     def port_generic_fn(self):
@@ -33,17 +34,21 @@ class File_generator_gui(QWidget):
         This method changes GUI when port or generic is chosen
         """
         if self.ui.comboBox_port_generic.currentText() == "generic":
-            self.ui.comboBox_inout.setEnabled(False)
+            self.ui.comboBox_inout.hide()
             self.ui.comboBox_type.clear()
             self.ui.comboBox_type.addItem("integer")
             self.ui.comboBox_type.addItem("unsigned")
+            self.ui.lineEdit_name.setGeometry(QtCore.QRect(110, 540, 170, 25))
+            self.ui.label_inout.hide()
         elif self.ui.comboBox_port_generic.currentText() == "port":
-            self.ui.comboBox_inout.setEnabled(True)
+            self.ui.comboBox_inout.show()
+            self.ui.label_inout.show()
             self.ui.comboBox_type.clear()
             self.ui.comboBox_type.addItem("std_logic")
             self.ui.comboBox_type.addItem("unsigned")
             self.ui.comboBox_type.addItem("integer")
             self.ui.comboBox_type.addItem("std_ulogic")
+            self.ui.lineEdit_name.setGeometry(QtCore.QRect(110, 540, 91, 25))
 
 
     def add_fn(self):
@@ -71,8 +76,20 @@ class File_generator_gui(QWidget):
                 self.ports.append([name, inout, type_])
             elif port_generic == "generic":
                 pass
-            self.ui.tableView_content.setRowCount(5)
+        self.ui.lineEdit_name.clear()
+        self.ui.lineEdit_bits.clear()
 
+
+    def entity_text_fn(self):
+        """
+        This method updates architecture text
+        """
+        text = self.ui.lineEdit_entity.text()
+        if text:
+            text = "arch_" + text
+        self.ui.lineEdit_architecture.setText(text)
+        
+    
 
     def sort_fn(self):
         """
