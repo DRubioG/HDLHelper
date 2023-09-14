@@ -112,20 +112,20 @@ class Testbench_vhdl():
             wr = "-----------------------------------------------\n"
             if self.tool_version_fl == "True":
                 wr += "-- Created using HDLHelper "+ self.version + "\n"
-            if self.user != "":
+            if not self.user:
                 wr += "-- User: " + self.user + "\n"
             if self.date_fl == "True":
                 wr += "-- Create Date: " + str(datetime.datetime.now()) + "\n"
-            if self.corporation != "":
+            if not self.corporation:
                 wr += "-- Corporation: " + self.corporation + "\n"
-            if self.contact != "":
+            if not self.contact:
                 wr += "-- Contact: " + self.contact + "\n"
-            if self.user_version != "":
+            if not self.user_version:
                 wr += "-- Version: " + self.user_version + "\n"
             wr += "-----------------------------------------------\n\n"
             return wr
-        else:
-            return ""
+        
+        return ""
 
 
     def write_libraries(self):

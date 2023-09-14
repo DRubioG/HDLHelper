@@ -346,7 +346,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Split signals and constants</string>
+    <string>Split generics and ports</string>
    </property>
   </widget>
   <zorder>groupBox</zorder>

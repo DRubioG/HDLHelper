@@ -13,7 +13,7 @@ class HDL():
 
     def __init__(self, file_input):
         self.file_input = file_input 
-        self.init()
+        # self.init()
     
     def init(self):
         """

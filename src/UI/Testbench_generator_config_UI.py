@@ -168,4 +168,4 @@ class Ui_testbench_generator_config(object):
         self.radioButton_regenerate.setText(_translate("testbench_generator_config", "Regenerate"))
         self.radioButton_copy.setText(_translate("testbench_generator_config", "Copy"))
         self.checkBox_tool_coments.setText(_translate("testbench_generator_config", "Tool comments"))
-        self.checkBox_signal_constant.setText(_translate("testbench_generator_config", "Split signals and constants"))
+        self.checkBox_signal_constant.setText(_translate("testbench_generator_config", "Split generics and ports"))

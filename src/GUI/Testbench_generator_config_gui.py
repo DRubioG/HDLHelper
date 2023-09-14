@@ -21,7 +21,7 @@ class Testbench_generator_config_gui(QDialog):
 
     def open_config(self):
         """
-        This method opens the config file
+        This method reads the config file
         """
         try:
             file = open("./config/configuration.json", "r")

@@ -1,11 +1,11 @@
 mkdir src
 cd .\src\
 Copy-Item "..\..\..\src\*"
-pyinstaller.exe --onefile .\main.py
+python -m PyInstaller --onefile .\main.py
 cd dist
-Copy-Item ".\*" -Destination "..\..\..\"
+Copy-Item ".\*" -Destination "..\..\"
 cd ..
 mkdir ..\config
 Copy-Item ".\config\*" -Destination "..\config"
 cd ..
-#--Remove-Item 
+Remove-Item .\src\ -Recurse

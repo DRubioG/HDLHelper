@@ -49,7 +49,7 @@ class Ui_Dialog_new_version(object):
 
     def retranslateUi(self, Dialog_new_version):
         _translate = QtCore.QCoreApplication.translate
-        Dialog_new_version.setWindowTitle(_translate("Dialog_new_version", "Dialog"))
+        Dialog_new_version.setWindowTitle(_translate("Dialog_new_version", "New version"))
         self.label.setText(_translate("Dialog_new_version", "New version of HDLHelper"))
         self.pushButton_ok.setText(_translate("Dialog_new_version", "Ok"))
         self.checkBox_show_again.setText(_translate("Dialog_new_version", "Do not show again"))
