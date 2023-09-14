@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Preferences</string>
   </property>
   <property name="windowIcon">
    <iconset>
@@ -203,7 +203,7 @@
     <string>Cancel</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_Ok">
+  <widget class="QPushButton" name="pushButton_save">
    <property name="geometry">
     <rect>
      <x>170</x>
@@ -213,7 +213,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Ok</string>
+    <string>Save</string>
    </property>
   </widget>
  </widget>

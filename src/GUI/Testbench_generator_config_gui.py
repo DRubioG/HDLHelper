@@ -26,6 +26,7 @@ class Testbench_generator_config_gui(QDialog):
         try:
             file = open("./config/configuration.json", "r")
             self.data = json.load(file)
+            
             self.ui.pushButton_save.setEnabled(True)
             self.ui.label_config_file.setText("")
             self.version = self.data["Testbench_generator"][0]["version"]

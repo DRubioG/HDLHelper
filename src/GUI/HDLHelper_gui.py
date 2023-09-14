@@ -207,7 +207,6 @@ class HDLHelper_gui(QMainWindow):
         This method opens the GUI of Testbench generator
         """
         self.testbench_generator = Testbench_generator_gui()
-        # self.testbench_generator.show()
 
     def calculator_fn(self):
         self.coming_soon()
@@ -253,9 +252,7 @@ class HDLHelper_gui(QMainWindow):
         self.coming_soon()
 
     def preferences_fn(self):
-        # self.preferencies = HDLHelper_preferences_gui()
-        # self.preferencies.show()
-        self.coming_soon()
+        self.preferencies = HDLHelper_preferences_gui()
 
     # Coming soon
     def coming_soon(self):

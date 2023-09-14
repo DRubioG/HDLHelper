@@ -69,16 +69,16 @@ class Ui_HDLHelper_preferences(object):
         self.pushButton_cancel = QtWidgets.QPushButton(HDLHelper_preferences)
         self.pushButton_cancel.setGeometry(QtCore.QRect(279, 420, 101, 27))
         self.pushButton_cancel.setObjectName("pushButton_cancel")
-        self.pushButton_Ok = QtWidgets.QPushButton(HDLHelper_preferences)
-        self.pushButton_Ok.setGeometry(QtCore.QRect(170, 420, 100, 27))
-        self.pushButton_Ok.setObjectName("pushButton_Ok")
+        self.pushButton_save = QtWidgets.QPushButton(HDLHelper_preferences)
+        self.pushButton_save.setGeometry(QtCore.QRect(170, 420, 100, 27))
+        self.pushButton_save.setObjectName("pushButton_save")
 
         self.retranslateUi(HDLHelper_preferences)
         QtCore.QMetaObject.connectSlotsByName(HDLHelper_preferences)
 
     def retranslateUi(self, HDLHelper_preferences):
         _translate = QtCore.QCoreApplication.translate
-        HDLHelper_preferences.setWindowTitle(_translate("HDLHelper_preferences", "Dialog"))
+        HDLHelper_preferences.setWindowTitle(_translate("HDLHelper_preferences", "Preferences"))
         self.groupBox.setTitle(_translate("HDLHelper_preferences", "Comments"))
         self.label_2.setText(_translate("HDLHelper_preferences", "User"))
         self.label_3.setText(_translate("HDLHelper_preferences", "Corporation"))
@@ -87,4 +87,4 @@ class Ui_HDLHelper_preferences(object):
         self.checkBox_version_fl.setText(_translate("HDLHelper_preferences", "Version of HDLHelper"))
         self.checkBox_date.setText(_translate("HDLHelper_preferences", "Add date"))
         self.pushButton_cancel.setText(_translate("HDLHelper_preferences", "Cancel"))
-        self.pushButton_Ok.setText(_translate("HDLHelper_preferences", "Ok"))
+        self.pushButton_save.setText(_translate("HDLHelper_preferences", "Save"))
