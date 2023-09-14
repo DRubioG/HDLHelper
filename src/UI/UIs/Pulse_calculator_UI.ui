@@ -17,9 +17,9 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Pulses_calculator</string>
   </property>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="lineEdit_f_p_global">
    <property name="geometry">
     <rect>
      <x>70</x>
@@ -32,7 +32,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_4">
+  <widget class="QLineEdit" name="lineEdit_f_p_local">
    <property name="geometry">
     <rect>
      <x>70</x>
@@ -45,7 +45,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="comboBox_f_p_general">
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -83,7 +83,7 @@
     <rect>
      <x>280</x>
      <y>120</y>
-     <width>21</width>
+     <width>41</width>
      <height>17</height>
     </rect>
    </property>
@@ -96,7 +96,7 @@
     <rect>
      <x>280</x>
      <y>190</y>
-     <width>21</width>
+     <width>41</width>
      <height>17</height>
     </rect>
    </property>
@@ -104,7 +104,7 @@
     <string>&lt;--&gt;</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="pushButton_calculate">
    <property name="geometry">
     <rect>
      <x>470</x>
@@ -117,7 +117,7 @@
     <string>Calculate</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="pushButton_cancel">
    <property name="geometry">
     <rect>
      <x>350</x>
@@ -143,7 +143,7 @@
     <string>Seconds</string>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioButton">
+  <widget class="QRadioButton" name="radioButton_frequency">
    <property name="geometry">
     <rect>
      <x>120</x>
@@ -159,7 +159,7 @@
     <bool>true</bool>
    </property>
   </widget>
-  <widget class="QRadioButton" name="radioButton_2">
+  <widget class="QRadioButton" name="radioButton_pulses">
    <property name="geometry">
     <rect>
      <x>120</x>
@@ -172,7 +172,7 @@
     <string>Pulses</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox_2">
+  <widget class="QComboBox" name="comboBox_f_p_local">
    <property name="geometry">
     <rect>
      <x>180</x>
@@ -202,7 +202,7 @@
     </property>
    </item>
   </widget>
-  <widget class="QComboBox" name="comboBox_4">
+  <widget class="QComboBox" name="comboBox_seconds_general">
    <property name="geometry">
     <rect>
      <x>440</x>
@@ -232,7 +232,7 @@
     </property>
    </item>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_5">
+  <widget class="QLineEdit" name="lineEdit_seconds_local">
    <property name="geometry">
     <rect>
      <x>330</x>
@@ -245,7 +245,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="lineEdit_seconds_general">
    <property name="geometry">
     <rect>
      <x>330</x>
@@ -258,7 +258,7 @@
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox_5">
+  <widget class="QComboBox" name="comboBox_seconds_local">
    <property name="geometry">
     <rect>
      <x>440</x>
@@ -306,7 +306,7 @@
     <rect>
      <x>30</x>
      <y>260</y>
-     <width>31</width>
+     <width>41</width>
      <height>17</height>
     </rect>
    </property>

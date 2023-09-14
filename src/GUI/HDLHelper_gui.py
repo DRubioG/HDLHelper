@@ -11,6 +11,7 @@ from GUI.HDLHelper_preferences_gui import *
 from GUI.Dialog_new_version_gui import *
 from GUI.Documentation_generator_gui import *
 from GUI.File_generator_gui import *
+from GUI.Pulse_calculator_gui import *
 
 from UI.StyleSheet.StyleSheet_testbench_generator import testbench_generator_gui
 
@@ -68,7 +69,7 @@ class HDLHelper_gui(QMainWindow):
         testbench_generator = QAction("Testbench Generator", self)
         # calculator = QAction("Calculator", self)
         # top_file_generator = QAction("Top file generator", self)
-        # ticks_calculator = QAction("Ticks calculator", self)
+        ticks_calculator = QAction("Ticks calculator", self)
         # translator = QAction("v <-> vhd", self)
         hdl_generator = QAction("HDL generator", self)
         # editor = QAction("Editor", self)
@@ -86,7 +87,7 @@ class HDLHelper_gui(QMainWindow):
         testbench_generator.triggered.connect(self.testbench_generator_fn)
         # calculator.triggered.connect(self.calculator_fn)
         # top_file_generator.triggered.connect(self.top_file_generator_fn)
-        # ticks_calculator.triggered.connect(self.ticks_calculator_fn)
+        ticks_calculator.triggered.connect(self.ticks_calculator_fn)
         # translator.triggered.connect(self.hdl_translator_fn)
         hdl_generator.triggered.connect(self.hdl_generator_fn)
         # editor.triggered.connect(self.editor_fn)
@@ -99,7 +100,7 @@ class HDLHelper_gui(QMainWindow):
         executeMenu.addAction(testbench_generator)
         # executeMenu.addAction(calculator)
         # executeMenu.addAction(top_file_generator)
-        # executeMenu.addAction(ticks_calculator)
+        executeMenu.addAction(ticks_calculator)
         # executeMenu.addAction(translator)
         executeMenu.addAction(hdl_generator)
         # executeMenu.addAction(editor)
@@ -170,25 +171,26 @@ class HDLHelper_gui(QMainWindow):
         This method connects the UI with the functinonal methods.
         """
         # first row
-        self.ui.testbench_generator_button.clicked.connect(
-            self.testbench_generator_fn)
+        self.ui.testbench_generator_button.clicked.connect(self.testbench_generator_fn)
+
         self.ui.calculator_button.clicked.connect(self.calculator_fn)
         self.ui.calculator_button.hide()
         self.ui.top_file_generator_button.clicked.connect(
             self.top_file_generator_fn)
         self.ui.top_file_generator_button.hide()
         # second row
-        self.ui.ticks_calculator_button.clicked.connect(
-            self.ticks_calculator_fn)
-        self.ui.ticks_calculator_button.hide()
+        self.ui.ticks_calculator_button.clicked.connect(self.ticks_calculator_fn)
+
         self.ui.hdl_translator_button.clicked.connect(self.hdl_translator_fn)
         self.ui.hdl_translator_button.hide()
+
         self.ui.hdl_generator_button.clicked.connect(self.hdl_generator_fn)
         # third row
         self.ui.editor_button.clicked.connect(self.editor_fn)
         self.ui.editor_button.hide()
-        self.ui.documentation_generator_button.clicked.connect(
-            self.documentation_generator_fn)
+
+        self.ui.documentation_generator_button.clicked.connect(self.documentation_generator_fn)
+
         self.ui.analize_dependencies_button.clicked.connect(
             self.analize_dependencies_fn)
         self.ui.analize_dependencies_button.hide()
@@ -216,7 +218,7 @@ class HDLHelper_gui(QMainWindow):
 
     # second row
     def ticks_calculator_fn(self):
-        self.coming_soon()
+        self.pulses_calculator = Pulse_calculator_gui()
 
     def hdl_translator_fn(self):
         self.coming_soon()
