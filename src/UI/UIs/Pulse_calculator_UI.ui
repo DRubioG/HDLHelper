@@ -19,39 +19,39 @@
   <property name="windowTitle">
    <string>Pulses_calculator</string>
   </property>
-  <widget class="QLineEdit" name="lineEdit_f_p_global">
+  <widget class="QLineEdit" name="lineEdit_var1">
    <property name="geometry">
     <rect>
      <x>70</x>
      <y>110</y>
      <width>91</width>
-     <height>36</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_f_p_local">
+  <widget class="QLineEdit" name="lineEdit_var3">
    <property name="geometry">
     <rect>
      <x>70</x>
      <y>180</y>
      <width>91</width>
-     <height>36</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox_f_p_general">
+  <widget class="QComboBox" name="comboBox_var1">
    <property name="geometry">
     <rect>
      <x>180</x>
      <y>110</y>
      <width>81</width>
-     <height>36</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="currentText">
@@ -82,7 +82,7 @@
    <property name="geometry">
     <rect>
      <x>280</x>
-     <y>120</y>
+     <y>115</y>
      <width>41</width>
      <height>17</height>
     </rect>
@@ -95,7 +95,7 @@
    <property name="geometry">
     <rect>
      <x>280</x>
-     <y>190</y>
+     <y>185</y>
      <width>41</width>
      <height>17</height>
     </rect>
@@ -172,13 +172,13 @@
     <string>Pulses</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox_f_p_local">
+  <widget class="QComboBox" name="comboBox_var3">
    <property name="geometry">
     <rect>
      <x>180</x>
      <y>180</y>
      <width>81</width>
-     <height>36</height>
+     <height>31</height>
     </rect>
    </property>
    <item>
@@ -202,13 +202,13 @@
     </property>
    </item>
   </widget>
-  <widget class="QComboBox" name="comboBox_seconds_general">
+  <widget class="QComboBox" name="comboBox_var2">
    <property name="geometry">
     <rect>
      <x>440</x>
      <y>110</y>
      <width>81</width>
-     <height>36</height>
+     <height>31</height>
     </rect>
    </property>
    <item>
@@ -232,39 +232,39 @@
     </property>
    </item>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_seconds_local">
+  <widget class="QLineEdit" name="lineEdit_var4">
    <property name="geometry">
     <rect>
      <x>330</x>
      <y>180</y>
      <width>91</width>
-     <height>36</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_seconds_general">
+  <widget class="QLineEdit" name="lineEdit_var2">
    <property name="geometry">
     <rect>
      <x>330</x>
      <y>110</y>
      <width>91</width>
-     <height>36</height>
+     <height>31</height>
     </rect>
    </property>
    <property name="alignment">
     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox_seconds_local">
+  <widget class="QComboBox" name="comboBox_var4">
    <property name="geometry">
     <rect>
      <x>440</x>
      <y>180</y>
      <width>81</width>
-     <height>36</height>
+     <height>31</height>
     </rect>
    </property>
    <item>
@@ -288,38 +288,12 @@
     </property>
    </item>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="label_binary_result">
    <property name="geometry">
     <rect>
-     <x>30</x>
+     <x>110</x>
      <y>230</y>
-     <width>31</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Bin:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_6">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>260</y>
-     <width>41</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Hex:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="binary_result">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>230</y>
-     <width>141</width>
+     <width>461</width>
      <height>17</height>
     </rect>
    </property>
@@ -327,12 +301,12 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="hexadecimal_result">
+  <widget class="QLabel" name="label_hexadecimal_result">
    <property name="geometry">
     <rect>
-     <x>70</x>
+     <x>110</x>
      <y>260</y>
-     <width>141</width>
+     <width>461</width>
      <height>17</height>
     </rect>
    </property>
@@ -345,7 +319,7 @@
     <rect>
      <x>220</x>
      <y>240</y>
-     <width>241</width>
+     <width>331</width>
      <height>41</height>
     </rect>
    </property>
@@ -364,6 +338,94 @@
    </property>
    <property name="text">
     <string>Remove all</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_clean1">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>110</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>clean</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_clean3">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>180</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>clean</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_clean2">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>110</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>clean</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_clean4">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>180</y>
+     <width>51</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>clean</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_bin">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>227</y>
+     <width>71</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <italic>false</italic>
+    </font>
+   </property>
+   <property name="text">
+    <string>Bin</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_hex">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>260</y>
+     <width>71</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <italic>false</italic>
+    </font>
+   </property>
+   <property name="text">
+    <string>Hex</string>
    </property>
   </widget>
  </widget>
