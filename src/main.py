@@ -10,10 +10,6 @@ from PyQt5.QtGui import QPixmap
 
 app = QApplication(sys.argv)    # call Qt application class
 app.setWindowIcon(QtGui.QIcon('icon.ico'))
-# pixmap = QPixmap("logo4.jpg")
-# splash = QSplashScreen(pixmap, QtCore.Qt.WindowStaysOnTopHint)
-# splash.show()
 hdlhelper_gui = HDLHelper_gui() # call HDLHelper application
 hdlhelper_gui.show()            # show the interface
-# splash.finish(hdlhelper_gui)
 sys.exit(app.exec_())           # exit at the finish
