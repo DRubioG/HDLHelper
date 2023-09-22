@@ -340,6 +340,32 @@
     <string/>
    </property>
   </widget>
+  <widget class="QLabel" name="label_error">
+   <property name="geometry">
+    <rect>
+     <x>220</x>
+     <y>240</y>
+     <width>241</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_remove">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>290</y>
+     <width>95</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Remove all</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

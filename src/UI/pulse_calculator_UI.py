@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'Pulse_calculator_UI.ui'
+# Form implementation generated from reading ui file 'pulse_calculator_UI.ui'
 #
 # Created by: PyQt5 UI code generator 5.14.1
 #
@@ -99,13 +99,6 @@ class Ui_Pulses_calculator(object):
         self.hexadecimal_result.setGeometry(QtCore.QRect(70, 260, 141, 17))
         self.hexadecimal_result.setText("")
         self.hexadecimal_result.setObjectName("hexadecimal_result")
-        self.label_error = QtWidgets.QLabel(Pulses_calculator)
-        self.label_error.setGeometry(QtCore.QRect(220, 240, 241, 41))
-        self.label_error.setText("")
-        self.label_error.setObjectName("label_error")
-        self.pushButton_remove = QtWidgets.QPushButton(Pulses_calculator)
-        self.pushButton_remove.setGeometry(QtCore.QRect(230, 290, 95, 36))
-        self.pushButton_remove.setObjectName("pushButton_remove")
 
         self.retranslateUi(Pulses_calculator)
         QtCore.QMetaObject.connectSlotsByName(Pulses_calculator)
@@ -139,4 +132,3 @@ class Ui_Pulses_calculator(object):
         self.comboBox_seconds_local.setItemText(3, _translate("Pulses_calculator", "nsec"))
         self.label_5.setText(_translate("Pulses_calculator", "Bin:"))
         self.label_6.setText(_translate("Pulses_calculator", "Hex:"))
-        self.pushButton_remove.setText(_translate("Pulses_calculator", "Remove all"))

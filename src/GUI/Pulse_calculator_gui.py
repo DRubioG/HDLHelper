@@ -1,4 +1,5 @@
 from PyQt5.QtWidgets import QWidget
+from PyQt5 import QtGui
 
 from UI.Pulse_calculator_UI import *
 
@@ -13,6 +14,7 @@ class Pulse_calculator_gui(QWidget):
     def connections(self):
         self.ui.pushButton_cancel.clicked.connect(self.cancel_fn)
         self.ui.pushButton_calculate.clicked.connect(self.calculate_fn)
+        self.ui.pushButton_remove.clicked.connect(self.remove_data_fn)
 
     def cancel_fn(self):
         self.close()
@@ -23,17 +25,40 @@ class Pulse_calculator_gui(QWidget):
         self.comboBox_f_p_local = self.ui.comboBox_f_p_local.currentText()
         self.comboBox_seconds_general = self.ui.comboBox_seconds_general.currentText()
         self.comboBox_seconds_local = self.ui.comboBox_seconds_local.currentText()
+        
+        try:
+            self.lineEdit_f_p_global = float(self.ui.lineEdit_f_p_global.text().replace(",", "."))
+            self.ui.lineEdit_f_p_global.setStyleSheet("""QLineEdit{border: 1px solid black}""")
+        except:
+            self.ui.lineEdit_f_p_global.setStyleSheet("""QLineEdit{border: 1px solid red}""")
+            self.ui.label_error.setText("ERROR")
+            
 
         try:
-            self.lineEdit_f_p_global = self.ui.lineEdit_f_p_global.text()
-            self.lineEdit_f_p_local = self.ui.lineEdit_f_p_local.text()
-            self.lineEdit_seconds_general = self.ui.lineEdit_seconds_general.text()
-            self.lineEdit_seconds_local = self.ui.lineEdit_seconds_local.text()
+            self.lineEdit_f_p_local = float(self.ui.lineEdit_f_p_local.text().replace(",", "."))
+            self.ui.lineEdit_f_p_local.setStyleSheet("""QLineEdit{border: 1px solid black}""")
         except:
-            pass
+            self.ui.lineEdit_f_p_local.setStyleSheet("""QLineEdit{border: 1px solid red}""")
+           
 
+        try:
+            self.lineEdit_seconds_general = float(self.ui.lineEdit_seconds_general.text().replace(",", "."))
+            self.ui.lineEdit_seconds_general.setStyleSheet("""QLineEdit{border: 1px solid black}""")
+        except:
+            self.ui.lineEdit_seconds_general.setStyleSheet("""QLineEdit{border: 1px solid red}""")
+            
+
+        try:
+            self.lineEdit_seconds_local = float(self.ui.lineEdit_seconds_local.text().replace(",", "."))
+            self.ui.lineEdit_seconds_local.setStyleSheet("""QLineEdit{border: 1px solid black}""")
+        except:
+            self.ui.lineEdit_seconds_local.setStyleSheet("""QLineEdit{border: 1px solid red}""")
+            
+
+        pass
+
+    def remove_data_fn(self):
         self.ui.lineEdit_f_p_global.clear()
         self.ui.lineEdit_f_p_local.clear()
         self.ui.lineEdit_seconds_general.clear()
         self.ui.lineEdit_seconds_local.clear()
-        pass
