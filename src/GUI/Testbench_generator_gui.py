@@ -1,4 +1,3 @@
-import sys
 import os
 from PyQt5.QtWidgets import QFileDialog, QWidget
 from PyQt5 import QtCore

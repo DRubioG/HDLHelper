@@ -1,5 +1,7 @@
-from PyQt5.QtWidgets import QWidget, QFileDialog
-
+from PyQt5.QtWidgets import QWidget, QFileDialog, QHeaderView, QComboBox
+from PyQt5 import Qt#, QBrush
+from PyQt5.Qt import QBrush
+# from Qt import QB
 from UI.File_generator_UI import *
 
 class File_generator_gui(QWidget):
@@ -13,6 +15,8 @@ class File_generator_gui(QWidget):
         self.connections()
         self.ports = []
         self.generics = []
+        self.currentrow = 0
+        self.charge_table()
         self.show()
 
 
@@ -28,6 +32,18 @@ class File_generator_gui(QWidget):
         self.ui.comboBox_port_generic.currentIndexChanged.connect(self.port_generic_fn)
         self.ui.lineEdit_entity.textChanged.connect(self.entity_text_fn)
         
+
+    def charge_table(self):
+        self.ui.tableWidget_content.setColumnCount(5)
+        self.ui.tableWidget_content.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
+        self.ui.tableWidget_content.setHorizontalHeaderLabels(["Name", "Inout", "Type", "Value", "Port/Gen"])
+        header = self.ui.tableWidget_content.horizontalHeader()
+        header.setSectionResizeMode(0, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(1, QHeaderView.ResizeMode.ResizeToContents)
+        
+        header.setSectionResizeMode(2, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(3, QHeaderView.ResizeMode.ResizeToContents)
+        header.setSectionResizeMode(4, QHeaderView.ResizeMode.ResizeToContents)
 
     def port_generic_fn(self):
         """
@@ -55,14 +71,18 @@ class File_generator_gui(QWidget):
         """
         This method executes add button
         """
+        combo = QComboBox()
+        combo.addItems(["in", "out", "inout"])
         port_generic = self.ui.comboBox_port_generic.currentText()
         name = self.ui.lineEdit_name.text()
         type = self.ui.comboBox_type.currentText()
         inout = self.ui.comboBox_inout.currentText()
         num_bits = self.ui.lineEdit_bits.text()
         if name:
+            self.ui.tableWidget_content.insertRow(self.ui.tableWidget_content.rowCount())
+            self.ui.tableWidget_content.setItem(self.currentrow, 0, QtWidgets.QTableWidgetItem(name))
             if port_generic == "port":
-                if num_bits and num_bits!='1':
+                if num_bits and num_bits != '1':
                     if type == "std_logic":
                         try:
                             num_bits = int(num_bits)
@@ -70,14 +90,46 @@ class File_generator_gui(QWidget):
                         except:
                             type_ = [num_bits+"-1", "std_logic_vector", "0"]
                 else:
-                    if type == "std_logic":
-                        type_ = type
+                    type_ = type
                 
                 self.ports.append([name, inout, type_])
+
+
+                # if inout == "in":
+                #     index = 0
+                # elif inout == "out":
+                #     index = 1
+                # elif inout == "inout":
+                #     index = 2
+                # combo.setCurrentIndex(index)
+                # self.ui.tableWidget_content.setCellWidget(self.currentrow, 1, combo)
+
+                self.ui.tableWidget_content.setItem(self.currentrow, 1, QtWidgets.QTableWidgetItem(inout))
+                self.ui.tableWidget_content.setItem(self.currentrow, 2, QtWidgets.QTableWidgetItem(type))
+                if not num_bits:
+                    self.ui.tableWidget_content.setItem(self.currentrow, 3, QtWidgets.QTableWidgetItem("1"))
+                else:
+                    self.ui.tableWidget_content.setItem(self.currentrow, 3, QtWidgets.QTableWidgetItem(str(num_bits)))
+                self.ui.tableWidget_content.setItem(self.currentrow, 4, QtWidgets.QTableWidgetItem("port"))
+
             elif port_generic == "generic":
+                self.ui.tableWidget_content.setItem(self.currentrow, 2, QtWidgets.QTableWidgetItem(type))
+                if not num_bits:
+                    self.ui.tableWidget_content.setItem(self.currentrow, 3, QtWidgets.QTableWidgetItem("1"))
+                else:
+                    self.ui.tableWidget_content.setItem(self.currentrow, 3, QtWidgets.QTableWidgetItem(str(num_bits)))
+                self.ui.tableWidget_content.setItem(self.currentrow, 4, QtWidgets.QTableWidgetItem("generic"))
                 pass
-        self.ui.lineEdit_name.clear()
-        self.ui.lineEdit_bits.clear()
+
+            
+            
+            
+            
+            
+
+            self.currentrow += 1
+            self.ui.lineEdit_name.clear()
+            self.ui.lineEdit_bits.clear()
 
 
     def entity_text_fn(self):
