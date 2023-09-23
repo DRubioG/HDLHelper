@@ -29,7 +29,7 @@ class VHDL_regen():
                      copy=False, 
                      uppercase_gen_cfg="False", 
                      uppercase_port_cfg="False", 
-                     tab_space_cfg="", 
+                     tab_space_cfg="tab", 
                      ftext="", 
                      etext="", 
                      user_code="", 
@@ -57,13 +57,50 @@ class VHDL_regen():
         """
         output = "architecture arch_" + name_ent + " of " + name_ent + " is\n\n"
 
-        # different options of architecture type
+        # different options for the architecture types
         if component is True and vhdl_version == "Mixed":
-            output += self.arch_Mixed(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, split_signal_constant, comments_cfg)
+            output += self.arch_Mixed(name_ent, 
+                                      generics, 
+                                      ports, 
+                                      comments, 
+                                      entity, 
+                                      vhdl_version, 
+                                      copy, 
+                                      uppercase_gen_cfg, 
+                                      uppercase_port_cfg, 
+                                      tab_space_cfg, 
+                                      ftext, 
+                                      etext, 
+                                      split_signal_constant, 
+                                      comments_cfg)
+            
         elif component is True and vhdl_version == "87":
-            output += self.arch_87(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, split_signal_constant, comments_cfg)
+            output += self.arch_87(name_ent, 
+                                   generics, 
+                                   ports, 
+                                   comments, 
+                                   entity, 
+                                   vhdl_version, 
+                                   copy, 
+                                   uppercase_gen_cfg, 
+                                   uppercase_port_cfg, 
+                                   tab_space_cfg, 
+                                   ftext, 
+                                   etext, 
+                                   split_signal_constant, 
+                                   comments_cfg)
+            
         elif component is True and vhdl_version == "93":
-            output += self.arch_93(name_ent, generics, ports, comments, entity, vhdl_version, copy, uppercase_gen_cfg, uppercase_port_cfg, tab_space_cfg, ftext, etext, split_signal_constant)
+            output += self.arch_93(name_ent, 
+                                   generics, 
+                                   ports, 
+                                   vhdl_version, 
+                                   uppercase_gen_cfg, 
+                                   uppercase_port_cfg, 
+                                   tab_space_cfg, 
+                                   ftext, 
+                                   etext, 
+                                   split_signal_constant)
 
         output += "\n" + user_code + "\n\n"
         output += "end architecture arch_" + name_ent + ";"
@@ -71,7 +108,20 @@ class VHDL_regen():
         return output
     
 
-    def arch_Mixed(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="Mixed", copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", split_signal_constant="True", comments_cfg="False"):
+    def arch_Mixed(self, name_ent, 
+                   generics=[], 
+                   ports=[], 
+                   comments=[], 
+                   entity=[], 
+                   vhdl_version="Mixed", 
+                   copy=False, 
+                   uppercase_gen_cfg="False", 
+                   uppercase_port_cfg="False", 
+                   tab_space_cfg="tab", 
+                   ftext="", 
+                   etext="", 
+                   split_signal_constant="True", 
+                   comments_cfg="False"):
         """
         This method creates a mixed option VHDL architecture
         Input:
@@ -91,16 +141,59 @@ class VHDL_regen():
         Return:
             - output: string with the architecture created
         """
-        output = self.component(ports, generics, comments, name_ent, copy, entity, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, comments_cfg, split_signal_constant)
-        output += self.constants(generics, tab_space_cfg, uppercase_gen_cfg, split_signal_constant)
-        output += self.signals(ports, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, ftext, etext, split_signal_constant)
+        output = self.component(ports, 
+                                generics, 
+                                comments, 
+                                name_ent, 
+                                copy, 
+                                entity, 
+                                uppercase_port_cfg, 
+                                uppercase_gen_cfg, 
+                                tab_space_cfg, 
+                                comments_cfg, 
+                                split_signal_constant)
+        
+        output += self.constants(generics, 
+                                 tab_space_cfg, 
+                                 uppercase_gen_cfg, 
+                                 split_signal_constant)
+        
+        output += self.signals(ports, 
+                               uppercase_port_cfg, 
+                               uppercase_gen_cfg, 
+                               tab_space_cfg, 
+                               ftext, 
+                               etext, 
+                               split_signal_constant)
+        
         output += "\nbegin\n"
-        output += self.implementation(name_ent, generics, ports, ftext, etext, tab_space_cfg, uppercase_port_cfg, uppercase_gen_cfg, vhdl_version)
+        output += self.implementation(name_ent, 
+                                      generics, 
+                                      ports, 
+                                      ftext, 
+                                      etext, 
+                                      tab_space_cfg, 
+                                      uppercase_port_cfg, 
+                                      uppercase_gen_cfg, 
+                                      vhdl_version)
         
         return output
     
 
-    def arch_87(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="87", copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", ftext="", etext="", split_signal_constant="True", comments_cfg="False"):
+    def arch_87(self, name_ent, 
+                generics=[], 
+                ports=[], 
+                comments=[], 
+                entity=[], 
+                vhdl_version="87", 
+                copy=False, 
+                uppercase_gen_cfg="False", 
+                uppercase_port_cfg="False", 
+                tab_space_cfg="tab", 
+                ftext="", 
+                etext="", 
+                split_signal_constant="True", 
+                comments_cfg="False"):
         """
         This method creates a '87 option VHDL architecture
         Input:
@@ -120,18 +213,55 @@ class VHDL_regen():
         Return:
             - output: string with the architecture created
         """
-        output = self.component(ports, generics, comments, name_ent, copy, entity, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, comments_cfg, split_signal_constant)
-        output += self.constants(generics, tab_space_cfg, uppercase_gen_cfg, split_signal_constant)
-        output += self.signals(ports, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, ftext, etext, split_signal_constant)
+        output = self.component(ports, 
+                                generics, 
+                                comments, 
+                                name_ent, 
+                                copy, 
+                                entity, 
+                                uppercase_port_cfg, 
+                                uppercase_gen_cfg, 
+                                tab_space_cfg, 
+                                comments_cfg, 
+                                split_signal_constant)
+        
+        output += self.constants(generics, 
+                                 tab_space_cfg, 
+                                 uppercase_gen_cfg, 
+                                 split_signal_constant)
+        
+        output += self.signals(ports, 
+                               uppercase_port_cfg, 
+                               uppercase_gen_cfg, 
+                               tab_space_cfg, 
+                               ftext, 
+                               etext, 
+                               split_signal_constant)
+        
         output += "\nbegin\n"
-        output += self.implementation(name_ent, generics, ports, ftext, etext, tab_space_cfg, uppercase_port_cfg, uppercase_gen_cfg, vhdl_version)
+        output += self.implementation(name_ent, 
+                                      generics, 
+                                      ports, 
+                                      ftext, 
+                                      etext, 
+                                      tab_space_cfg, 
+                                      uppercase_port_cfg, 
+                                      uppercase_gen_cfg, 
+                                      vhdl_version)
         
         return output
     
     
-    def arch_93(self, name_ent, generics=[], ports=[], comments=[], entity=[], vhdl_version="93", 
-                copy=False, uppercase_gen_cfg="False", uppercase_port_cfg="False", tab_space_cfg="", 
-                ftext="", etext="", split_signal_constant="True"):
+    def arch_93(self, name_ent, 
+                generics=[], 
+                ports=[], 
+                vhdl_version="93", 
+                uppercase_gen_cfg="False", 
+                uppercase_port_cfg="False", 
+                tab_space_cfg="tab", 
+                ftext="", 
+                etext="", 
+                split_signal_constant="True"):
         """
         This method creates a '93 option VHDL architecture
         Input:
@@ -151,15 +281,42 @@ class VHDL_regen():
         Return:
             - output: string with the architecture created
         """
-        output = self.constants(generics, tab_space_cfg, uppercase_gen_cfg, split_signal_constant)
-        output += self.signals(ports, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, ftext, etext, split_signal_constant)
+        output = self.constants(generics, 
+                                tab_space_cfg, 
+                                uppercase_gen_cfg, 
+                                split_signal_constant)
+        
+        output += self.signals(ports, 
+                               uppercase_port_cfg, 
+                               uppercase_gen_cfg, 
+                               tab_space_cfg, 
+                               ftext, 
+                               etext, 
+                               split_signal_constant)
+        
         output += "\nbegin\n"
-        output += self.implementation(name_ent, generics, ports, ftext, etext, tab_space_cfg, uppercase_port_cfg, uppercase_gen_cfg, vhdl_version)
+        output += self.implementation(name_ent, 
+                                      generics, 
+                                      ports, 
+                                      ftext, 
+                                      etext, 
+                                      tab_space_cfg, 
+                                      uppercase_port_cfg, 
+                                      uppercase_gen_cfg, 
+                                      vhdl_version)
         
         return output
 
 
-    def entity(self, name_ent, generics=[], ports=[], comments=[], uppercase_gen_cfg="", uppercase_port_cfg="", tab_spaces_cfg="", comments_cfg="", split="True"):
+    def entity(self, name_ent, 
+               generics=[], 
+               ports=[], 
+               comments=[], 
+               uppercase_gen_cfg="", 
+               uppercase_port_cfg="", 
+               tab_spaces_cfg="tab", 
+               comments_cfg="", 
+               split="True"):
         """
         This method creates an VHDL entity
         Input:
@@ -172,10 +329,19 @@ class VHDL_regen():
         Return:
             - output: string with the architecture created
         """
-        output = "architecture arch_" + name_ent + " of " + name_ent + " is\n\n"
-        output = "\nentity " + name_ent + " is\n"
-        output += self.generics(generics, comments, uppercase_gen_cfg, tab_spaces_cfg, comments_cfg)
-        output += self.ports(ports, comments, uppercase_port_cfg, uppercase_gen_cfg, tab_spaces_cfg, comments_cfg, split)
+        output = "entity " + name_ent + " is\n"
+        output += self.generics(generics, 
+                                comments, 
+                                uppercase_gen_cfg, 
+                                tab_spaces_cfg, 
+                                comments_cfg)
+        
+        output += self.ports(ports, 
+                             comments, 
+                             uppercase_port_cfg, 
+                             uppercase_gen_cfg, 
+                             tab_spaces_cfg, 
+                             comments_cfg, split)
         output += "end entity " + name_ent + ";\n\n"
         
         return output
@@ -274,7 +440,8 @@ class VHDL_regen():
                     cont = 1
                     for i in generic[0]:
                         if split == "True":
-                            output += self.tab_spaces(tab_spaces_cfg, N+1) + self.uppercase(uppercase_cfg, i) + \
+                            output += self.tab_spaces(tab_spaces_cfg, N+1) + \
+                                self.uppercase(uppercase_cfg, i) + \
                                 self.space_alignment(i, lon_max) + "\t : \t" + generic[1]
 
                             if generic[2]:
@@ -391,14 +558,18 @@ class VHDL_regen():
                     cont = 1
                     for i in port[0]:
                         if split == "True":
-                            output += self.tab_spaces(tab_spaces_cfg, N+1) + self.uppercase(uppercase_port_cfg, i) + \
+                            output += self.tab_spaces(tab_spaces_cfg, N+1) + \
+                                self.uppercase(uppercase_port_cfg, i) + \
                                 self.space_alignment(i, lon_max) + "\t : \t" + port[1]
 
                             if type(port[2]) != list:
                                 output += self.space_alignment(port[1], lon_max_inout) + " " + port[2]
                             else:
-                                output += self.space_alignment(port[1], lon_max_inout) + " " + port[2][0] + "(" + self.uppercase(uppercase_gen_cfg, port[2][1]) + \
-                                    " " + port[2][2] + " " + self.uppercase(uppercase_gen_cfg, port[2][3]) + ")"
+                                output += self.space_alignment(port[1], lon_max_inout) + \
+                                    " " + port[2][0] + "(" + \
+                                        self.uppercase(uppercase_gen_cfg, port[2][1]) + \
+                                    " " + port[2][2] + " " + \
+                                        self.uppercase(uppercase_gen_cfg, port[2][3]) + ")"
 
                             if cont_ports != len(ports):
                                 output += ";"
@@ -427,7 +598,9 @@ class VHDL_regen():
                         if type(port[2]) != list:
                             output += self.space_alignment(port[1], lon_max_inout) + " " + port[2]
                         else:
-                            output += self.space_alignment(port[1], lon_max_inout) + " " + port[2][0] + "(" + self.uppercase(uppercase_gen_cfg, port[2][1]) + \
+                            output += self.space_alignment(port[1], lon_max_inout) + \
+                                " " + port[2][0] + "(" + \
+                                    self.uppercase(uppercase_gen_cfg, port[2][1]) + \
                                 " " + port[2][2] + " " + self.uppercase(uppercase_gen_cfg, port[2][3]) + ")"
 
                         if cont_ports != len(ports):
@@ -450,7 +623,9 @@ class VHDL_regen():
                     if type(port[2]) != list:
                         output += self.space_alignment(port[1], lon_max_inout) + " " + port[2]
                     else:
-                        output += self.space_alignment(port[1], lon_max_inout) + " " + port[2][0] + "(" + self.uppercase(uppercase_gen_cfg, port[2][1]) + \
+                        output += self.space_alignment(port[1], lon_max_inout) + \
+                            " " + port[2][0] + "(" + \
+                                self.uppercase(uppercase_gen_cfg, port[2][1]) + \
                             " " + port[2][2] + " " + self.uppercase(uppercase_gen_cfg, port[2][3]) + ")"
 
                     if cont_ports != len(ports):
@@ -514,7 +689,16 @@ class VHDL_regen():
         return output + "end component;\n\n"
 
 
-    def implementation(self, name,  generics, ports, ftext, etext, tab_spaces_cfg, uppercase_port_cfg, uppercase_gen_cfg, vhdl_version, N=0):
+    def implementation(self, name,  
+                       generics, 
+                       ports, 
+                       ftext, 
+                       etext, 
+                       tab_spaces_cfg, 
+                       uppercase_port_cfg, 
+                       uppercase_gen_cfg, 
+                       vhdl_version, 
+                       N=0):
         """
         This method defines the implementation of the code in the testbench
         Input:
@@ -677,15 +861,24 @@ class VHDL_regen():
         """
         output = ""
         if type(port[2]) == list:
-            output += port[2][0] + "(" + self.uppercase(uppercase_gen_cfg, port[2][1]) + " " + \
-                port[2][2] + " " + self.uppercase(uppercase_gen_cfg, port[2][3]) + ")"
+            output += port[2][0] + "(" + \
+                self.uppercase(uppercase_gen_cfg, port[2][1]) + " " + \
+                port[2][2] + " " + \
+                self.uppercase(uppercase_gen_cfg, port[2][3]) + ")"
         else:
             output += port[2] 
 
         return output + ";\n"
 
 
-    def signals(self, ports, uppercase_port_cfg, uppercase_gen_cfg, tab_space_cfg, ftext, etext, split_signal_constant, N=0):
+    def signals(self, ports, 
+                uppercase_port_cfg, 
+                uppercase_gen_cfg, 
+                tab_space_cfg, 
+                ftext, 
+                etext, 
+                split_signal_constant, 
+                N=0):
         """
         This method creates a signal from a port list
         Input:
@@ -752,7 +945,11 @@ class VHDL_regen():
         return output
 
 
-    def constants(self, generics, tab_space_cfg, upper_generics, split_signal_constant, N=0):
+    def constants(self, generics, 
+                  tab_space_cfg, 
+                  upper_generics, 
+                  split_signal_constant, 
+                  N=0):
         """
         This method generates constant using a list of generics
         Input:

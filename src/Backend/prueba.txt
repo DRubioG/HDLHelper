@@ -1,3 +1,0 @@
-[['dfhdfg', 26], ['hola 2', 29], ['hola', 30], ['comentario', 31], ['prueba', 32], ['preuba3', 33], ['alfa', 36], ['34234523', 37], ['dfhdfg', 38], ['dfhdfg1', 39], ['marcafa', 40]]
-[[['CLK', 'rst'], 'in', 'STD_LOGIC', 36], ['Row', 'in', ['STD_LOGIC_VECTOR', '(N-1)', 'downto', '(N-2)'], 38], ['Col', 'out', ['STD_LOGIC_VECTOR', '3', 'downto', '0'], 39], ['DecodeOut', 'out', ['STD_LOGIC_VECTOR', '3', 'downto', '0'], 40]]
-[['y', 'integer', '', 29], ['U', 'integer', '32', 30], [['N', 'T'], 'integer', '', 32], ['Gadgvsed', 'std_logic_vector', 'N-1', 33]]
