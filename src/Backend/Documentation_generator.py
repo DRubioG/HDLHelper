@@ -1,4 +1,4 @@
-import json
+import json, os
 from Backend.HDL import *
 from fpdf import FPDF
 
@@ -27,7 +27,7 @@ class Documentation_generator():
             self.templates = ["template_basic"]
 
 
-    def generate(self, file_input, file_output):
+    def generate(self, file_input, file_output, file_path, logo_path):
         """
         This method calls the generate method and checks the options
         Input:
@@ -40,10 +40,12 @@ class Documentation_generator():
             self.file = open(file_input, "r")
             self.file = self.file.readlines()
 
-        self.gen_pdf(file_output)
+        self.logo_path = logo_path
+        file_path, _ = os.path.split(file_path)
+        self.gen_pdf(file_output, file_path)
         
     
-    def gen_pdf(self, file_output):
+    def gen_pdf(self, file_output, file_path):
         """
         This method generates pdf
         Input:
@@ -62,7 +64,7 @@ class Documentation_generator():
 
         self.insert_code(base_y)
 
-        self.pdf.output(file_output, 'F')
+        self.pdf.output(os.path.join(file_path, file_output), 'F')
 
 
     def add_page(self):
@@ -71,6 +73,11 @@ class Documentation_generator():
         """
         try:
             self.pdf.cell(0, 0, link=self.pdf.image('./img/logo/prueba.png', 190, 10, 7))
+        except:
+            pass
+
+        try:
+            self.pdf.cell(0, 0, link=self.pdf.image(self.logo_path, 20, 10, 7))
         except:
             pass
         self.pdf.add_page()

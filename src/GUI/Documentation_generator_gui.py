@@ -16,6 +16,7 @@ class Documentation_generator_gui(QWidget):
         self.read_config()
         self.load_config()
         self.connections()
+        self.logo_path = ""
         self.show()
     
 
@@ -61,6 +62,7 @@ class Documentation_generator_gui(QWidget):
         self.ui.pushButton_input.clicked.connect(self.search_input)
         self.ui.pushButton_output.clicked.connect(self.search_output)
         self.ui.checkBox_logo.toggled.connect(self.logo_fn)
+        self.ui.pushButton_logo.clicked.connect(self.search_logo_fn)
         self.ui.lineEdit_output.setReadOnly(True)
         self.ui.lineEdit_file.setReadOnly(True)
         self.ui.pushButton_accept.setEnabled(False)
@@ -100,7 +102,7 @@ class Documentation_generator_gui(QWidget):
         except:
             pass
         documentation = Documentation_generator()
-        documentation.generate(self.file_input, self.file_output)
+        documentation.generate(self.file_input, self.file_output, self.file_path, self.logo_path)
 
         self.close()
 
@@ -134,3 +136,11 @@ class Documentation_generator_gui(QWidget):
         relative_path = os.path.relpath(self.file_output, self.file_path)
         self.ui.lineEdit_output.setText(relative_path[3:])
         
+
+    def search_logo_fn(self):
+        logoDialog = QFileDialog()
+        self.logo_path, _ = logoDialog.getOpenFileName(self, "Select file", QtCore.QDir.currentPath(
+        ), "PNG (*.png) ;;JPEG (*.jpg)")
+        
+        self.ui.lineEdit_logo.setText(self.logo_path)
+
