@@ -140,7 +140,7 @@ class Documentation_generator_gui(QWidget):
     def search_logo_fn(self):
         logoDialog = QFileDialog()
         self.logo_path, _ = logoDialog.getOpenFileName(self, "Select file", QtCore.QDir.currentPath(
-        ), "PNG (*.png) ;;JPEG (*.jpg)")
+        ), "PNG, JPEG (*.png *.jpg)")
         
         self.ui.lineEdit_logo.setText(self.logo_path)
 
