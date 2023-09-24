@@ -44,6 +44,7 @@ end;
 architecture Behavioral of Decoder is
 
 signal sclk :STD_LOGIC_VECTOR(19 downto 0);
+signal alfa: unsigned(19 downto 0);
 begin
 	process(clk)
 		begin 

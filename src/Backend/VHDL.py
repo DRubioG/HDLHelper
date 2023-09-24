@@ -10,6 +10,7 @@ class VHDL():
         self.generics = []
         self.comments = []
 
+
     def read_file(self):
         """
         This method is used to read VHDL file
@@ -17,8 +18,8 @@ class VHDL():
             - text: a list with VHDL lines of the file
         """
         file = open(self.file_input, 'r')
-        text = file.readlines()
-        return text
+        self.text = file.readlines()
+
 
     def get_entity(self):
         """
@@ -31,9 +32,9 @@ class VHDL():
         entity_flag = 0
         line_counter = 0
 
-        text = self.read_file()
+        self.read_file()
         # find the entity in the file
-        for t in text:
+        for t in self.text:
             t = t.replace("\n", "")
             t = t.replace(";", "")
 
@@ -54,9 +55,11 @@ class VHDL():
 
         return entity
 
+
     def get_comments(self, code):
         """
         This method gets VHDL comments of the input list
+        Comment list follows this scheme: [<comment>, <number of the line>]
         Input:
             - code: a list with VHDL line with comments
         Return:
@@ -74,9 +77,11 @@ class VHDL():
 
         return entity
 
+
     def get_generics(self, entity):
         """
         This method gets the generics of the list of lines of VHDL code
+        List follows this scheme: [<name>, <type>, <value>, <number of the line>]
         Input:
             - entity: a list with the list of VHDL lines
         """
@@ -107,7 +112,6 @@ class VHDL():
             if generic[0] != "generic" and generic[0] != '':
                 _real_generic.append(generic)
 
-        # print(_real_generic)
         # extract all parts of generics and add to a generics list
         for generic in _real_generic:
             aux1 = generic[0].split(":=")
@@ -133,6 +137,9 @@ class VHDL():
     def get_ports(self, entity):
         """
         This method gets the port lines of the VHDL code
+        Ports list follows this scheme:
+        Only one bit:   [<name>, <in/out/inout>, <type>, <number of line>]
+        Multiple bits:  [<name>, <in/out/inout>, [<type>, <first value>, <downto/to>, <last value>], <number of line>]
         Input:
             - entity: a list of the entity lines of VHDL code
         """
@@ -245,9 +252,63 @@ class VHDL():
         return self.ports, self.generics, self.comments, self.entity
 
 
+    def get_signals(self):
+        """
+        This method returns the signals in the following scheme of list:
+        Non declared:   [<name>, <type>]
+        Declared:       [<name>, <type>, [<MSB>, <downto/to>, <LSB>]]
+        Return:
+            - signal_list: a list with the signals
+        """
+        self.read_file()
+        signal_raw = []
+        signal_list = []
+        # find signal in the file
+        for t in self.text:
+            t = t.replace("\n", "")
+
+            if t.find("signal") != -1:
+                t1 = t.replace("signal ", "")
+                t1 = t1.split(":")
+                t1[0] = t1[0].replace(" ", "")
+                t1[1] = t1[1].split("(")
+                if len(t1[1]) != 1:
+                    t1[1][1] = t1[1][1][:t1[1][1].find(";")-1]
+                    t1[1][1] = t1[1][1].split(" ")
+                else:
+                    t1[1][0] = t1[1][0].replace(";", "")
+                t1[1][0] = t1[1][0].replace(" ", "")
+                signal_raw.append(t1)
+
+        for signal in signal_raw:
+            signal_aux = []
+            if len(signal[1]) != 1:
+                signal_aux.append(signal[0])
+                signal_aux.append(signal[1][0])
+                signal_aux.append(signal[1][1])
+                signal_list.append(signal_aux)
+            else:
+                signal_aux.append(signal[0])
+                signal_aux.append(signal[1][0])
+                signal_list.append(signal_aux)
+
+        return signal_list
+            
+
+    def get_constants(self):
+        """
+        This method returns the signals in the following scheme of list:
+        Non declared:   [<name>, <type>, <value>]
+        Declared:       [<name>, <type>, [<MSB>, <downto/to>, <LSB>], <value>]
+        Return:
+            - constant_list: a list with the constants
+        """
+        for t in self.text:
+            t = t.replace("\n", "")
+
+
+
+
 if __name__ == "__main__":
-    vhdl = VHDL("Decoder.vhd", copy=True)
-    print(vhdl.get_list())
-    # print(vhdl.comments)
-    # print(vhdl.ports)
-    # print(vhdl.generics)
+    vhdl = VHDL("Decoder.vhd")
+    print(vhdl.get_signals())

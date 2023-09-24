@@ -22,6 +22,10 @@ class HDL():
         if self.file_input[-4:] == ".vhd":
             self.hdl = VHDL(self.file_input)
             ports, generics, comments, entity = self.hdl.get_list()
+            self.signals = self.hdl.get_signals()
             return ports, generics, comments, entity
        # elif self.file_input[-2:] == ".v":
            # self.hdl = Verilog(self.file_input)
+
+    def get_signals(self):
+        return self.signals

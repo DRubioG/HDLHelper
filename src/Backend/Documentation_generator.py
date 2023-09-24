@@ -34,7 +34,7 @@ class Documentation_generator():
             - file_input: name of the file input
             - file_output: name of the file output
         """
-        hdl = HDL(file_input)
+        self.hdl = HDL(file_input)
         self.ports, self.generics, self.comments, _ = hdl.init()
         if self.source_code:
             self.file = open(file_input, "r")
@@ -61,6 +61,7 @@ class Documentation_generator():
         
         base_y = self.pdf_generic(base_x, base_y)
         base_y = self.pdf_port(base_x, base_y)
+        self.write_signal_info(base_y)
 
         self.insert_code(base_y)
 
@@ -269,6 +270,12 @@ class Documentation_generator():
                 cont = 10
         
         return cont
+
+
+    def write_signal_info(self, base_y):
+        signals = self.hdl.get_signals()
+
+
 
 
     def pdf_text(self, x, y, text, underline=False, bold=False, italic=False, color=(0,0,0), size=10):
