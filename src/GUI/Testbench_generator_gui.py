@@ -1,12 +1,14 @@
 import os
 from PyQt5.QtWidgets import QFileDialog, QWidget
 from PyQt5 import QtCore
+from PyQt5.QtGui import *
+from PyQt5.QtCore import *
+from PyQt5.QtWidgets import *
 
 from UI.Testbench_generator_UI import *
 from UI.StyleSheet.StyleSheet_testbench_generator import testbench_generator_gui
 
 from GUI.Testbench_generator_config_gui import *
-from GUI.Testbench_overwrite_gui import *
 
 from Backend.HDLHelper import *
 
@@ -22,6 +24,7 @@ class Testbench_generator_gui(QWidget):
         self.ui = Ui_Testbench_generator()
         self.ui.setupUi(self)
         self.connections()
+        self.overwrite_opt = "False"
         self.show()
 
 
@@ -115,13 +118,32 @@ class Testbench_generator_gui(QWidget):
         This method create a testbench file, and shows the overwriting GUI if a file is going to be overwriting
         """
         if self.overwrite == 1:
-            self.overwrite_config = Testbench_overwrite_gui()
-            self.hdlhelper = HDLHelper(
-                self.file_path, self.file_output, "testbench")
-            self.close()
+            if self.overwrite_opt == "False":
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Warning)
+                msg.setText("Do you want to overwrite existing file?")
+                msg.setWindowTitle("Overwrite option")
+
+                msg.setStandardButtons(QMessageBox.Yes | QMessageBox.Cancel)
+
+                dontShowCheckBox = QCheckBox("don't show this message again")
+                dontShowCheckBox.setCheckable(True)
+                msg.setCheckBox(dontShowCheckBox)
+
+                retval = msg.exec_()
+
+                if dontShowCheckBox.isChecked():
+                    self.overwrite_opt = "True"
+
+                if retval == QMessageBox.Yes:
+                    self.hdlhelper = HDLHelper(self.file_path, self.file_output, "testbench")
+                    self.close()
+                
+            else:
+                self.hdlhelper = HDLHelper(self.file_path, self.file_output, "testbench")
+                self.close()
         else:
-            self.hdlhelper = HDLHelper(
-                    self.file_path, self.file_output, "testbench")
+            self.hdlhelper = HDLHelper(self.file_path, self.file_output, "testbench")
             self.close()
 
 

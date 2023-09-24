@@ -211,7 +211,7 @@ class File_generator_gui(QWidget):
         """
         This method updates architecture text
         """
-        self.name_entity = self.ui.lineEdit_entity.text()
+        self.name_entity = self.ui.lineEdit_entity.text().strip()
         if self.name_entity:
             text_arch = "arch_" + self.name_entity
         else:
