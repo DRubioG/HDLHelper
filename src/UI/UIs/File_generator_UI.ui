@@ -408,14 +408,14 @@
   <widget class="QPushButton" name="pushButton_components">
    <property name="geometry">
     <rect>
-     <x>69</x>
+     <x>159</x>
      <y>600</y>
-     <width>171</width>
+     <width>81</width>
      <height>27</height>
     </rect>
    </property>
    <property name="text">
-    <string>Insert components</string>
+    <string>add files</string>
    </property>
   </widget>
   <zorder>tableWidget_content</zorder>

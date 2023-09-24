@@ -240,6 +240,7 @@ class Documentation_generator():
         
         return cont
         
+        
     def generic_desciption(self, x, y, generic, generic_=""):
         """
         This method adds the description of the ports

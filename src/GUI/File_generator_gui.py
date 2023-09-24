@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QWidget, QFileDialog, QHeaderView, QComboBox
 from UI.File_generator_UI import *
 
 from Backend.VHDL_regen import *
+from Backend.HDL import *
 
 class File_generator_gui(QWidget):
     """
@@ -13,6 +14,7 @@ class File_generator_gui(QWidget):
         self.ui = Ui_File_generator_ui()
         self.ui.setupUi(self)
         self.connections()
+        self.libraries = []
         self.ports = []
         self.generics = []
         self.currentrow = 0
@@ -30,6 +32,7 @@ class File_generator_gui(QWidget):
         self.ui.pushButton_cancel.clicked.connect(self.cancel_fn)
         self.ui.pushButton_create.clicked.connect(self.create_fn)
         self.ui.pushButton_config.clicked.connect(self.config_fn)
+        self.ui.pushButton_components.clicked.connect(self.add_component_fn)
         self.ui.checkBox_comments.toggled.connect(self.comments_fn)
         self.ui.comboBox_port_generic.currentIndexChanged.connect(self.port_generic_fn)
         self.ui.lineEdit_entity.textChanged.connect(self.entity_text_fn)
@@ -103,8 +106,6 @@ class File_generator_gui(QWidget):
         num_bits = self.ui.lineEdit_bits.text()
 
         if name:
-            self.ui.tableWidget_content.insertRow(self.ui.tableWidget_content.rowCount())
-            self.ui.tableWidget_content.setItem(self.currentrow, 0, QtWidgets.QTableWidgetItem(name))
             if port_generic == "port":
                 if num_bits and num_bits != '1':
                     if type == "std_logic":
@@ -117,40 +118,93 @@ class File_generator_gui(QWidget):
                     type_ = type
                 
                 self.ports.append([name, inout, type_])
-                self.ui.tableWidget_content.setItem(self.currentrow, 1,
-                                                     QtWidgets.QTableWidgetItem(inout))
-                self.ui.tableWidget_content.setItem(self.currentrow, 2,
-                                                     QtWidgets.QTableWidgetItem(type))
-                if not num_bits:
-                    self.ui.tableWidget_content.setItem(self.currentrow, 3,
-                                                         QtWidgets.QTableWidgetItem("1"))
-                else:
-                    self.ui.tableWidget_content.setItem(self.currentrow, 3,
-                                                         QtWidgets.QTableWidgetItem(str(num_bits)))
-                self.ui.tableWidget_content.setItem(self.currentrow, 4,
-                                                     QtWidgets.QTableWidgetItem("port"))
 
             elif port_generic == "generic":
-                self.ui.tableWidget_content.setItem(self.currentrow, 2,
-                                                     QtWidgets.QTableWidgetItem(type))
-                if not num_bits:
-                    self.ui.tableWidget_content.setItem(self.currentrow, 3,
-                                                         QtWidgets.QTableWidgetItem("1"))
-                else:
-                    self.ui.tableWidget_content.setItem(self.currentrow, 3,
-                                                         QtWidgets.QTableWidgetItem(str(num_bits)))
-                self.ui.tableWidget_content.setItem(self.currentrow, 4,
-                                                     QtWidgets.QTableWidgetItem("generic"))
                 self.generics.append([name, type, num_bits])
 
-            self.currentrow += 1
-
+            # self.currentrow += 1
+            self.regenerate_table()
             self.ui.lineEdit_name.clear()
             self.ui.lineEdit_bits.clear()
 
             output = self.file_regen.entity(self.name_entity, self.generics, self.ports)
             self.ui.textEdit_text.setText(output)
 
+
+    def regenerate_table(self):
+        """
+        This method regenates the table
+        """
+        self.ui.tableWidget_content.insertRow(self.ui.tableWidget_content.rowCount())
+        self.ui.tableWidget_content.clear()
+        self.charge_table()
+        cont = 0
+        cont = self.insert_generics(cont)
+        cont = self.insert_ports(cont)
+
+
+    def insert_generics(self, cont):
+        """
+        This method insert generics in the table
+        Input:
+            - cont: counter of lines
+        Return:
+            - cont: counter of lines
+        """
+        if self.generics:
+            for gen in self.generics:
+
+                self.ui.tableWidget_content.setItem(cont, 0, QtWidgets.QTableWidgetItem(gen[0]))
+
+                self.ui.tableWidget_content.setItem(cont, 2, QtWidgets.QTableWidgetItem(gen[1]))
+                 
+                if not gen[2]:
+                    self.ui.tableWidget_content.setItem(cont, 3, QtWidgets.QTableWidgetItem("1"))
+                else:
+                    self.ui.tableWidget_content.setItem(cont, 3, QtWidgets.QTableWidgetItem(str(gen[2])))
+                    
+                self.ui.tableWidget_content.setItem(cont, 4, QtWidgets.QTableWidgetItem("generic"))
+                cont += 1
+        return cont
+
+
+    def insert_ports(self, cont):
+        """
+        This method insert ports in the table
+        Input:
+            - cont: counter of lines
+        Return:
+            - cont: counter of lines
+        """
+        if self.ports:
+            for port in self.ports:
+                fv = ""
+                num_bits = 0
+                self.ui.tableWidget_content.setItem(cont, 0, QtWidgets.QTableWidgetItem(port[0]))
+                
+                self.ui.tableWidget_content.setItem(cont, 1, QtWidgets.QTableWidgetItem(port[1]))
+                
+                self.ui.tableWidget_content.setItem(cont, 4, QtWidgets.QTableWidgetItem("port"))
+                
+                if type(port[2]) is list:
+                    self.ui.tableWidget_content.setItem(cont, 2, QtWidgets.QTableWidgetItem(port[2][0]))
+                    try:
+                        fv = int(port[2][1])
+                        lv = int(port[2][3])
+                        num_bits = max(fv, lv) - min(fv, lv) + 1
+                    except:
+                        if port[2][1][-2:] == "-1":
+                            num_bits = port[2][1][:-2]
+                        else:
+                            num_bits = port[2][1]
+                    self.ui.tableWidget_content.setItem(cont, 3, QtWidgets.QTableWidgetItem(str(num_bits)))
+                    
+                else:
+                    self.ui.tableWidget_content.setItem(cont, 2, QtWidgets.QTableWidgetItem(port[2]))
+
+                    self.ui.tableWidget_content.setItem(cont, 3, QtWidgets.QTableWidgetItem("1"))
+                cont += 1
+        return cont
 
 
     def entity_text_fn(self):
@@ -164,10 +218,15 @@ class File_generator_gui(QWidget):
             text_arch = ""
         self.ui.lineEdit_architecture.setText(text_arch)
 
-        output = self.file_regen.entity(self.name_entity, self.generics, self.ports)
+        output = self.file_gen()
         self.ui.textEdit_text.setText(output)
         
     
+    def file_gen(self):
+        self.file_regen.libraries(self.libraries)
+        output = self.file_regen.entity(self.name_entity, self.generics, self.ports)
+        return output
+
 
     def comments_fn(self):
         """
@@ -182,7 +241,7 @@ class File_generator_gui(QWidget):
 
     def create_fn(self):
         """
-        Create method
+        This method creates a file with the text in textedit
         """
         text = self.ui.textEdit_text.toPlainText()
         path = QFileDialog()
@@ -190,6 +249,20 @@ class File_generator_gui(QWidget):
         file = open(os.path.join(path, self.name_entity)+".vhd", "w")
         file.write(text)
         file.close()
+
+
+    def add_component_fn(self):
+
+        path = QFileDialog()
+        file, _ = path.getOpenFileName(self, "Select file", QtCore.QDir.currentPath(
+        ), "VHDL, verilog (*.vhd *.v) ;;VHDL (*.vhd);; Verilog (*.v);; Tesbenches (*_tb.vhd *_tb.v)")
+        hdl = HDL(file)
+        ports, generics, _, _ = hdl.init()
+        regen = VHDL_regen()
+        output = regen.component(ports, generics)
+
+
+
 
 
     def config_fn(self):
