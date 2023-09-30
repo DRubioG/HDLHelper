@@ -213,7 +213,7 @@ class HDLHelper_gui(QMainWindow):
         self.coming_soon()
 
     def top_file_generator_fn(self):
-        self.top_file_generator = Top_file_generator()
+        self.top_file_generator = Top_file_generator_gui()
 
     # second row
     def ticks_calculator_fn(self):

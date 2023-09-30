@@ -3,8 +3,9 @@ import os
 from PyQt5.QtWidgets import QWidget, QFileDialog
 
 from UI.Top_file_generator_UI import *
+from Backend.Top_file_generator import *
 
-class Top_file_generator(QWidget):
+class Top_file_generator_gui(QWidget):
     """
     This class generates a top file with the bottom files
     """
@@ -41,7 +42,8 @@ class Top_file_generator(QWidget):
         This method searchs bottom files
         """
         path = QFileDialog()
-        self.files, _ = path.getOpenFileNames()
+        self.files, _ = path.getOpenFileNames(self, "Select file", QtCore.QDir.currentPath(
+        ), "VHDL, verilog (*.vhd *.v) ;;VHDL (*.vhd);; Verilog (*.v);; Tesbenches (*_tb.vhd *_tb.v)")
         if self.files:
             self.ui.comboBox_files.clear()
             self.ui.comboBox_files.addItems(self.files)
@@ -58,8 +60,9 @@ class Top_file_generator(QWidget):
         else:
             path, _ = os.path.split(self.files)
         file_name = self.ui.lineEdit_name_file.text().strip() + ".vhd"
-        file = open(os.path.join(path, file_name), "w")
-        file.close()
+        file_path = os.path.join(path, file_name)
+        Top_file_generator(file_path, self.files)
+
         self.close()
         
 

@@ -169,7 +169,7 @@ class Testbench_vhdl():
         Return:
             - string with all the architecture part written
         """
-        output = self.regen.architecture(name, generics=generics, ports=ports, comments=comments, entity=entity, vhdl_version=self.vhdl_version, component=True, copy=copy_flag,
+        output = self.regen.architecture(name, generics=[generics], ports=[ports], comments=[comments], entity=[entity], vhdl_version=self.vhdl_version, component=True, copy=copy_flag,
                                          uppercase_gen_cfg=self.uppercase_generics, uppercase_port_cfg=self.uppercase_ports, tab_space_cfg=self.tab_spaces, 
                                          etext=self.etext, ftext=self.ftext, user_code=self.user_code, split_signal_constant=self.split_signal_constant, comments_cfg=self.comments_load)
 

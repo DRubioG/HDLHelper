@@ -32,6 +32,17 @@
             "split_signal_constant": "False"
         }
     ],
+    "Top_file_generator": [
+        {
+            "version": "Mixed",
+            "tab_spaces": "tab",
+            "spaces": "4",
+            "copy": "False",
+            "uppercase_generics": "True",
+            "uppercase_ports": "False",
+            "comments": "True"
+        }
+    ],
     "Documentation_generator": [
         {
             "source_code": "True",
