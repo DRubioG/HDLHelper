@@ -262,12 +262,12 @@
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>231</width>
+      <width>281</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
-     <string>Uppercase for generics</string>
+     <string>Capital letters for generics</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="checkBox_uppercase_ports">
@@ -280,7 +280,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Uppercase for ports</string>
+     <string>Capital letters for ports</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="checkBox_comments">
