@@ -28,7 +28,7 @@ This tool generates a top file
 
 This tool calculates pulses
 
-![Pulses calculator](./img/pulses_calculator.png)
+![Pulses calculator](./img/pulses_calculator.gif)
 
 ### HDL generator
 
