@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>639</width>
-    <height>664</height>
+    <height>760</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -363,7 +363,7 @@
     <item>
      <widget class="QPushButton" name="clock_divisor_button">
       <property name="text">
-       <string>Clock Divisor</string>
+       <string>Prescaler clock</string>
       </property>
      </widget>
     </item>
@@ -415,7 +415,78 @@
        <bool>true</bool>
       </property>
       <property name="text">
-       <string>Communication libraries</string>
+       <string> </string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QWidget" name="horizontalLayoutWidget_7">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>640</y>
+     <width>541</width>
+     <height>80</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_7">
+    <item>
+     <widget class="QPushButton" name="clock_divisor_button_2">
+      <property name="text">
+       <string>Control Engineering</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer_13">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="filter_generator_button_2">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>Power Control</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <spacer name="horizontalSpacer_14">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="sizeType">
+       <enum>QSizePolicy::Fixed</enum>
+      </property>
+      <property name="sizeHint" stdset="0">
+       <size>
+        <width>20</width>
+        <height>20</height>
+       </size>
+      </property>
+     </spacer>
+    </item>
+    <item>
+     <widget class="QPushButton" name="auto_improve_button_4">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="text">
+       <string>Communication</string>
       </property>
      </widget>
     </item>
