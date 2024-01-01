@@ -6,14 +6,14 @@ def seno(N, amplitud):
     samples = np.linspace(0, 1, N)
     return [hex(int(i)) for i in ((2**(amplitud-1))*np.sin(np.pi*2*samples)+(2**(amplitud-1)))]
 
-def chip(N, amplitud):
-    samples = np.linspace(0, 1, N)
-    w = (2**(amplitud-1))*(chirp(samples, f0=1, f1=8, t1=1, method='linear')+1)
-    return [hex(int(i)) for i in w]
+# def chip(N, amplitud):
+#     samples = np.linspace(0, 1, N)
+#     w = (2**(amplitud-1))*(chirp(samples, f0=1, f1=8, t1=1, method='linear')+1)
+#     return [hex(int(i)) for i in w]
 
 if __name__=="__main__":
     
-    sen = chip(100,12)
+    sen = chirp(100,8)
     # cont = 0
     # for t in sen:
     #     if len(t) < 5:
