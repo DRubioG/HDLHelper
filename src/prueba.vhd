@@ -1,4 +1,5 @@
 entity prueba is
+	port(clk : in std_logic)
 end entity prueba;
 
 architecture arch_prueba of prueba is

@@ -66,6 +66,7 @@ class Testbench_vhdl():
             self.etext = ""
             self.uppercase_generics = "True"
             self.uppercase_ports = "False"
+            self.user_code = ""
             self.comments_load = "False"
             self.split_signal_constant = "True"
 

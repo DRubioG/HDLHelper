@@ -344,7 +344,7 @@
        <bool>true</bool>
       </property>
       <property name="text">
-       <string>Antirrebotes</string>
+       <string>Debounce</string>
       </property>
      </widget>
     </item>
@@ -415,7 +415,7 @@
        <bool>true</bool>
       </property>
       <property name="text">
-       <string> </string>
+       <string/>
       </property>
      </widget>
     </item>

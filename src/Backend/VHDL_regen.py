@@ -597,7 +597,7 @@ class VHDL_regen():
             lon_max_val = 0
 
             for port_len in ports:
-                if type(port_len[2]) is list:
+                if type(port_len[2]) is list:   # check if it is a std_logic_vector or similar
                     lon_val = 5
                     for values in port_len[2]:
                         lon_val += len(values)
@@ -613,6 +613,8 @@ class VHDL_regen():
 
             cont_ports = 1
             for port in ports:
+
+                # write the name of the port
                 if type(port[0]) is list:
                     if split != "True":
                         output += self.tab_spaces(tab_spaces_cfg, N+1)
@@ -677,7 +679,7 @@ class VHDL_regen():
                             
                         output += "\n"
 
-
+                # write the type of the port
                 if split != "True":
                     output += self.space_alignment(port[0], lon_max) + "\t : \t" + port[1]
 
@@ -782,15 +784,15 @@ class VHDL_regen():
         output = "\n" + name[:-3] + "_inst : " + name + "\n"
 
         # This part defines the implementation of the generics
-        if generics:      # analize if there are generics
+        if generics[0]:      # analize if there are generics
 
             # Calculates the number of characters of the more longer name in generics
-            lon_max = max_length(generics)
+            lon_max = max_length(generics[0])
 
             # Implementation of the generic map
             cont_gen = 1
             output += self.tab_spaces(tab_spaces_cfg, N+1) + "generic map (\n"
-            for generic in generics:
+            for generic in generics[0]:
                 if type(generic[0]) is list:
                     for i in generic[0]:        # this part individualize the nested generics
                         output += self.tab_spaces(tab_spaces_cfg, N+2) + \
@@ -816,12 +818,12 @@ class VHDL_regen():
             output += self.tab_spaces(tab_spaces_cfg, N+1) + ")\n"
 
 
-        if ports:
-            lon_max = max_length(ports)
+        if ports[0]:
+            lon_max = max_length(ports[0])
 
             cont_port = 0
             output += self.tab_spaces(tab_spaces_cfg, N+1) + "port map (\n"
-            for port in ports:
+            for port in ports[0]:
                 if type(port[0]) is list:
                     for i in port[0]:
                         output += self.tab_spaces(tab_spaces_cfg, N+2) + \
@@ -957,12 +959,12 @@ class VHDL_regen():
         """
         output = ""     # define the writtable variable
         if ports:
-            lon_max = max_length(ports, split_signal_constant, ftext, etext)
+            lon_max = max_length(ports[0], split_signal_constant, ftext, etext)
 
             
             signal_pre = self.tab_spaces(tab_space_cfg, N) + "signal "
 
-            for port in ports:      
+            for port in ports[0]:      
                 if type(port[0]) is list:       # check if the port is nested
                     cont = 1
                     if split_signal_constant != "True":
@@ -1027,10 +1029,10 @@ class VHDL_regen():
         if generics:
             
                 
-            lon_max = max_length(generics, split_signal_constant)
+            lon_max = max_length(generics[0], split_signal_constant)
             constant_pre = self.tab_spaces(tab_space_cfg, N) + "constant "
 
-            for constant in generics:
+            for constant in generics[0]:
 
                 if type(constant[0]) is list:
                     cont = 1
