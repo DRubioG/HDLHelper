@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>639</width>
-    <height>760</height>
+    <height>757</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -415,7 +415,7 @@
        <bool>true</bool>
       </property>
       <property name="text">
-       <string/>
+       <string>VHDL type conversor</string>
       </property>
      </widget>
     </item>
@@ -491,6 +491,26 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>630</y>
+     <width>131</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+     <underline>true</underline>
+    </font>
+   </property>
+   <property name="text">
+    <string>Specific fields</string>
+   </property>
   </widget>
  </widget>
  <resources/>
