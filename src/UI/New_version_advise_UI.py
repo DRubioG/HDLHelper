@@ -1,58 +1,70 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'New_version_advise_UI.ui'
-#
-# Created by: PyQt5 UI code generator 5.14.1
-#
-# WARNING! All changes made in this file will be lost!
+################################################################################
+## Form generated from reading UI file 'New_version_advise_UI.ui'
+##
+## Created by: Qt User Interface Compiler version 6.6.2
+##
+## WARNING! All changes made in this file will be lost when recompiling UI file!
+################################################################################
 
-
-from PyQt5 import QtCore, QtGui, QtWidgets
-
+from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
+    QMetaObject, QObject, QPoint, QRect,
+    QSize, QTime, QUrl, Qt)
+from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
+    QFont, QFontDatabase, QGradient, QIcon,
+    QImage, QKeySequence, QLinearGradient, QPainter,
+    QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QLabel,
+    QPushButton, QSizePolicy, QWidget)
 
 class Ui_Dialog_new_version(object):
     def setupUi(self, Dialog_new_version):
-        Dialog_new_version.setObjectName("Dialog_new_version")
+        if not Dialog_new_version.objectName():
+            Dialog_new_version.setObjectName(u"Dialog_new_version")
         Dialog_new_version.resize(509, 187)
-        self.label = QtWidgets.QLabel(Dialog_new_version)
-        self.label.setGeometry(QtCore.QRect(40, 40, 301, 19))
-        self.label.setObjectName("label")
-        self.pushButton_ok = QtWidgets.QPushButton(Dialog_new_version)
-        self.pushButton_ok.setGeometry(QtCore.QRect(370, 140, 100, 27))
-        self.pushButton_ok.setObjectName("pushButton_ok")
-        self.checkBox_show_again = QtWidgets.QCheckBox(Dialog_new_version)
-        self.checkBox_show_again.setGeometry(QtCore.QRect(40, 140, 181, 25))
-        font = QtGui.QFont()
+        self.label = QLabel(Dialog_new_version)
+        self.label.setObjectName(u"label")
+        self.label.setGeometry(QRect(40, 40, 301, 19))
+        self.pushButton_ok = QPushButton(Dialog_new_version)
+        self.pushButton_ok.setObjectName(u"pushButton_ok")
+        self.pushButton_ok.setGeometry(QRect(370, 140, 100, 27))
+        self.checkBox_show_again = QCheckBox(Dialog_new_version)
+        self.checkBox_show_again.setObjectName(u"checkBox_show_again")
+        self.checkBox_show_again.setGeometry(QRect(40, 140, 181, 25))
+        font = QFont()
         font.setPointSize(10)
         self.checkBox_show_again.setFont(font)
-        self.checkBox_show_again.setObjectName("checkBox_show_again")
-        self.label_2 = QtWidgets.QLabel(Dialog_new_version)
-        self.label_2.setGeometry(QtCore.QRect(140, 80, 111, 19))
-        self.label_2.setObjectName("label_2")
-        self.pushButton_web = QtWidgets.QPushButton(Dialog_new_version)
-        self.pushButton_web.setGeometry(QtCore.QRect(250, 140, 100, 27))
-        self.pushButton_web.setObjectName("pushButton_web")
-        self.label_previous_version = QtWidgets.QLabel(Dialog_new_version)
-        self.label_previous_version.setGeometry(QtCore.QRect(260, 80, 41, 19))
-        self.label_previous_version.setText("")
-        self.label_previous_version.setObjectName("label_previous_version")
-        self.label_4 = QtWidgets.QLabel(Dialog_new_version)
-        self.label_4.setGeometry(QtCore.QRect(300, 80, 31, 19))
-        self.label_4.setObjectName("label_4")
-        self.label_new_version = QtWidgets.QLabel(Dialog_new_version)
-        self.label_new_version.setGeometry(QtCore.QRect(340, 80, 41, 19))
-        self.label_new_version.setText("")
-        self.label_new_version.setObjectName("label_new_version")
+        self.label_2 = QLabel(Dialog_new_version)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(140, 80, 111, 19))
+        self.pushButton_web = QPushButton(Dialog_new_version)
+        self.pushButton_web.setObjectName(u"pushButton_web")
+        self.pushButton_web.setGeometry(QRect(250, 140, 100, 27))
+        self.label_previous_version = QLabel(Dialog_new_version)
+        self.label_previous_version.setObjectName(u"label_previous_version")
+        self.label_previous_version.setGeometry(QRect(260, 80, 41, 19))
+        self.label_4 = QLabel(Dialog_new_version)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setGeometry(QRect(300, 80, 31, 19))
+        self.label_new_version = QLabel(Dialog_new_version)
+        self.label_new_version.setObjectName(u"label_new_version")
+        self.label_new_version.setGeometry(QRect(340, 80, 41, 19))
 
         self.retranslateUi(Dialog_new_version)
-        QtCore.QMetaObject.connectSlotsByName(Dialog_new_version)
+
+        QMetaObject.connectSlotsByName(Dialog_new_version)
+    # setupUi
 
     def retranslateUi(self, Dialog_new_version):
-        _translate = QtCore.QCoreApplication.translate
-        Dialog_new_version.setWindowTitle(_translate("Dialog_new_version", "New version"))
-        self.label.setText(_translate("Dialog_new_version", "New version of HDLHelper"))
-        self.pushButton_ok.setText(_translate("Dialog_new_version", "Ok"))
-        self.checkBox_show_again.setText(_translate("Dialog_new_version", "Do not show again"))
-        self.label_2.setText(_translate("Dialog_new_version", "Your version:"))
-        self.pushButton_web.setText(_translate("Dialog_new_version", "Web"))
-        self.label_4.setText(_translate("Dialog_new_version", "-> "))
+        Dialog_new_version.setWindowTitle(QCoreApplication.translate("Dialog_new_version", u"New version", None))
+        self.label.setText(QCoreApplication.translate("Dialog_new_version", u"New version of HDLHelper", None))
+        self.pushButton_ok.setText(QCoreApplication.translate("Dialog_new_version", u"Ok", None))
+        self.checkBox_show_again.setText(QCoreApplication.translate("Dialog_new_version", u"Do not show again", None))
+        self.label_2.setText(QCoreApplication.translate("Dialog_new_version", u"Your version:", None))
+        self.pushButton_web.setText(QCoreApplication.translate("Dialog_new_version", u"Web", None))
+        self.label_previous_version.setText("")
+        self.label_4.setText(QCoreApplication.translate("Dialog_new_version", u"-> ", None))
+        self.label_new_version.setText("")
+    # retranslateUi
+
