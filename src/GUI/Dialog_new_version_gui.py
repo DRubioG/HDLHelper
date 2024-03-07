@@ -1,6 +1,7 @@
-from PyQt5.QtWidgets import QDialog
+from PySide6.QtWidgets import QDialog
 from UI.New_version_advise_UI import *
-from PyQt5.Qt import QDesktopServices, QUrl
+from PySide6.QtCore import QUrl
+from PySide6.QtGui import QDesktopServices
 import json
 
 

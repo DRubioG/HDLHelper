@@ -1,4 +1,5 @@
-from PyQt5.QtWidgets import QWidget, QFileDialog
+from PySide6.QtWidgets import QWidget, QFileDialog
+from PySide6 import QtCore
 
 from UI.Documentation_generator_UI import *
 from Backend.Documentation_generator import *

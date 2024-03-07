@@ -1,6 +1,7 @@
 import os
 
-from PyQt5.QtWidgets import QWidget, QFileDialog
+from PySide6.QtWidgets import QWidget, QFileDialog
+from PySide6 import QtCore
 
 from UI.Top_file_generator_UI import *
 from Backend.Top_file_generator import *

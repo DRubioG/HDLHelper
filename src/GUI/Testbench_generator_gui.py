@@ -1,9 +1,9 @@
 import os
-from PyQt5.QtWidgets import QFileDialog, QWidget
-from PyQt5 import QtCore
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PySide6.QtWidgets import QFileDialog, QWidget
+from PySide6 import QtCore
+from PySide6.QtGui import *
+from PySide6.QtCore import *
+from PySide6.QtWidgets import *
 
 from UI.Testbench_generator_UI import *
 from UI.StyleSheet.StyleSheet_testbench_generator import testbench_generator_gui

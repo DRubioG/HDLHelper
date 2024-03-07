@@ -1,6 +1,6 @@
 import os
-from PyQt5.QtWidgets import QWidget
-from PyQt5 import QtCore
+from PySide6.QtWidgets import QWidget
+from PySide6 import QtCore
 
 from UI.HDLHelper_preferences_UI import *
 from UI.StyleSheet.StyleSheet_testbench_generator import testbench_generator_gui

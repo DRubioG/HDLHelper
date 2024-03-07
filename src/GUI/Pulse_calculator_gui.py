@@ -1,5 +1,5 @@
-from PyQt5.QtWidgets import QWidget
-from PyQt5 import QtGui
+from PySide6.QtWidgets import QWidget
+from PySide6 import QtGui
 import pyperclip
 
 from UI.Pulse_calculator_UI import *

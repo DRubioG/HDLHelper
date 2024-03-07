@@ -1,5 +1,6 @@
 import os
-from PyQt5.QtWidgets import QWidget, QFileDialog, QHeaderView, QComboBox
+from PySide6.QtWidgets import QWidget, QFileDialog, QHeaderView, QComboBox
+from PySide6 import QtWidgets, QtGui, QtCore
 from UI.File_generator_UI import *
 
 from Backend.VHDL_regen import *
@@ -39,8 +40,8 @@ class File_generator_gui(QWidget):
 
         font = self.ui.textEdit_text.font()
         fontMetrics = QtGui.QFontMetricsF(font)
-        spaceWidth = fontMetrics.width(' ')
-        self.ui.textEdit_text.setTabStopDistance(spaceWidth * 4)
+        # spaceWidth = fontMetrics.width(' ')
+        # self.ui.textEdit_text.setTabStopDistance(' ' * 4)
         self.ui.textEdit_text.setStyleSheet("""
                                             QTextEdit {
                                                 font-family: "MS Shell Dlg 2"; 

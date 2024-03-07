@@ -7,13 +7,13 @@ from PySide6.QtCore import QUrl
 
 from UI.HDLHelper_UI import *
 
-# from GUI.Testbench_generator_gui import *
-# from GUI.HDLHelper_preferences_gui import *
-# from GUI.Dialog_new_version_gui import *
-# from GUI.Documentation_generator_gui import *
-# from GUI.File_generator_gui import *
-# from GUI.Pulse_calculator_gui import *
-# from GUI.Top_file_generator_gui import *
+from GUI.Testbench_generator_gui import *
+from GUI.HDLHelper_preferences_gui import *
+from GUI.Dialog_new_version_gui import *
+from GUI.Documentation_generator_gui import *
+from GUI.File_generator_gui import *
+from GUI.Pulse_calculator_gui import *
+from GUI.Top_file_generator_gui import *
 
 from UI.StyleSheet.StyleSheet_testbench_generator import testbench_generator_gui
 
@@ -86,14 +86,14 @@ class HDLHelper_gui(QMainWindow):
         # editor.setShortcut('Ctrl+E')
         # ascii_conversor.setShortcut('Ctrl+A')
 
-        # testbench_generator.triggered.connect(self.testbench_generator_fn)
+        testbench_generator.triggered.connect(self.testbench_generator_fn)
         # calculator.triggered.connect(self.calculator_fn)
-        # top_file_generator.triggered.connect(self.top_file_generator_fn)
-        # ticks_calculator.triggered.connect(self.ticks_calculator_fn)
+        top_file_generator.triggered.connect(self.top_file_generator_fn)
+        ticks_calculator.triggered.connect(self.ticks_calculator_fn)
         # translator.triggered.connect(self.hdl_translator_fn)
-        # hdl_generator.triggered.connect(self.hdl_generator_fn)
+        hdl_generator.triggered.connect(self.hdl_generator_fn)
         # editor.triggered.connect(self.editor_fn)
-        # documentation_generator.triggered.connect(self.documentation_generator_fn)
+        documentation_generator.triggered.connect(self.documentation_generator_fn)
         # analize_dependencies.triggered.connect(self.analize_dependencies_fn)
         # gen_state_machine.triggered.connect(self.generate_state_machine_fn)
         # ascii_conversor.triggered.connect(self.ascii_conversor_fn)
@@ -162,7 +162,7 @@ class HDLHelper_gui(QMainWindow):
         else:
             version_tag = "<a href ='https://github.com/DRubioG/HDLHelper'>New version available(" + \
                 version_act + " -> " + new_version + ")[copy link]</a>"
-            # self.new_version = Dialog_new_version_gui(version_act, new_version)
+            self.new_version = Dialog_new_version_gui(version_act, new_version)
 
         return version_tag
         
@@ -208,26 +208,26 @@ class HDLHelper_gui(QMainWindow):
         """
         This method opens the GUI of Testbench generator
         """
-        # self.testbench_generator = Testbench_generator_gui()
+        self.testbench_generator = Testbench_generator_gui()
         pass
 
     def calculator_fn(self):
         self.coming_soon()
 
     def top_file_generator_fn(self):
-        # self.top_file_generator = Top_file_generator_gui()
+        self.top_file_generator = Top_file_generator_gui()
         pass
 
     # second row
     def ticks_calculator_fn(self):
-        # self.pulses_calculator = Pulse_calculator_gui()
+        self.pulses_calculator = Pulse_calculator_gui()
         pass
 
     def hdl_translator_fn(self):
         self.coming_soon()
 
     def hdl_generator_fn(self):
-        # self.file_generator = File_generator_gui()
+        self.file_generator = File_generator_gui()
         pass
 
     # third row
@@ -235,7 +235,7 @@ class HDLHelper_gui(QMainWindow):
         self.coming_soon()
 
     def documentation_generator_fn(self):
-        # self.documentation_generator = Documentation_generator_gui()
+        self.documentation_generator = Documentation_generator_gui()
         pass
 
     def analize_dependencies_fn(self):
@@ -259,7 +259,7 @@ class HDLHelper_gui(QMainWindow):
         self.coming_soon()
 
     def preferences_fn(self):
-        # self.preferencies = HDLHelper_preferences_gui()
+        self.preferencies = HDLHelper_preferences_gui()
         pass
 
     # Coming soon
