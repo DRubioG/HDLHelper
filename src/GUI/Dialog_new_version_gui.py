@@ -66,6 +66,6 @@ class Dialog_new_version_gui(QDialog):
         """
         This method redirects to the browser to see the new version of HDLHelper
         """
-        url = QUrl("https://github.com/DRubioG/HDLHelper")
+        url = QUrl("https://github.com/DRubioG/HDLHelper/releases/")
         QDesktopServices.openUrl(url)
         

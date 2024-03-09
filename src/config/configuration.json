@@ -14,7 +14,7 @@
     "configuration": [
         {
             "overwrite_window": "True",
-            "new_version_message": "False"
+            "new_version_message": "True"
         }
     ],
     "Testbench_generator": [
@@ -29,7 +29,8 @@
             "uppercase_ports": "False",
             "user_code": "\tclk <= not(clk) after 5 ns;\n\trst <= '0', '1' after 20 ns;",
             "comments": "True",
-            "split_signal_constant": "False"
+            "split_signal_constant": "False",
+            "tool_comments": "False"
         }
     ],
     "Top_file_generator": [

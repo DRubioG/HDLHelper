@@ -1,9 +1,6 @@
-import sys
 import json
-from PySide6.QtWidgets import QMainWindow, QWidget, QDialog, QMenu, QLabel
+from PySide6.QtWidgets import QMainWindow, QDialog, QLabel
 from PySide6.QtGui import QAction
-from PySide6 import QtCore
-from PySide6.QtCore import QUrl
 
 from UI.HDLHelper_UI import *
 

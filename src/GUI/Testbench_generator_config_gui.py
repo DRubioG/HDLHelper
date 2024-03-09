@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QDialog
+from PySide6.QtWidgets import QDialog
 from UI.Testbench_generator_config_UI import *
 from UI.StyleSheet.StyleSheet_testbench_generator_config import testbench_generator_config_gui
 
@@ -37,11 +37,12 @@ class Testbench_generator_config_gui(QDialog):
             self.copy = self.data["Testbench_generator"][0]["copy"]
             self.uppercase_generics = self.data["Testbench_generator"][0]["uppercase_generics"]
             self.uppercase_ports = self.data["Testbench_generator"][0]["uppercase_ports"]
-            self.default_config = self.data["Testbench_generator"][0]["default_config"]
+            self.default_config = self.data["Testbench_generator"][0]["user_code"]
             self.comments = self.data["Testbench_generator"][0]["comments"]
             self.tool_comments = self.data["Testbench_generator"][0]["tool_comments"]
             self.split_signal_constant = self.data["Testbench_generator"][0]["split_signal_constant"]
         except:
+            self.setStyleSheet("background-color:#db939a;")
             self.ui.comboBox_language.setEnabled(False)
             self.ui.pushButton_save.setEnabled(False)
             self.ui.groupBox_tab_space.setEnabled(False)
@@ -53,6 +54,7 @@ class Testbench_generator_config_gui(QDialog):
             self.ui.textEdit_default_config.setEnabled(False)
             self.ui.checkBox_tool_coments.setEnabled(False)
             self.ui.label_config_file.setText("configuration.json doesn't exist")
+            self.ui.label_config_file.setStyleSheet("font-size: 20px")
             self.ui.groupBox.setEnabled(False)
             self.ui.checkBox_signal_constant.setEnabled(False)
             self.version = "87"
@@ -131,6 +133,7 @@ class Testbench_generator_config_gui(QDialog):
             self.ui.checkBox_tool_coments.setChecked(True)
         else:
             self.ui.checkBox_tool_coments.setChecked(False)
+
         self.ui.textEdit_default_config.setText(self.default_config)
 
 
@@ -226,7 +229,7 @@ class Testbench_generator_config_gui(QDialog):
             self.data["Testbench_generator"][0]["tool_comments"] = "False"
 
 
-        self.data["Testbench_generator"][0]["default_config"] = self.ui.textEdit_default_config.toPlainText()
+        self.data["Testbench_generator"][0]["user_code"] = self.ui.textEdit_default_config.toPlainText()
 
         json.dump(self.data, file, indent=4)
         file.close()

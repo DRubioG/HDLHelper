@@ -1,8 +1,7 @@
 from GUI.HDLHelper_gui import HDLHelper_gui
 import sys
-from PySide6.QtWidgets import QApplication, QSplashScreen
-from PySide6 import QtGui, QtCore
-from PySide6.QtGui import QPixmap
+from PySide6.QtWidgets import QApplication
+from PySide6 import QtGui
 
 """ This code is the start point of the program
 
