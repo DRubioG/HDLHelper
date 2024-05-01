@@ -1,39 +1,11 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 11/26/2023 06:48:21 PM
--- Design Name: 
--- Module Name: multplier_recursive - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
 use IEEE.NUMERIC_STD.ALL;
 
--- Uncomment the following library declaration if instantiating
--- any Xilinx leaf cells in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
-
-entity multplier_recursive is
+entity multiplier_recursive is
     generic (
-        WIDTH : integer := 5
+        WIDTH : integer := 5;
+        DECIMAL : integer := 3
     );
     Port ( 
         clk : in std_logic;
@@ -43,23 +15,27 @@ entity multplier_recursive is
         finish : out std_logic;
         a : in std_logic_vector(WIDTH-1 downto 0);
         b : in std_logic_vector(WIDTH-1 downto 0);
-        y : out std_logic_vector(2*WIDTH-1 downto 0)
+        y : out std_logic_vector(WIDTH-1 downto 0) --2*WIDTH-1 downto 0)
     );
-end multplier_recursive;
+end multiplier_recursive;
 
-architecture Behavioral of multplier_recursive is
+
+architecture Behavioral of multiplier_recursive is
+
 type fsm is (IDLE, READY, EXE, FIN);
 signal state : fsm;
 
 signal product, multiplicand : unsigned(2*WIDTH-1 downto 0);
+signal y_aux :  std_logic_vector(2*WIDTH-1 downto 0);
 signal multiplier : unsigned(WIDTH-1 downto 0);
 signal cont : integer range 0 to WIDTH-1;
 signal end_exe : std_logic;
 
 begin
-    process(rst, clk, end_exe)
+
+FSM_declaration : process(rst, clk, end_exe)
     begin
-        if rst = '1' then
+        if rst = '0' then
             state <= IDLE;
         elsif rising_edge(clk) then
             if en = '1' then
@@ -77,6 +53,7 @@ begin
                     when FIN =>
                         state <= IDLE;
                     when others =>
+                        state <= READY;
                 end case;
             elsif en = '0' then
                 state <= IDLE;
@@ -85,9 +62,9 @@ begin
     end process;
 
 
-    process(rst, state)
+FSM_signals : process(rst, state)
     begin
-        if rst = '1' then
+        if rst = '0' then
             finish <= '0';
         else
             if en = '1' then
@@ -107,10 +84,10 @@ begin
         end if;
     end process;
 
-    process(clk,rst, en, state)
-    
+
+MULTIPLICATION : process(clk,rst, en, state)
     begin
-        if rst='1' then
+        if rst='0' then
             multiplicand <= (others=> '0');
             product <= (others=>'0');
             multiplier <= (others=>'0');
@@ -151,6 +128,7 @@ begin
     end process;
 
     
-    y <= std_logic_vector(product);
+    y_aux <= std_logic_vector(product);
+    y <= y_aux(WIDTH+(WIDTH-DECIMAL) downto DECIMAL);
 
 end Behavioral;

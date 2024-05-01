@@ -49,7 +49,7 @@ component multiplier_recursive is
         finish : out std_logic;
         a : in std_logic_vector(WIDTH-1 downto 0);
         b : in std_logic_vector(WIDTH-1 downto 0);
-        y : out std_logic_vector(2*WIDTH-1 downto 0)
+        y : out std_logic_vector(WIDTH-1 downto 0)
     );
 end component;
 
@@ -57,7 +57,7 @@ constant WIDTH : integer := 5;
 signal clk : std_logic := '0';
 signal rst, en, start, finish : std_logic;
 signal a, b : std_logic_vector(WIDTH-1 downto 0);
-signal y : std_logic_vector(2*WIDTH-1 downto 0);
+signal y : std_logic_vector(WIDTH-1 downto 0);
 
 begin
 
@@ -90,10 +90,10 @@ DUT : multiplier_recursive
 --    );
 
 clk <= not clk after 10 ns;
-rst <= '1', '0' after 50ns;
-a <= "01000";
+rst <= '0', '1' after 50ns;
+a <= "00001";
 en <= '1';
-b <= "00100";
+b <= "01000";
 process begin
     start<='0';
     wait for 100 ns;
